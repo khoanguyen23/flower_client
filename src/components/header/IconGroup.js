@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { deleteFromCart } from "../../redux/actions/cartActions";
+import AuthService from "../../services/AuthService";
 
 const IconGroup = ({
   currency,
@@ -11,9 +12,26 @@ const IconGroup = ({
   wishlistData,
   compareData,
   deleteFromCart,
-  iconWhiteClass
+  iconWhiteClass,
 }) => {
-  const handleClick = e => {
+  const isLoggedIn = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    return !!accessToken; // Trả về true nếu có access token, ngược lại trả về false
+  };
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+
+    AuthService.logout()
+      .then((response) => {
+        console.log(response.data); // Xử lý phản hồi từ backend sau khi đăng xuất thành công
+        // Thực hiện hành động sau khi đăng xuất thành công (ví dụ: chuyển hướng đến trang login.html)
+        window.location.href = "/home-flower-shop";
+      })
+      .catch((error) => {
+        console.error(error); // Xử lý lỗi nếu có
+      });
+  };
+  const handleClick = (e) => {
     e.currentTarget.nextSibling.classList.toggle("active");
   };
 
@@ -29,7 +47,7 @@ const IconGroup = ({
       className={`header-right-wrap ${iconWhiteClass ? iconWhiteClass : ""}`}
     >
       <div className="same-style header-search d-none d-lg-block">
-        <button className="search-active" onClick={e => handleClick(e)}>
+        <button className="search-active" onClick={(e) => handleClick(e)}>
           <i className="pe-7s-search" />
         </button>
         <div className="search-content">
@@ -44,25 +62,38 @@ const IconGroup = ({
       <div className="same-style account-setting d-none d-lg-block">
         <button
           className="account-setting-active"
-          onClick={e => handleClick(e)}
+          onClick={(e) => handleClick(e)}
         >
           <i className="pe-7s-user-female" />
         </button>
         <div className="account-dropdown">
           <ul>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>Login</Link>
-            </li>
-            <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                Register
-              </Link>
-            </li>
+            {!isLoggedIn() && (
+              <>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/login-register"}>
+                    Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to={process.env.PUBLIC_URL + "/login-register"}>
+                    Register
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link to={process.env.PUBLIC_URL + "/my-account"}>
                 my account
               </Link>
             </li>
+            {isLoggedIn() && (
+              <li>
+                <a href="/home-flower-shop" onClick={handleLogout}>
+                  Log out
+                </a>
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -83,7 +114,7 @@ const IconGroup = ({
         </Link>
       </div>
       <div className="same-style cart-wrap d-none d-lg-block">
-        <button className="icon-cart" onClick={e => handleClick(e)}>
+        <button className="icon-cart" onClick={(e) => handleClick(e)}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
             {cartData && cartData.length ? cartData.length : 0}
@@ -122,23 +153,23 @@ IconGroup.propTypes = {
   currency: PropTypes.object,
   iconWhiteClass: PropTypes.string,
   deleteFromCart: PropTypes.func,
-  wishlistData: PropTypes.array
+  wishlistData: PropTypes.array,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     currency: state.currencyData,
     cartData: state.cartData,
     wishlistData: state.wishlistData,
-    compareData: state.compareData
+    compareData: state.compareData,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     deleteFromCart: (item, addToast) => {
       dispatch(deleteFromCart(item, addToast));
-    }
+    },
   };
 };
 

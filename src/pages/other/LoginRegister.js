@@ -8,8 +8,84 @@ import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
+import AuthService from "../../services/AuthService";
+
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { useRef } from "react";
+
 const LoginRegister = ({ location }) => {
   const { pathname } = location;
+
+  const history = useHistory();
+
+  const form = useRef();
+  const checkBtn = useRef();
+
+  
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
+
+  const onChangeEmail = (e) => {
+    const email = e.target.value;
+    setEmail(email);
+  };
+
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const credentials = {
+      username,
+      password
+    };
+
+    AuthService.login(credentials)
+      .then((response) => {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('email', response.data.email);
+        history.push("/my-account");
+      })
+      .catch((error) => {
+        console.error("Đăng nhập thất bại:", error);
+      });
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+
+    AuthService.register(username, email, password).then(
+      (response) => {
+        window.location.reload();
+
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setMessage(resMessage);
+        setSuccessful(false);
+      }
+    );
+  };
 
   return (
     <Fragment>
@@ -46,18 +122,22 @@ const LoginRegister = ({ location }) => {
                       </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                      <Tab.Pane eventKey="login">
+                    <Tab.Pane eventKey="login">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={handleLogin}>
                               <input
                                 type="text"
                                 name="user-name"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
                                 placeholder="Username"
                               />
                               <input
                                 type="password"
                                 name="user-password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
                                 placeholder="Password"
                               />
                               <div className="button-box">
@@ -79,21 +159,33 @@ const LoginRegister = ({ location }) => {
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={handleRegister}>
                               <input
                                 type="text"
                                 name="user-name"
+                                value={username}
+                                onChange={(event) =>
+                                  setUsername(event.target.value)
+                                }
                                 placeholder="Username"
                               />
                               <input
                                 type="password"
                                 name="user-password"
+                                value={password}
+                                onChange={(event) =>
+                                  setPassword(event.target.value)
+                                }
                                 placeholder="Password"
                               />
                               <input
                                 name="user-email"
                                 placeholder="Email"
                                 type="email"
+                                value={email}
+                                onChange={(event) =>
+                                  setEmail(event.target.value)
+                                }
                               />
                               <div className="button-box">
                                 <button type="submit">

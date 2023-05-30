@@ -37,7 +37,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -61,6 +61,6 @@
   },
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8",
-    "sass": "^1.29.0"
+    "sass": "^1.62.1"
   }
 }
