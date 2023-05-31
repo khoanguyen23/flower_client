@@ -33,6 +33,17 @@ const MyAccount = ({ location }) => {
   }, []);
   const accessToken = localStorage.getItem("accessToken");
   const [toggle, setToggle] = useState(false);
+  const [addressList, setAddressList] = useState([0]);
+  const [id, setId] = useState(0);
+  console.log(addressList)
+  const onAddBtnClick = (event) => {
+    
+    setId((id) => id + 1 );
+    setAddressList([...addressList, id + 11]);
+  };
+  const onRemoveBtnClick = (id) => {
+    setAddressList(addressList.filter((address) => address !== id));
+  };
 
   return (
     <Fragment>
@@ -197,13 +208,13 @@ const MyAccount = ({ location }) => {
 
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
-                        <Accordion.Toggle variant="link" eventKey="2">
+                        <Accordion.Toggle variant="link" eventKey="3">
                           <h3 className="panel-title">
                             <span>4 .</span> Thông tin địa chỉ{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
-                      <Accordion.Collapse eventKey="2">
+                      <Accordion.Collapse eventKey="3">
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
@@ -226,63 +237,117 @@ const MyAccount = ({ location }) => {
                                       onClick={() => setToggle(!toggle)}
                                       className="edit"
                                     >
-                                      Edit
+                                      Chỉnh sửa
                                     </button>
-                                    <button>Delete</button>
+                                    <button onClick={(event) => onAddBtnClick()}>
+                                      Thêm địa chỉ{" "}
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             {toggle && (
-                               <div className="myaccount-info-wrapper">
-                               <div className="row">
-                                 <div className="col-lg-6 col-md-12">
-                                   <div className="billing-info">
-                                     <label>Tên </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
-                                 <div className="col-lg-6 col-md-6">
-                                   <div className="billing-info">
-                                     <label>Số nhà </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
-                                 <div className="col-lg-12 col-md-6">
-                                   <div className="billing-info">
-                                     <label>Số đường </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
- 
-                                 <div className="col-lg-6 col-md-6">
-                                   <div className="billing-info">
-                                     <label>Quận/huyện </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
-                                 <div className="col-lg-6 col-md-6">
-                                   <div className="billing-info">
-                                     <label>Tỉnh </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
-                                 <div className="col-lg-12 col-md-6">
-                                   <div className="billing-info">
-                                     <label>Quốc Gia </label>
-                                     <input type="text" />
-                                   </div>
-                                 </div>
-                               </div>
-                             </div>
-                              
-                            )}
+                              <div className="myaccount-info-wrapper">
+                                <div className="row">
+                                  <div className="col-lg-6 col-md-12">
+                                    <div className="billing-info">
+                                      <label>Tên </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
+                                  <div className="col-lg-6 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Số nhà </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
+                                  <div className="col-lg-12 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Số đường </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
 
-                            
+                                  <div className="col-lg-6 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Quận/huyện </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
+                                  <div className="col-lg-6 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Tỉnh </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
+                                  <div className="col-lg-12 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Quốc Gia </label>
+                                      <input type="text" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                            <div className="description">
+                              {addressList.map((address) => {
+                                return (
+                                  <div key={address}>
+                                    <div className="myaccount-info-wrapper">
+                                      <div className="row">
+                                        <div className="col-lg-6 col-md-12">
+                                          <div className="billing-info">
+                                            <label>Tên </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+                                        <div className="col-lg-6 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Số nhà </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+                                        <div className="col-lg-12 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Số đường </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+
+                                        <div className="col-lg-6 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Quận/huyện </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+                                        <div className="col-lg-6 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Tỉnh </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+                                        <div className="col-lg-12 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Quốc Gia </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <button
+                                      className="billing-btn"
+                                      onClick={() => onRemoveBtnClick(address)}
+                                    >
+                                      Xóa địa chỉ
+                                    </button>
+                                  </div>
+                                );
+                              })}
+                            </div>
 
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Lưu thay đổi </button>
                               </div>
                             </div>
                           </div>
