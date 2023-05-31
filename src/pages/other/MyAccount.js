@@ -17,22 +17,22 @@ const MyAccount = ({ location }) => {
   const history = useHistory();
   // const [userInfo, setUserInfo] = useState(null);
   const [userInfo, setUserInfo] = useState({
-    username: '',
-    email: '',
+    username: "",
+    email: "",
   });
   useEffect(() => {
     // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang login.html
-    if (!localStorage.getItem('accessToken')) {
-      history.push('/home-flower-shop');
+    if (!localStorage.getItem("accessToken")) {
+      history.push("/home-flower-shop");
     } else {
       // Lấy thông tin người dùng từ local storage
-      const username = localStorage.getItem('username');
-      const email = localStorage.getItem('email');
+      const username = localStorage.getItem("username");
+      const email = localStorage.getItem("email");
       setUserInfo({ username, email });
     }
   }, []);
-  const accessToken = localStorage.getItem('accessToken');
-
+  const accessToken = localStorage.getItem("accessToken");
+  const [toggle, setToggle] = useState(false);
 
   return (
     <Fragment>
@@ -68,7 +68,9 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>My Account Information {userInfo.username}</h4>
+                              <h4>
+                                My Account Information {userInfo.username}
+                              </h4>
                               <h5>Your Personal Details</h5>
                             </div>
                             <div className="row">
@@ -192,6 +194,101 @@ const MyAccount = ({ location }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
+
+                    <Card className="single-my-account mb-20">
+                      <Card.Header className="panel-heading">
+                        <Accordion.Toggle variant="link" eventKey="2">
+                          <h3 className="panel-title">
+                            <span>4 .</span> Thông tin địa chỉ{" "}
+                          </h3>
+                        </Accordion.Toggle>
+                      </Card.Header>
+                      <Accordion.Collapse eventKey="2">
+                        <Card.Body>
+                          <div className="myaccount-info-wrapper">
+                            <div className="account-info-wrapper">
+                              <h4>Address Book Entries</h4>
+                            </div>
+                            <div className="entries-wrapper">
+                              <div className="row">
+                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                  <div className="entries-info text-center">
+                                    <p>John Doe</p>
+                                    <p>Paul Park </p>
+                                    <p>Lorem ipsum dolor set amet</p>
+                                    <p>NYC</p>
+                                    <p>New York</p>
+                                  </div>
+                                </div>
+                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
+                                  <div className="entries-edit-delete text-center">
+                                    <button
+                                      onClick={() => setToggle(!toggle)}
+                                      className="edit"
+                                    >
+                                      Edit
+                                    </button>
+                                    <button>Delete</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {toggle && (
+                               <div className="myaccount-info-wrapper">
+                               <div className="row">
+                                 <div className="col-lg-6 col-md-12">
+                                   <div className="billing-info">
+                                     <label>Tên </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+                                 <div className="col-lg-6 col-md-6">
+                                   <div className="billing-info">
+                                     <label>Số nhà </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+                                 <div className="col-lg-12 col-md-6">
+                                   <div className="billing-info">
+                                     <label>Số đường </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+ 
+                                 <div className="col-lg-6 col-md-6">
+                                   <div className="billing-info">
+                                     <label>Quận/huyện </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+                                 <div className="col-lg-6 col-md-6">
+                                   <div className="billing-info">
+                                     <label>Tỉnh </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+                                 <div className="col-lg-12 col-md-6">
+                                   <div className="billing-info">
+                                     <label>Quốc Gia </label>
+                                     <input type="text" />
+                                   </div>
+                                 </div>
+                               </div>
+                             </div>
+                              
+                            )}
+
+                            
+
+                            <div className="billing-back-btn">
+                              <div className="billing-btn">
+                                <button type="submit">Continue</button>
+                              </div>
+                            </div>
+                          </div>
+                        </Card.Body>
+                      </Accordion.Collapse>
+                    </Card>
                   </Accordion>
                 </div>
               </div>
@@ -204,7 +301,7 @@ const MyAccount = ({ location }) => {
 };
 
 MyAccount.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default MyAccount;

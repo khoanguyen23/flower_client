@@ -1,5 +1,23 @@
 /*------ 25. My account Page  ------*/
-
+.billing-btn {
+  button {
+    background-color: #f2f2f2;
+    border: medium none;
+    color: #000;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 16px 35px 17px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    &:hover {
+      background: $theme-color;
+      color: #fff;
+    }
+  }
+}
 .single-my-account {
   margin-bottom: 20px;
   border: 1px solid #ebebeb;
