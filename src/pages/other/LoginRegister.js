@@ -7,6 +7,7 @@ import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { Modal, Button } from "react-bootstrap";
 
 import AuthService from "../../services/AuthService";
 
@@ -21,8 +22,8 @@ const LoginRegister = ({ location }) => {
 
   const form = useRef();
   const checkBtn = useRef();
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
-  
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [successful, setSuccessful] = useState(false);
@@ -50,18 +51,19 @@ const LoginRegister = ({ location }) => {
 
     const credentials = {
       username,
-      password
+      password,
     };
 
     AuthService.login(credentials)
       .then((response) => {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        localStorage.setItem('username', response.data.username);
-        localStorage.setItem('email', response.data.email);
+        localStorage.setItem("accessToken", response.data.accessToken);
+        localStorage.setItem("username", response.data.username);
+        localStorage.setItem("email", response.data.email);
         history.push("/my-account");
       })
       .catch((error) => {
         console.error("Đăng nhập thất bại:", error);
+        setLoginSuccess(false);
       });
   };
 
@@ -71,7 +73,6 @@ const LoginRegister = ({ location }) => {
     AuthService.register(username, email, password).then(
       (response) => {
         window.location.reload();
-
       },
       (error) => {
         const resMessage =
@@ -122,7 +123,7 @@ const LoginRegister = ({ location }) => {
                       </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                    <Tab.Pane eventKey="login">
+                      <Tab.Pane eventKey="login">
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={handleLogin}>
@@ -204,12 +205,23 @@ const LoginRegister = ({ location }) => {
           </div>
         </div>
       </LayoutOne>
+      <Modal show={!loginSuccess} onHide={() => setLoginSuccess(true)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Đăng nhập thất bại</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Thông tin đăng nhập không chính xác. Vui lòng thử lại.</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setLoginSuccess(true)}>Đóng</Button>
+        </Modal.Footer>
+      </Modal>
     </Fragment>
   );
 };
 
 LoginRegister.propTypes = {
-  location: PropTypes.object
+  location: PropTypes.object,
 };
 
 export default LoginRegister;
