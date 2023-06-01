@@ -63,5 +63,6 @@
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8",
     "sass": "^1.62.1"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
