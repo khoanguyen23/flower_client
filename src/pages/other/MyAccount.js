@@ -11,6 +11,7 @@ import AuthService from "../../services/AuthService";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import CreditCardForm from "./CreditCardForm1";
 
 const MyAccount = ({ location }) => {
   const { pathname } = location;
@@ -33,13 +34,12 @@ const MyAccount = ({ location }) => {
   }, []);
   const accessToken = localStorage.getItem("accessToken");
   const [toggle, setToggle] = useState(false);
-  const [addressList, setAddressList] = useState([0]);
+  const [addressList, setAddressList] = useState([]);
   const [id, setId] = useState(0);
-  console.log(addressList)
+  console.log(addressList);
   const onAddBtnClick = (event) => {
-    
-    setId((id) => id + 1 );
-    setAddressList([...addressList, id + 11]);
+    setId((id) => id + 1);
+    setAddressList([...addressList, id + 1]);
   };
   const onRemoveBtnClick = (id) => {
     setAddressList(addressList.filter((address) => address !== id));
@@ -167,7 +167,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> Modify your address book entries{" "}
+                            <span>3 .</span> Thông tin tài khoản{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -183,19 +183,31 @@ const MyAccount = ({ location }) => {
                                   <div className="entries-info text-center">
                                     <p>John Doe</p>
                                     <p>Paul Park </p>
-                                    <p>Lorem ipsum dolor set amet</p>
-                                    <p>NYC</p>
-                                    <p>New York</p>
+                                    <p>2352367828723897</p>
+                                    <p>10</p>/
+                                    <p>29</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-edit-delete text-center">
-                                    <button className="edit">Edit</button>
-                                    <button>Delete</button>
+                                    <button
+                                      onClick={() => setToggle(!toggle)}
+                                      className="edit"
+                                    >
+                                      Chỉnh sửa
+                                    </button>
+                                    <button
+                                      onClick={(event) => onAddBtnClick()}
+                                    >
+                                      Thêm địa chỉ{" "}
+                                    </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
+                            {toggle && <CreditCardForm />}
+                            
+
                             <div className="billing-back-btn">
                               <div className="billing-btn">
                                 <button type="submit">Continue</button>
@@ -239,13 +251,16 @@ const MyAccount = ({ location }) => {
                                     >
                                       Chỉnh sửa
                                     </button>
-                                    <button onClick={(event) => onAddBtnClick()}>
+                                    <button
+                                      onClick={(event) => onAddBtnClick()}
+                                    >
                                       Thêm địa chỉ{" "}
                                     </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
+
                             {toggle && (
                               <div className="myaccount-info-wrapper">
                                 <div className="row">
@@ -285,6 +300,24 @@ const MyAccount = ({ location }) => {
                                       <label>Quốc Gia </label>
                                       <input type="text" />
                                     </div>
+                                  </div>
+                                </div>
+                                <div className="billing-back-btn">
+                                <div className="billing-btn">
+                                    <button
+                                      
+                                      className="save"
+                                    >
+                                      Lưu 
+                                    </button>
+                                  </div>
+                                  <div className="billing-btn">
+                                    <button
+                                      onClick={() => setToggle(!toggle)}
+                                      className="cancel"
+                                    >
+                                      Hủy
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -334,12 +367,16 @@ const MyAccount = ({ location }) => {
                                         </div>
                                       </div>
                                     </div>
+                                    <div className="billing-back-btn">
+                                    <div className="billing-btn">
                                     <button
                                       className="billing-btn"
                                       onClick={() => onRemoveBtnClick(address)}
                                     >
                                       Xóa địa chỉ
                                     </button>
+                                    </div>
+                                    </div>
                                   </div>
                                 );
                               })}
