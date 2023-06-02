@@ -11,6 +11,8 @@ import AuthService from "../../services/AuthService";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
+import CreditCardForm from "./CreditCardForm1";
+import MyAccountService from "../../services/MyAccountService";
 
 const MyAccount = ({ location }) => {
   const { pathname } = location;
@@ -31,15 +33,87 @@ const MyAccount = ({ location }) => {
       setUserInfo({ username, email });
     }
   }, []);
+  // const [userShipping, setUserShipping] = useState("");
+  // useEffect(() => {
+  //   MyAccountService.getUserShipping().then((Response) => {
+  //     console.log(Response.data);
+  //     setUserShipping(Response.data);
+  //   });
+  // }, []);
+  const [userShippingList, setUserShippingList] = useState([]);
+  const [userShippingCity, setUserShippingCity] = useState("");
+  const [userShippingCountry, setUserShippingCountry] = useState("");
+  const [userShippingDefault, setUserShippingDefault] = useState(false);
+  const [userShippingName, setUserShippingName] = useState("");
+  const [userShippingState, setUserShippingState] = useState("");
+  const [userShippingStreet1, setUserShippingStreet1] = useState("");
+  const [userShippingStreet2, setUserShippingStreet2] = useState("");
+  const [userShippingZipcode, setUserShippingZipcode] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
+
+
+  const handleSetUserShipping = (e) => {
+    e.preventDefault();
+
+    MyAccountService.setUserShipping(
+      userShippingCity,
+      userShippingCountry,
+      userShippingDefault,
+      userShippingName,
+      userShippingState,
+      userShippingStreet1,
+      userShippingStreet2,
+      userShippingZipcode).then(
+      (response) => {
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setMessage(resMessage);
+        setSuccessful(false);
+      }
+    );
+  };
+  
+
+
+
+  useEffect(() => {
+    fetch('api/user-shipping')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data); // Kiểm tra dữ liệu phản hồi từ server
+        setUserShippingList(data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+  console.log("userShipping", userShippingList);
   const accessToken = localStorage.getItem("accessToken");
   const [toggle, setToggle] = useState(false);
-  const [addressList, setAddressList] = useState([0]);
+  const [addressList, setAddressList] = useState([]);
   const [id, setId] = useState(0);
-  console.log(addressList)
+  const [idCreditCard, setIdCreditCard] = useState(0);
+  const [creditCardList, setCreditCardList] = useState([]);
+
+  const onAddCreditCard = (event) => {
+    setIdCreditCard((id) => idCreditCard + 1);
+    setCreditCardList([...creditCardList, idCreditCard + 1]);
+  };
+  const onRemoveCreditCard = (idCreditCard) => {
+    setCreditCardList(
+      creditCardList.filter((creditcard) => creditcard !== idCreditCard)
+    );
+  };
   const onAddBtnClick = (event) => {
-    
-    setId((id) => id + 1 );
-    setAddressList([...addressList, id + 11]);
+    setId((id) => id + 1);
+    setAddressList([...addressList, id + 1]);
   };
   const onRemoveBtnClick = (id) => {
     setAddressList(addressList.filter((address) => address !== id));
@@ -71,7 +145,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> Chỉnh sửa thông tin tài khoản{" "}
+                            <span>1 .</span> Edit your account information{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -85,7 +159,7 @@ const MyAccount = ({ location }) => {
                             <div className="row">
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Họ</label>
+                                  <label>First Name</label>
                                   <input type="text" />
                                 </div>
                               </div>
@@ -97,13 +171,13 @@ const MyAccount = ({ location }) => {
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Địa chỉ Email</label>
+                                  <label>Email Address</label>
                                   <input type="email" />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Số điện thoại</label>
+                                  <label>Telephone</label>
                                   <input type="text" />
                                 </div>
                               </div>
@@ -116,7 +190,7 @@ const MyAccount = ({ location }) => {
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Tiếp tục</button>
+                                <button type="submit">Continue</button>
                               </div>
                             </div>
                           </div>
@@ -127,7 +201,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> Thay đổi mật khẩu
+                            <span>2 .</span> Change your password
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -135,26 +209,26 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Thay đổi mật khẩu</h4>
-                              <h5>Mật khẩu của bạn</h5>
+                              <h4>Change Password</h4>
+                              <h5>Your Password</h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Mật khẩu</label>
+                                  <label>Password</label>
                                   <input type="password" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Xác nhận mật khẩu</label>
+                                  <label>Password Confirm</label>
                                   <input type="password" />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Tiếp tục</button>
+                                <button type="submit">Continue</button>
                               </div>
                             </div>
                           </div>
@@ -165,7 +239,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> Thay đổi địa chỉ{" "}
+                            <span>3 .</span> Modify your address book entries{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -173,28 +247,55 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Địa chỉ nhận hàng</h4>
+                              <h4>Address Book Entries</h4>
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-info text-center">
-                                    <p>268 Lý Thường Kiệt</p>
-                                    <p>Quận 10</p>
-                                    <p>Hồ Chí Minh</p>
+                                    <p>John Doe</p>
+                                    <p>Paul Park </p>
+                                    <p>Lorem ipsum dolor set amet</p>
+                                    <p>NYC</p>
+                                    <p>New York</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-edit-delete text-center">
-                                    <button className="edit">Sửa</button>
-                                    <button>Xóa</button>
+                                    <button className="edit">Edit</button>
+                                    <button>Delete</button>
                                   </div>
                                 </div>
                               </div>
+                             
                             </div>
+                            <div className="description">
+                                {creditCardList.map((creditcard) => {
+                                  return (
+                                    <>
+                                      <CreditCardForm />
+
+                                      <div className="billing-back-btn">
+                                        <div className="billing-btn">
+                                          <button
+                                            className="billing-btn"
+                                            onClick={() =>
+                                              onRemoveCreditCard(creditcard)
+                                            }
+                                          >
+                                            Xóa địa chỉ
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </>
+                                  );
+                                })}
+                              </div>
+                            {toggle && <CreditCardForm />}
+
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Tiếp tục</button>
+                                <button type="submit">Continue</button>
                               </div>
                             </div>
                           </div>
@@ -214,7 +315,7 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Address Book Entries</h4>
+                              <h4>Địa chỉ nhận hàng </h4>
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
@@ -235,54 +336,103 @@ const MyAccount = ({ location }) => {
                                     >
                                       Chỉnh sửa
                                     </button>
-                                    <button onClick={(event) => onAddBtnClick()}>
+                                    <button
+                                      onClick={(event) => onAddBtnClick()}
+                                    >
                                       Thêm địa chỉ{" "}
                                     </button>
                                   </div>
                                 </div>
                               </div>
                             </div>
+
                             {toggle && (
                               <div className="myaccount-info-wrapper">
+                                <form onSubmit={handleSetUserShipping}>
                                 <div className="row">
                                   <div className="col-lg-6 col-md-12">
                                     <div className="billing-info">
                                       <label>Tên </label>
-                                      <input type="text" />
+                                      <input type="text" 
+                                      value={userShippingName}
+                                      name="userShippingName"
+                                      onChange={(e) => setUserShippingName(e.target.value)}/>
                                     </div>
                                   </div>
                                   <div className="col-lg-6 col-md-6">
                                     <div className="billing-info">
                                       <label>Số nhà </label>
-                                      <input type="text" />
+                                      <input type="text" 
+                                      value={userShippingStreet1}
+                                      name="userShippingStreet1"
+                                      onChange={(e) => setUserShippingStreet1(e.target.value)}
+                                      />
                                     </div>
                                   </div>
                                   <div className="col-lg-12 col-md-6">
                                     <div className="billing-info">
                                       <label>Số đường </label>
-                                      <input type="text" />
+                                      <input type="text"
+                                      value={userShippingStreet2}
+                                      name="userShippingStreet2"
+                                      onChange={(e) => setUserShippingStreet2(e.target.value)} />
                                     </div>
                                   </div>
 
                                   <div className="col-lg-6 col-md-6">
                                     <div className="billing-info">
                                       <label>Quận/huyện </label>
-                                      <input type="text" />
+                                      <input type="text" 
+                                      value={userShippingState}
+                                      name="userShippingState"
+                                      onChange={(e) => setUserShippingState(e.target.value)}/>
                                     </div>
                                   </div>
                                   <div className="col-lg-6 col-md-6">
                                     <div className="billing-info">
-                                      <label>Tỉnh </label>
-                                      <input type="text" />
+                                      <label>Tỉnh/ Thành phố </label>
+                                      <input type="text" 
+                                      value={userShippingCity}
+                                      name="userShippingCity"
+                                      onChange={(e) => setUserShippingCity(e.target.value)}/>
                                     </div>
                                   </div>
-                                  <div className="col-lg-12 col-md-6">
+                                  <div className="col-lg-6 col-md-6">
                                     <div className="billing-info">
                                       <label>Quốc Gia </label>
-                                      <input type="text" />
+                                      <input type="text" 
+                                      value={userShippingCountry}
+                                      name="userShippingCountry"
+                                      onChange={(e) => setUserShippingCountry(e.target.value)}/>
+                                    </div>
+                                  </div>
+                                  <div className="col-lg-6 col-md-6">
+                                    <div className="billing-info">
+                                      <label>Zipcode </label>
+                                      <input type="text"
+                                      value={userShippingZipcode}
+                                      name="userShippingZipcode"
+                                      onChange={(e) => setUserShippingZipcode(e.target.value)} />
                                     </div>
                                   </div>
                                 </div>
+                                <div className="billing-back-btn">
+                                  <div className="billing-btn">
+                                    <button 
+                                    type="submit"  
+                                    className="save">Lưu</button>
+                                  </div>
+                                  <div className="billing-btn">
+                                    <button
+                                      onClick={() => setToggle(!toggle)}
+                                      className="cancel"
+                                    >
+                                      Hủy
+                                    </button>
+                                  </div>
+                                </div>
+                                </form>
+                                
                               </div>
                             )}
                             <div className="description">
@@ -322,20 +472,32 @@ const MyAccount = ({ location }) => {
                                             <input type="text" />
                                           </div>
                                         </div>
-                                        <div className="col-lg-12 col-md-6">
+                                        <div className="col-lg-6 col-md-6">
                                           <div className="billing-info">
                                             <label>Quốc Gia </label>
                                             <input type="text" />
                                           </div>
                                         </div>
+                                        <div className="col-lg-6 col-md-6">
+                                          <div className="billing-info">
+                                            <label>Zipcode </label>
+                                            <input type="text" />
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                    <button
-                                      className="billing-btn"
-                                      onClick={() => onRemoveBtnClick(address)}
-                                    >
-                                      Xóa địa chỉ
-                                    </button>
+                                    <div className="billing-back-btn">
+                                      <div className="billing-btn">
+                                        <button
+                                          className="billing-btn"
+                                          onClick={() =>
+                                            onRemoveBtnClick(address)
+                                          }
+                                        >
+                                          Xóa địa chỉ
+                                        </button>
+                                      </div>
+                                    </div>
                                   </div>
                                 );
                               })}

@@ -15,6 +15,7 @@
     "react-countdown-now": "^2.1.2",
     "react-countup": "^4.2.3",
     "react-dom": "^17.0.2",
+    "react-dropdown": "^1.11.0",
     "react-fullpage": "^0.1.19",
     "react-hooks-paginator": "^0.4.0",
     "react-id-swiper": "2.4.0",
@@ -37,7 +38,7 @@
     "uuid": "^3.3.3"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts  start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -62,5 +63,6 @@
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8",
     "sass": "^1.62.1"
-  }
+  },
+  "proxy": "http://localhost:8080"
 }
