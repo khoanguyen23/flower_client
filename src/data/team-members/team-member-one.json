@@ -5,8 +5,8 @@
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.Mike Banding",
-    "position": "Manager"
+    "name": "Nguyễn Hoàng Khoa",
+    "position": "Leader"
   },
   {
     "id": "2",
@@ -14,8 +14,8 @@
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.Peter Pan",
-    "position": "Developer"
+    "name": "Nguyễn Ngọc Luân",
+    "position": "Member"
   },
   {
     "id": "3",
@@ -23,8 +23,8 @@
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Ms.Sophia",
-    "position": "Designer"
+    "name": "Lê Thị Thiệp",
+    "position": "Member"
   },
   {
     "id": "4",
@@ -32,7 +32,7 @@
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
-    "name": "Mr.John Lee",
-    "position": "Chairman"
+    "name": "Nguyễn Thùy Trâm",
+    "position": "Member"
   }
 ]

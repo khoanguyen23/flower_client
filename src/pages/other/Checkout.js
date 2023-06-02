@@ -15,15 +15,15 @@ const Checkout = ({ location, cartItems, currency }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Checkout</title>
+        <title>Flora | Thanh toán</title>
         <meta
           name="description"
-          content="Checkout page of flone react minimalist eCommerce template."
+          content=""
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Checkout
+        Thanh toán
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -34,91 +34,91 @@ const Checkout = ({ location, cartItems, currency }) => {
               <div className="row">
                 <div className="col-lg-7">
                   <div className="billing-info-wrap">
-                    <h3>Billing Details</h3>
+                    <h3>Chi tiết đơn hàng</h3>
                     <div className="row">
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>First Name</label>
+                          <label>Họ</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Last Name</label>
+                          <label>Tên</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Company Name</label>
+                          <label>Tên công ty (nếu có)</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>Country</label>
+                          <label>Tỉnh thành</label>
                           <select>
-                            <option>Select a country</option>
-                            <option>Azerbaijan</option>
-                            <option>Bahamas</option>
-                            <option>Bahrain</option>
-                            <option>Bangladesh</option>
-                            <option>Barbados</option>
+                            <option>Chọn địa chỉ của bạn</option>
+                            <option>Đà Nẵng</option>
+                              <option>Lâm Đồng</option>
+                              <option>Quảng Trị</option>
+                              <option>Hồ Chí Minh</option>
+                              <option>Ninh Thuận</option>
                           </select>
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Street Address</label>
+                          <label>Tên đường, Tòa nhà, Số nhà.</label>
                           <input
                             className="billing-address"
-                            placeholder="House number and street name"
+                            placeholder="Tên đường, Tòa nhà"
                             type="text"
                           />
                           <input
-                            placeholder="Apartment, suite, unit etc."
+                            placeholder="Số nhà"
                             type="text"
                           />
                         </div>
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Town / City</label>
+                          <label>Tỉnh/Thành phố</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>State / County</label>
+                          <label>Quận/Huyện</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Postcode / ZIP</label>
+                          <label>Phường/Xã</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Phone</label>
+                          <label>Số điện thoại</label>
                           <input type="text" />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>Email Address</label>
+                          <label>Địa chỉ Email</label>
                           <input type="text" />
                         </div>
                       </div>
                     </div>
 
                     <div className="additional-info-wrap">
-                      <h4>Additional information</h4>
+                      <h4>Thông tin thêm</h4>
                       <div className="additional-info">
-                        <label>Order notes</label>
+                        <label>Ghi chú</label>
                         <textarea
-                          placeholder="Notes about your order, e.g. special notes for delivery. "
+                          placeholder="Ghi chú về đơn đặt hàng của bạn. Ví dụ: ghi chú đặc biệt cho shipper, lời nhắn cho người nhận,..."
                           name="message"
                           defaultValue={""}
                         />
@@ -129,13 +129,13 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                 <div className="col-lg-5">
                   <div className="your-order-area">
-                    <h3>Your order</h3>
+                    <h3>Đơn hàng của bạn</h3>
                     <div className="your-order-wrap gray-bg-4">
                       <div className="your-order-product-info">
                         <div className="your-order-top">
                           <ul>
-                            <li>Product</li>
-                            <li>Total</li>
+                            <li>Sản phẩm</li>
+                            <li>Tổng</li>
                           </ul>
                         </div>
                         <div className="your-order-middle">
@@ -181,13 +181,13 @@ const Checkout = ({ location, cartItems, currency }) => {
                         </div>
                         <div className="your-order-bottom">
                           <ul>
-                            <li className="your-order-shipping">Shipping</li>
-                            <li>Free shipping</li>
+                            <li className="your-order-shipping">Phí ship</li>
+                            <li>Miễn phí vận chuyển</li>
                           </ul>
                         </div>
                         <div className="your-order-total">
                           <ul>
-                            <li className="order-total">Total</li>
+                            <li className="order-total">Tổng thanh toán</li>
                             <li>
                               {currency.currencySymbol +
                                 cartTotalPrice.toFixed(2)}
@@ -198,7 +198,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button className="btn-hover">Place Order</button>
+                      <button className="btn-hover">Đặt hàng</button>
                     </div>
                   </div>
                 </div>
@@ -211,9 +211,9 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <i className="pe-7s-cash"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in cart to checkout <br />{" "}
+                      Không tìm thấy sản phẩm trong giỏ hàng để thanh toán <br />{" "}
                       <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Shop Now
+                        MUA NGAY
                       </Link>
                     </div>
                   </div>

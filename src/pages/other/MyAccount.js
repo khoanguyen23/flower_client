@@ -48,15 +48,15 @@ const MyAccount = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | My Account</title>
+        <title>Flora | Tài khoản của tôi</title>
         <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        My Account
+        Tài khoản của tôi
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -71,7 +71,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> Edit your account information{" "}
+                            <span>1 .</span> Chỉnh sửa thông tin tài khoản{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -79,46 +79,44 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>
-                                My Account Information {userInfo.username}
-                              </h4>
-                              <h5>Your Personal Details</h5>
+                              <h4>Tài khoản của tôi</h4>
+                              <h5>Chi tiết</h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>First Name</label>
+                                  <label>Họ</label>
                                   <input type="text" />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Last Name</label>
+                                  <label>Tên</label>
                                   <input type="text" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Email Address</label>
+                                  <label>Địa chỉ Email</label>
                                   <input type="email" />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Telephone</label>
+                                  <label>Số điện thoại</label>
                                   <input type="text" />
                                 </div>
                               </div>
-                              <div className="col-lg-6 col-md-6">
+                              {/* <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Fax</label>
                                   <input type="text" />
                                 </div>
-                              </div>
+                              </div> */}
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Tiếp tục</button>
                               </div>
                             </div>
                           </div>
@@ -129,7 +127,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> Change your password
+                            <span>2 .</span> Thay đổi mật khẩu
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -137,26 +135,26 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Change Password</h4>
-                              <h5>Your Password</h5>
+                              <h4>Thay đổi mật khẩu</h4>
+                              <h5>Mật khẩu của bạn</h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password</label>
+                                  <label>Mật khẩu</label>
                                   <input type="password" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password Confirm</label>
+                                  <label>Xác nhận mật khẩu</label>
                                   <input type="password" />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Tiếp tục</button>
                               </div>
                             </div>
                           </div>
@@ -167,7 +165,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> Modify your address book entries{" "}
+                            <span>3 .</span> Thay đổi địa chỉ{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -175,30 +173,28 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Address Book Entries</h4>
+                              <h4>Địa chỉ nhận hàng</h4>
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-info text-center">
-                                    <p>John Doe</p>
-                                    <p>Paul Park </p>
-                                    <p>Lorem ipsum dolor set amet</p>
-                                    <p>NYC</p>
-                                    <p>New York</p>
+                                    <p>268 Lý Thường Kiệt</p>
+                                    <p>Quận 10</p>
+                                    <p>Hồ Chí Minh</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-edit-delete text-center">
-                                    <button className="edit">Edit</button>
-                                    <button>Delete</button>
+                                    <button className="edit">Sửa</button>
+                                    <button>Xóa</button>
                                   </div>
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Tiếp tục</button>
                               </div>
                             </div>
                           </div>

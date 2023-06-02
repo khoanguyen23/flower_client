@@ -19,7 +19,8 @@
     position: absolute;
     top: 40px;
     left: 36px;
-
+    padding: 10px;
+    background: rgba($color: #fff, $alpha: 0.85);
     content: "";
     @media #{$lg-layout} {
       top: 20px;
@@ -41,8 +42,7 @@
       font-weight: 600;
 
       margin: 0;
-
-      color: #915342;
+      color: #000;
       @media #{$md-layout} {
         font-size: 27px;
       }

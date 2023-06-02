@@ -64,26 +64,26 @@ const FooterOne = ({
           >
             <div className="footer-widget mb-30 ml-30">
               <div className="footer-title">
-                <h3>ABOUT US</h3>
+                <h3>VỀ CHÚNG TÔI</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "/about"}>About us</Link>
+                    <Link to={process.env.PUBLIC_URL + "/about"}>Về chúng tôi</Link>
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Store location
+                      Địa chỉ của Flora
                     </Link>
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "/contact"}>
-                      Contact
+                      Liên hệ
                     </Link>
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Orders tracking
+                      Theo dõi đơn hàng
                     </Link>
                   </li>
                 </ul>
@@ -103,23 +103,20 @@ const FooterOne = ({
               }`}
             >
               <div className="footer-title">
-                <h3>USEFUL LINKS</h3>
+                <h3>LIÊN KẾT</h3>
               </div>
               <div className="footer-list">
                 <ul>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Returns</Link>
+                    <Link to={process.env.PUBLIC_URL + "#/"}>Hoàn tiền</Link>
                   </li>
                   <li>
                     <Link to={process.env.PUBLIC_URL + "#/"}>
-                      Support Policy
+                      Chính sách hỗ trợ
                     </Link>
                   </li>
                   <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>Size guide</Link>
-                  </li>
-                  <li>
-                    <Link to={process.env.PUBLIC_URL + "#/"}>FAQs</Link>
+                    <Link to={process.env.PUBLIC_URL + "#/"}>Hỏi & đáp</Link>
                   </li>
                 </ul>
               </div>
@@ -138,7 +135,7 @@ const FooterOne = ({
               }`}
             >
               <div className="footer-title">
-                <h3>FOLLOW US</h3>
+                <h3>THEO DÕI</h3>
               </div>
               <div className="footer-list">
                 <ul>

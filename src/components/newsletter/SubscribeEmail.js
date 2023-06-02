@@ -21,7 +21,7 @@ const CustomForm = ({ status, message, onValidated }) => {
             className="email"
             ref={node => (email = node)}
             type="email"
-            placeholder="Your Email Address"
+            placeholder="Địa chỉ Email của bạn"
             required
           />
         </div>
@@ -33,7 +33,7 @@ const CustomForm = ({ status, message, onValidated }) => {
       </div>
 
       {status === "sending" && (
-        <div style={{ color: "#3498db", fontSize: "12px" }}>sending...</div>
+        <div style={{ color: "#3498db", fontSize: "12px" }}>Gửi...</div>
       )}
       {status === "error" && (
         <div

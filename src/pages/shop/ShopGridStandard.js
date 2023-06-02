@@ -50,12 +50,12 @@ const ShopGridStandard = ({location, products}) => {
     return (
         <Fragment>
             <MetaTags>
-                <title>Flone | Shop Page</title>
+                <title>Cửa hàng</title>
                 <meta name="description" content="Shop page of flone react minimalist eCommerce template." />
             </MetaTags>
 
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
-            <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Shop</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Trang chủ</BreadcrumbsItem>
+            <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Cửa hàng</BreadcrumbsItem>
 
             <LayoutOne headerTop="visible">
                 {/* breadcrumb */}

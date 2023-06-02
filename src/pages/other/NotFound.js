@@ -12,16 +12,12 @@ const NotFound = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Not Found</title>
+        <title>Không tìm thấy trang</title>
         <meta
           name="description"
-          content="404 page of flone react minimalist eCommerce template."
+          content=""
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        404 page
-      </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
@@ -31,17 +27,16 @@ const NotFound = ({ location }) => {
               <div className="col-xl-7 col-lg-8 text-center">
                 <div className="error">
                   <h1>404</h1>
-                  <h2>OPPS! PAGE NOT FOUND</h2>
+                  <h2>OPPS! KHÔNG TÌM THẤY TRANG</h2>
                   <p>
-                    Sorry but the page you are looking for does not exist, have
-                    been removed, name changed or is temporarity unavailable.
+                    Xin lỗi nhưng trang bạn đang tìm kiếm không tồn tại, đã bị xóa, đổi tên hoặc tạm thời không khả dụng.
                   </p>
                   <form className="searchform mb-50">
                     <input
                       type="text"
                       name="search"
                       id="error_search"
-                      placeholder="Search..."
+                      placeholder="Tìm kiếm..."
                       className="searchform__input"
                     />
                     <button type="submit" className="searchform__submit">
@@ -49,7 +44,7 @@ const NotFound = ({ location }) => {
                     </button>
                   </form>
                   <Link to={process.env.PUBLIC_URL + "/"} className="error-btn">
-                    Back to home page
+                    Quay lại Trang chủ
                   </Link>
                 </div>
               </div>

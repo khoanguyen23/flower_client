@@ -5,7 +5,7 @@ import { setActiveSort } from "../../helpers/product";
 const ShopColor = ({ colors, getSortParams }) => {
   return (
     <div className="sidebar-widget mt-50">
-      <h4 className="pro-sidebar-title">Color </h4>
+      <h4 className="pro-sidebar-title">Màu sắc </h4>
       <div className="sidebar-widget-list mt-20">
         {colors ? (
           <ul>
@@ -17,7 +17,7 @@ const ShopColor = ({ colors, getSortParams }) => {
                     setActiveSort(e);
                   }}
                 >
-                  <span className="checkmark" /> All Colors{" "}
+                  <span className="checkmark" />Tất cả{" "}
                 </button>
               </div>
             </li>

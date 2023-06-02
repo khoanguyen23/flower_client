@@ -22,7 +22,7 @@ const LoginRegister = ({ location }) => {
 
   const form = useRef();
   const checkBtn = useRef();
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginSuccess, setLoginSuccess] = useState(true);
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -91,15 +91,15 @@ const LoginRegister = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Login</title>
+        <title>Flora | Đăng nhập</title>
         <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Login Register
+        Đăng nhập/Đăng ký
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -113,12 +113,12 @@ const LoginRegister = ({ location }) => {
                     <Nav variant="pills" className="login-register-tab-list">
                       <Nav.Item>
                         <Nav.Link eventKey="login">
-                          <h4>Login</h4>
+                          <h4>Đăng nhập</h4>
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
                         <Nav.Link eventKey="register">
-                          <h4>Register</h4>
+                          <h4>Đăng ký</h4>
                         </Nav.Link>
                       </Nav.Item>
                     </Nav>
@@ -132,25 +132,25 @@ const LoginRegister = ({ location }) => {
                                 name="user-name"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
-                                placeholder="Username"
+                                placeholder="Tên đăng nhập"
                               />
                               <input
                                 type="password"
                                 name="user-password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Password"
+                                placeholder="Mật khẩu"
                               />
                               <div className="button-box">
                                 <div className="login-toggle-btn">
                                   <input type="checkbox" />
-                                  <label className="ml-10">Remember me</label>
+                                  <label className="ml-10">Nhớ tài khoản</label>
                                   <Link to={process.env.PUBLIC_URL + "/"}>
-                                    Forgot Password?
+                                    Quên mật khẩu
                                   </Link>
                                 </div>
                                 <button type="submit">
-                                  <span>Login</span>
+                                  <span>Đăng nhập</span>
                                 </button>
                               </div>
                             </form>
@@ -168,7 +168,7 @@ const LoginRegister = ({ location }) => {
                                 onChange={(event) =>
                                   setUsername(event.target.value)
                                 }
-                                placeholder="Username"
+                                placeholder="Tên đăng nhập"
                               />
                               <input
                                 type="password"
@@ -177,7 +177,7 @@ const LoginRegister = ({ location }) => {
                                 onChange={(event) =>
                                   setPassword(event.target.value)
                                 }
-                                placeholder="Password"
+                                placeholder="Mật khẩu"
                               />
                               <input
                                 name="user-email"
@@ -190,7 +190,7 @@ const LoginRegister = ({ location }) => {
                               />
                               <div className="button-box">
                                 <button type="submit">
-                                  <span>Register</span>
+                                  <span>Đăng ký</span>
                                 </button>
                               </div>
                             </form>

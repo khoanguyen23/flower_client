@@ -52,7 +52,7 @@ const IconGroup = ({
         </button>
         <div className="search-content">
           <form action="#">
-            <input type="text" placeholder="Search" />
+            <input type="text" placeholder="Tìm kiếm..." />
             <button className="button-search">
               <i className="pe-7s-search" />
             </button>
@@ -68,23 +68,17 @@ const IconGroup = ({
         </button>
         <div className="account-dropdown">
           <ul>
-            {!isLoggedIn() && (
-              <>
-                <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link to={process.env.PUBLIC_URL + "/login-register"}>
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
+            <li>
+              <Link to={process.env.PUBLIC_URL + "/login-register"}>Đăng nhập</Link>
+            </li>
+            <li>
+              <Link to={process.env.PUBLIC_URL + "/login-register"}>
+                Đăng ký
+              </Link>
+            </li>
             <li>
               <Link to={process.env.PUBLIC_URL + "/my-account"}>
-                my account
+                Tài khoản của tôi
               </Link>
             </li>
             {isLoggedIn() && (

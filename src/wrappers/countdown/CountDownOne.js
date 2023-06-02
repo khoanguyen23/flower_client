@@ -16,13 +16,13 @@ const CountDownOne = ({ spaceTopClass, spaceBottomClass, bgImg, dateTime }) => {
         <div className="row">
           <div className="col-lg-6 ml-auto">
             <div className="funfact-content text-center">
-              <h2>Deal of the day</h2>
+              <h2>Ưu đãi hôm nay</h2>
               <div className="timer">
                 <Countdown date={new Date(dateTime)} renderer={Renderer} />
               </div>
               <div className="funfact-btn btn-hover">
                 <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                  SHOP NOW
+                  MUA NGAY
                 </Link>
               </div>
             </div>

@@ -30,16 +30,16 @@ const Wishlist = ({
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Wishlist</title>
+        <title>Flora | Danh sách yêu thích</title>
         <meta
           name="description"
           content="Wishlist page of flone react minimalist eCommerce template."
         />
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Wishlist
+        Danh sách yêu thích
       </BreadcrumbsItem>
 
       <LayoutOne headerTop="visible">
@@ -49,18 +49,18 @@ const Wishlist = ({
           <div className="container">
             {wishlistItems && wishlistItems.length >= 1 ? (
               <Fragment>
-                <h3 className="cart-page-title">Your wishlist items</h3>
+                <h3 className="cart-page-title">Sản phẩm yêu thích</h3>
                 <div className="row">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
                       <table>
                         <thead>
                           <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
-                            <th>Unit Price</th>
-                            <th>Add To Cart</th>
-                            <th>action</th>
+                            <th>Hình ảnh</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Đơn giá</th>
+                            <th>Thêm vào giỏ hàng</th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -177,7 +177,7 @@ const Wishlist = ({
                                     </button>
                                   ) : (
                                     <button disabled className="active">
-                                      Out of stock
+                                      Hết hàng
                                     </button>
                                   )}
                                 </td>
@@ -207,12 +207,12 @@ const Wishlist = ({
                         <Link
                           to={process.env.PUBLIC_URL + "/shop-grid-standard"}
                         >
-                          Continue Shopping
+                          Tiếp tục mua sắm
                         </Link>
                       </div>
                       <div className="cart-clear">
                         <button onClick={() => deleteAllFromWishlist(addToast)}>
-                          Clear Wishlist
+                          Xóa toàn bộ sản phẩm
                         </button>
                       </div>
                     </div>
@@ -227,9 +227,9 @@ const Wishlist = ({
                       <i className="pe-7s-like"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in wishlist <br />{" "}
+                      Không tìm thấy sản phẩm nào trong danh sách yêu thích của bạn<br />{" "}
                       <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Add Items
+                        Thêm sản phẩm
                       </Link>
                     </div>
                   </div>

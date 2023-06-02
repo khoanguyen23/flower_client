@@ -91,7 +91,7 @@
   }
 }
 .logo {
-  margin-top: 32px;
+  margin-top: 0;
   @media #{$md-layout} {
     margin-top: 0;
   }
@@ -99,7 +99,7 @@
     margin-top: 0;
   }
   &.logo-hm5 {
-    margin-top: 41px;
+    margin-top: 10px;
     a.sticky-block {
       display: none;
       @media #{$md-layout,
@@ -408,7 +408,6 @@
   line-height: 75px;
 }
 
-.stick .logo,
 .stick .header-right-wrap {
   margin-top: 22px;
   @media #{$md-layout} {
@@ -489,7 +488,7 @@
 
       visibility: hidden;
 
-      width: 125px;
+      width: 150px;
       padding: 8px 12px 10px;
 
       transition: all 0.5s ease 0s;

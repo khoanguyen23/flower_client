@@ -141,7 +141,7 @@ const App = (props) => {
                 <Route
                   exact
                   path={process.env.PUBLIC_URL + "/"}
-                  component={HomeFashion}
+                  component={HomeFurniture}
                 />
 
                 {/* Homepages */}

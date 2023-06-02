@@ -1,26 +1,26 @@
 [
   {
     "id": "1",
-    "iconClass": "pe-7s-portfolio",
-    "countNum": 360,
-    "title": "project done"
+    "iconClass": "pe-7s-cup",
+    "countNum": 259,
+    "title": "Lượt đánh giá 5 sao"
   },
   {
     "id": "2",
-    "iconClass": "pe-7s-cup",
-    "countNum": 690,
-    "title": "cups of coffee"
+    "iconClass": "pe-7s-light",
+    "countNum": 60,
+    "title": "Kiểu dáng"
   },
   {
     "id": "3",
-    "iconClass": "pe-7s-light",
-    "countNum": 100,
-    "title": "branding"
+    "iconClass": "pe-7s-portfolio",
+    "countNum": 499,
+    "title": "Đơn hàng"
   },
   {
     "id": "4",
     "iconClass": "pe-7s-smile",
     "countNum": 420,
-    "title": "happy clients"
+    "title": "Khách hàng"
   }
 ]

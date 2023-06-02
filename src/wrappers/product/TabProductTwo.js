@@ -10,7 +10,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
   return (
     <div className={`product-area ${spaceBottomClass ? spaceBottomClass : ""}`}>
       <div className="container">
-        <SectionTitle titleText="DAILY DEALS!" positionClass="text-center" />
+        <SectionTitle titleText="ƯU ĐÃI HÀNG NGÀY!" positionClass="text-center" />
         <Tab.Container defaultActiveKey="bestSeller">
           <Nav
             variant="pills"
@@ -18,7 +18,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
           >
             <Nav.Item>
               <Nav.Link eventKey="newArrival">
-                <h4>New Arrivals</h4>
+                <h4>Sản phẩm mới</h4>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -28,7 +28,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             </Nav.Item>
             <Nav.Item>
               <Nav.Link eventKey="saleItems">
-                <h4>Sale Items</h4>
+                <h4>Giảm giá</h4>
               </Nav.Link>
             </Nav.Item>
           </Nav>
@@ -70,7 +70,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             className="loadMore6"
             to={process.env.PUBLIC_URL + "/shop-grid-standard"}
           >
-            VIEW MORE PRODUCTS
+            Xem thêm
           </Link>
         </div>
       </div>

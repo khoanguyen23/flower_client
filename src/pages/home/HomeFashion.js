@@ -10,10 +10,10 @@ const HomeFashion = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Fashion Home</title>
+        <title>Flora - Flower Shop</title>
         <meta
           name="description"
-          content="Fashion home of flone react minimalist eCommerce template."
+          content="Flora - Nơi nhắn gửi lời yêu thương"
         />
       </MetaTags>
       <LayoutOne

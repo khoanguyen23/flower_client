@@ -12,15 +12,15 @@ const Contact = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Contact</title>
+        <title>Flora | Liên hệ</title>
         <meta
           name="description"
           content="Contact of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Contact
+        Liên hệ
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -28,7 +28,7 @@ const Contact = ({ location }) => {
         <div className="contact-area pt-100 pb-100">
           <div className="container">
             <div className="contact-map mb-10">
-              <LocationMap latitude="47.444" longitude="-122.176" />
+              <LocationMap latitude="10.8693545" longitude="106.8006564" />
             </div>
             <div className="custom-row-2">
               <div className="col-lg-4 col-md-5">
@@ -38,8 +38,8 @@ const Contact = ({ location }) => {
                       <i className="fa fa-phone" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>+012 345 678 102</p>
-                      <p>+012 345 678 102</p>
+                      <p>+84123 345 678</p>
+                      <p>+84123 345 678</p>
                     </div>
                   </div>
                   <div className="single-contact-info">
@@ -48,13 +48,13 @@ const Contact = ({ location }) => {
                     </div>
                     <div className="contact-info-dec">
                       <p>
-                        <a href="mailto:yourname@email.com">
-                          yourname@email.com
+                        <a href="mailto:flora.shophoa@gmail.com">
+                        flora.shophoa@gmail.com
                         </a>
                       </p>
                       <p>
-                        <a href="https://yourwebsitename.com">
-                          yourwebsitename.com
+                        <a href="https://floraflower.com">
+                          floraflower.com
                         </a>
                       </p>
                     </div>
@@ -64,12 +64,12 @@ const Contact = ({ location }) => {
                       <i className="fa fa-map-marker" />
                     </div>
                     <div className="contact-info-dec">
-                      <p>Address goes here, </p>
-                      <p>street, Crossroad 123.</p>
+                      <p>Địa chỉ đến </p>
+                      <p>Đường Hàn Thuyên, Linh Trung, Thủ Đức, Hồ Chí Minh</p>
                     </div>
                   </div>
                   <div className="contact-social text-center">
-                    <h3>Follow Us</h3>
+                    <h3>Theo dõi tại</h3>
                     <ul>
                       <li>
                         <a href="//facebook.com">
@@ -103,12 +103,12 @@ const Contact = ({ location }) => {
               <div className="col-lg-8 col-md-7">
                 <div className="contact-form">
                   <div className="contact-title mb-30">
-                    <h2>Get In Touch</h2>
+                    <h2>Liên lạc với Flora</h2>
                   </div>
                   <form className="contact-form-style">
                     <div className="row">
                       <div className="col-lg-6">
-                        <input name="name" placeholder="Name*" type="text" />
+                        <input name="name" placeholder="Tên*" type="text" />
                       </div>
                       <div className="col-lg-6">
                         <input name="email" placeholder="Email*" type="email" />
@@ -116,18 +116,18 @@ const Contact = ({ location }) => {
                       <div className="col-lg-12">
                         <input
                           name="subject"
-                          placeholder="Subject*"
+                          placeholder="Tiêu đề*"
                           type="text"
                         />
                       </div>
                       <div className="col-lg-12">
                         <textarea
                           name="message"
-                          placeholder="Your Message*"
+                          placeholder="Tin nhắn của bạn*"
                           defaultValue={""}
                         />
                         <button className="submit" type="submit">
-                          SEND
+                          Gửi
                         </button>
                       </div>
                     </div>

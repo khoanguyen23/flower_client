@@ -14,15 +14,15 @@ const BlogStandard = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Blog</title>
+        <title>Flora | Bài viết</title>
         <meta
           name="description"
-          content="Blog of flone react minimalist eCommerce template."
+          content=""
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Blog
+        Bài viết
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}

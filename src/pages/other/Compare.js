@@ -26,15 +26,15 @@ const Compare = ({
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Compare</title>
+        <title>Flora | So sánh sản phẩm</title>
         <meta
           name="description"
-          content="Compare page of flone react minimalist eCommerce template."
+          content=""
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Compare
+        So sánh sản phẩm
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -49,7 +49,7 @@ const Compare = ({
                       <table className="table table-bordered mb-0">
                         <tbody>
                           <tr>
-                            <th className="title-column">Product Info</th>
+                            <th className="title-column">Thông tin sản phẩm</th>
                             {compareItems.map((compareItem, key) => {
                               const cartItem = cartItems.filter(
                                 item => item.id === compareItem.id
@@ -101,14 +101,14 @@ const Compare = ({
                                         target="_blank"
                                       >
                                         {" "}
-                                        Buy now{" "}
+                                        Mua ngay{" "}
                                       </a>
                                     ) : compareItem.variation &&
                                       compareItem.variation.length >= 1 ? (
                                       <Link
                                         to={`${process.env.PUBLIC_URL}/product/${compareItem.id}`}
                                       >
-                                        Select Option
+                                        Chi tiết
                                       </Link>
                                     ) : compareItem.stock &&
                                       compareItem.stock > 0 ? (
@@ -139,7 +139,7 @@ const Compare = ({
                                       </button>
                                     ) : (
                                       <button disabled className="active">
-                                        Out of Stock
+                                        Hết hàng
                                       </button>
                                     )}
                                   </div>
@@ -148,7 +148,7 @@ const Compare = ({
                             })}
                           </tr>
                           <tr>
-                            <th className="title-column">Price</th>
+                            <th className="title-column">Giá</th>
                             {compareItems.map((compareItem, key) => {
                               const discountedPrice = getDiscountPrice(
                                 compareItem.price,
@@ -185,7 +185,7 @@ const Compare = ({
                           </tr>
 
                           <tr>
-                            <th className="title-column">Description</th>
+                            <th className="title-column">Mô tả</th>
                             {compareItems.map((compareItem, key) => {
                               return (
                                 <td className="product-desc" key={key}>
@@ -200,7 +200,7 @@ const Compare = ({
                           </tr>
 
                           <tr>
-                            <th className="title-column">Rating</th>
+                            <th className="title-column">Đánh giá</th>
                             {compareItems.map((compareItem, key) => {
                               return (
                                 <td className="product-rating" key={key}>
@@ -223,9 +223,9 @@ const Compare = ({
                       <i className="pe-7s-shuffle"></i>
                     </div>
                     <div className="item-empty-area__text">
-                      No items found in compare <br />{" "}
+                        Không tìm thấy sản phẩm để so sánh <br />{" "}
                       <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
-                        Add Items
+                        Thêm sản phẩm
                       </Link>
                     </div>
                   </div>

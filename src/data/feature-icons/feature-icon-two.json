@@ -2,19 +2,19 @@
   {
     "id": 1,
     "image": "/assets/img/icon-img/support-1.png",
-    "title": "Free Shipping",
-    "subtitle": "Lorem ipsum dolor sit amet consectetu adipisicing elit sed"
+    "title": "Miễn phí vận chuyển",
+    "subtitle": "Miễn phí vận chuyện cho đơn hàng từ 300K"
   },
   {
     "id": 2,
     "image": "/assets/img/icon-img/support-2.png",
-    "title": "Support 24/7",
-    "subtitle": "Lorem ipsum dolor sit amet consectetu adipisicing elit sed"
+    "title": "Hỗ trợ 24/7",
+    "subtitle": "Đội ngũ Flora sẵn sàng hỗ trợ khách hàng mọi lúc"
   },
   {
     "id": 3,
     "image": "/assets/img/icon-img/support-3.png",
-    "title": "Money Return",
-    "subtitle": "Lorem ipsum dolor sit amet consectetu adipisicing elit sed"
+    "title": "Hoàn tiền",
+    "subtitle": "Chính sách hoàn tiền của Flora luôn đặt khách hàng lên hàng đầu"
   }
 ]

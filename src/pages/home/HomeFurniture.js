@@ -12,10 +12,10 @@ const HomeFurniture = () => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Furniture Home</title>
+        <title>Flora | Trang chủ</title>
         <meta
           name="description"
-          content="Furniture home of flone react minimalist eCommerce template."
+          content="Flora - Nơi nhắn gửi lời yêu thương"
         />
       </MetaTags>
       <LayoutOne headerTop="visible">
@@ -32,8 +32,8 @@ const HomeFurniture = () => {
         <CountDownOne
           spaceTopClass="pt-115"
           spaceBottomClass="pb-115"
-          bgImg="/assets/img/bg/bg-1.jpg"
-          dateTime="November 13, 2021 12:12:00"
+          bgImg="/assets/img/bg/bg-1.png"
+          dateTime="June 30, 2023 12:12:00"
         />
 
         {/* feature icon */}

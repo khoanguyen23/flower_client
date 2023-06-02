@@ -17,15 +17,15 @@ const About = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | About us</title>
+        <title>Flora | Về chúng tôi</title>
         <meta
           name="description"
           content="About page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        About us
+        Về chúng tôi
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -51,7 +51,7 @@ const About = ({ location }) => {
         <TeamMemberOne spaceTopClass="pt-95" spaceBottomClass="pb-70" />
 
         {/* brand logo slider */}
-        <BrandLogoSliderOne spaceBottomClass="pb-70" />
+        {/* <BrandLogoSliderOne spaceBottomClass="pb-70" /> */}
       </LayoutOne>
     </Fragment>
   );
