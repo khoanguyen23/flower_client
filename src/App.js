@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, Suspense, lazy } from "react";
+import React, { useEffect, Suspense, lazy, useState } from "react";
 import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
@@ -7,6 +7,9 @@ import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 import CreditCardForm1 from "./pages/other/CreditCardForm1";
+import BoardAdmin from "./components/BoardAdmin";
+import Register from "./pages/other/Register";
+
 
 // home pages
 
@@ -30,6 +33,8 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
+
+
 
 const App = (props) => {
   
@@ -55,24 +60,16 @@ const App = (props) => {
                   path={process.env.PUBLIC_URL + "/"}
                   component={HomeFurniture}
                 />
-
                 {/* Homepages */}
-
-                
                 <Route
                   path={process.env.PUBLIC_URL + "/home-furniture"}
                   component={HomeFurniture}
                 />
-                
-
                 {/* Shop pages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
                   component={ShopGridStandard}
                 />
-               
-               
-
                 {/* Shop product pages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/product/:id"}
@@ -80,15 +77,11 @@ const App = (props) => {
                     <Product {...routeProps} key={routeProps.match.params.id} />
                   )}
                 />
-                
-
                 {/* Blog pages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/blog-standard"}
                   component={Blog}
                 />
-                
-
                 {/* Other pages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/about"}
@@ -103,8 +96,12 @@ const App = (props) => {
                   component={MyAccount}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/login-register"}
+                  path={process.env.PUBLIC_URL + "/login"}
                   component={LoginRegister}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/register"}
+                  component={Register}
                 />
 
                 <Route
@@ -132,6 +129,9 @@ const App = (props) => {
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}
                 />
+                <Route path={process.env.PUBLIC_URL + "/admin"} 
+                component={BoardAdmin} 
+                />
 
                 <Route exact component={NotFound} />
               </Switch>
@@ -144,7 +144,7 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  dispatch: PropTypes.func
+  dispatch: PropTypes.func,
 };
 
 export default connect()(multilanguage(App));

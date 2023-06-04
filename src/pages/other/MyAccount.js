@@ -8,7 +8,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import AddFlower from "./AddFlower";
 
-import AuthService from "../../services/AuthService";
+import AuthService from "../../services/auth.service";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -23,17 +23,17 @@ const MyAccount = ({ location }) => {
     username: "",
     email: "",
   });
-  useEffect(() => {
-    // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang login.html
-    if (!localStorage.getItem("accessToken")) {
-      history.push("/home-flower-shop");
-    } else {
-      // Lấy thông tin người dùng từ local storage
-      const username = localStorage.getItem("username");
-      const email = localStorage.getItem("email");
-      setUserInfo({ username, email });
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang login.html
+  //   if (!localStorage.getItem("accessToken")) {
+  //     history.push("/home-flower-shop");
+  //   } else {
+  //     // Lấy thông tin người dùng từ local storage
+  //     const username = localStorage.getItem("username");
+  //     const email = localStorage.getItem("email");
+  //     setUserInfo({ username, email });
+  //   }
+  // }, []);
   // const [userShipping, setUserShipping] = useState("");
   // useEffect(() => {
   //   MyAccountService.getUserShipping().then((Response) => {
