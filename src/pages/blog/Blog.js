@@ -5,24 +5,24 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import BlogSidebar from "../../wrappers/blog/BlogSidebar";
-import BlogComment from "../../wrappers/blog/BlogComment";
-import BlogPost from "../../wrappers/blog/BlogPost";
+import BlogPagination from "../../wrappers/blog/BlogPagination";
+import BlogPosts from "../../wrappers/blog/BlogPosts";
 
-const BlogDetailsStandard = ({ location }) => {
+const Blog = ({ location }) => {
   const { pathname } = location;
 
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Blog Post</title>
+        <title>Flora | Bài viết</title>
         <meta
           name="description"
-          content="Blog post page of flone react minimalist eCommerce template."
+          content=""
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Blog Post
+        Bài viết
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -31,12 +31,14 @@ const BlogDetailsStandard = ({ location }) => {
           <div className="container">
             <div className="row flex-row-reverse">
               <div className="col-lg-9">
-                <div className="blog-details-wrapper ml-20">
-                  {/* blog post */}
-                  <BlogPost />
+                <div className="ml-20">
+                  <div className="row">
+                    {/* blog posts */}
+                    <BlogPosts />
+                  </div>
 
-                  {/* blog post comment */}
-                  <BlogComment />
+                  {/* blog pagination */}
+                  <BlogPagination />
                 </div>
               </div>
               <div className="col-lg-3">
@@ -51,8 +53,8 @@ const BlogDetailsStandard = ({ location }) => {
   );
 };
 
-BlogDetailsStandard.propTypes = {
+Blog.propTypes = {
   location: PropTypes.object
 };
 
-export default BlogDetailsStandard;
+export default Blog;

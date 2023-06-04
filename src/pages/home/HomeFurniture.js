@@ -7,6 +7,7 @@ import TabProductTwo from "../../wrappers/product/TabProductTwo";
 import CountDownOne from "../../wrappers/countdown/CountDownOne";
 import FeatureIconTwo from "../../wrappers/feature-icon/FeatureIconTwo";
 import BlogFeatured from "../../wrappers/blog-featured/BlogFeatured";
+import Newsletter from "../../wrappers/newsletter/Newsletter";
 
 const HomeFurniture = () => {
   return (
@@ -19,6 +20,8 @@ const HomeFurniture = () => {
         />
       </MetaTags>
       <LayoutOne headerTop="visible">
+
+        
         {/* hero slider */}
         <HeroSliderTwo />
 
@@ -27,6 +30,7 @@ const HomeFurniture = () => {
 
         {/* tab product */}
         <TabProductTwo spaceBottomClass="pb-100" category="furniture" />
+        
 
         {/* countdown */}
         <CountDownOne

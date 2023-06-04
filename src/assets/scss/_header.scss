@@ -983,6 +983,8 @@
 .header-offer {
   p {
     margin: 0;
+    display: flex;
+    justify-content: flex-end;
 
     letter-spacing: 0.8px;
 
