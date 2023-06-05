@@ -63,7 +63,7 @@ const LoginRegister = ({ location }) => {
         // localStorage.setItem("accessToken", response.data.accessToken);
         // localStorage.setItem("username", response.data.username);
         // localStorage.setItem("email", response.data.email);
-        history.push("/admin");
+        history.push("/my-account");
         window.location.reload();
       })
       .catch((error) => {

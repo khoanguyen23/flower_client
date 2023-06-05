@@ -91,7 +91,7 @@ const IconGroup = ({
               </li>
               <li>
                 {/* <a href="/home-flower-shop">Log out</a> */}
-                <a href="/login-register" className="nav-link" onClick={logOut}>
+                <a href="/login" className="nav-link" onClick={logOut}>
                 LogOut
               </a>
               </li>

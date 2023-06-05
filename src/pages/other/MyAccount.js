@@ -8,42 +8,22 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import AddFlower from "./AddFlower";
 
-import AuthService from "../../services/auth.service";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import CreditCardForm from "./CreditCardForm1";
 import MyAccountService from "../../services/MyAccountService";
+import AuthService from "../../services/auth.service";
 
 const MyAccount = ({ location }) => {
+  const currentUser = AuthService.getCurrentUser();
   const { pathname } = location;
   const history = useHistory();
-  // const [userInfo, setUserInfo] = useState(null);
-  const [userInfo, setUserInfo] = useState({
-    username: "",
-    email: "",
-  });
-  // useEffect(() => {
-  //   // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang login.html
-  //   if (!localStorage.getItem("accessToken")) {
-  //     history.push("/home-flower-shop");
-  //   } else {
-  //     // Lấy thông tin người dùng từ local storage
-  //     const username = localStorage.getItem("username");
-  //     const email = localStorage.getItem("email");
-  //     setUserInfo({ username, email });
-  //   }
-  // }, []);
-  // const [userShipping, setUserShipping] = useState("");
-  // useEffect(() => {
-  //   MyAccountService.getUserShipping().then((Response) => {
-  //     console.log(Response.data);
-  //     setUserShipping(Response.data);
-  //   });
-  // }, []);
-
-  
-
+ 
+  // const [userInfo, setUserInfo] = useState({
+  //   username: "",
+  //   email: "",
+  // });
   //shipping address
   const [userShippingList, setUserShippingList] = useState([]);
   const [userShippingCity, setUserShippingCity] = useState("");
@@ -96,20 +76,6 @@ const MyAccount = ({ location }) => {
       }
     );
   };
-  
-
-
-
-  // useEffect(() => {
-  //   fetch('api/user-shipping/')
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data); // Kiểm tra dữ liệu phản hồi từ server
-  //       setUserShippingList(data);
-  //     })
-  //     .catch(error => console.error(error));
-  // }, []);
-  // console.log("userShipping", userShippingList);
   const accessToken = localStorage.getItem("accessToken");
   const [toggle, setToggle] = useState(false);
   const [addressList, setAddressList] = useState([]);
@@ -155,7 +121,7 @@ const MyAccount = ({ location }) => {
             <div className="row">
               <div className="ml-auto mr-auto col-lg-9">
                 <div className="myaccount-wrapper">
-                  <AddFlower/>
+                  {/* <AddFlower/> */}
                   <Accordion defaultActiveKey="0">
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
@@ -170,11 +136,18 @@ const MyAccount = ({ location }) => {
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
                               <h4>
-                                Xin Chào  {userInfo.username}
+                                Xin Chào   <strong>{currentUser.username}</strong>
+                                {currentUser.user_shipping_city}
                               </h4>
                               
                             </div>
                             <div className="row">
+                            <div className="col-lg-12 col-md-12">
+                                <div className="billing-info">
+                                  <label>User Name</label>
+                                  <input type="text" value = {currentUser.username} />
+                                </div>
+                              </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Họ </label>
@@ -187,10 +160,11 @@ const MyAccount = ({ location }) => {
                                   <input type="text" />
                                 </div>
                               </div>
+                              
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Email</label>
-                                  <input type="email" />
+                                  <input type="email" value={currentUser.email} />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
