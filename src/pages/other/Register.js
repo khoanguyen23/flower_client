@@ -16,7 +16,7 @@ import { useHistory } from "react-router-dom";
 import { useRef } from "react";
 
 
-const LoginRegister = ({ location }) => {
+const Register = ({ location }) => {
   const { pathname } = location;
   
 
@@ -63,7 +63,7 @@ const LoginRegister = ({ location }) => {
         // localStorage.setItem("accessToken", response.data.accessToken);
         // localStorage.setItem("username", response.data.username);
         // localStorage.setItem("email", response.data.email);
-        history.push("/my-account");
+        history.push("/admin");
         window.location.reload();
       })
       .catch((error) => {
@@ -116,21 +116,21 @@ const LoginRegister = ({ location }) => {
             <div className="row">
               <div className="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div className="login-register-wrapper">
-                  <Tab.Container defaultActiveKey="login">             
+                  <Tab.Container defaultActiveKey="register">             
                     <Nav variant="pills" className="login-register-tab-list">
-                      <Nav.Item>
+                      {/* <Nav.Item>
                         <Nav.Link eventKey="login">
                           <h4>Đăng nhập</h4>
                         </Nav.Link>
-                      </Nav.Item>
-                      {/* <Nav.Item>
+                      </Nav.Item> */}
+                      <Nav.Item>
                         <Nav.Link eventKey="register">
                           <h4>Đăng ký</h4>
                         </Nav.Link>
-                      </Nav.Item> */}
+                      </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                      <Tab.Pane eventKey="login">
+                      {/* <Tab.Pane eventKey="login">
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={handleLogin} >
@@ -155,20 +155,16 @@ const LoginRegister = ({ location }) => {
                                   <Link to={process.env.PUBLIC_URL + "/"}>
                                     Quên mật khẩu
                                   </Link>
-                                  <Link to={process.env.PUBLIC_URL + "/register"}>
-                                    Chưa có tài khoản ?? Tạo tài khoản mới 
-                                  </Link>
                                 </div>
                                 <button type="submit">
                                   <span>Đăng nhập</span>
                                 </button>
                               </div>
-                              
                             </form>
                           </div>
                         </div>
-                      </Tab.Pane>
-                      {/* <Tab.Pane eventKey="register">
+                      </Tab.Pane> */}
+                      <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={handleRegister}>
@@ -194,14 +190,22 @@ const LoginRegister = ({ location }) => {
                                 onChange={onChangeEmail}
                               />
                               <div className="button-box">
+                              <div className="login-toggle-btn">
+                                  
+                                  <Link to={process.env.PUBLIC_URL + "/login"}>
+                                    Đã có tài khoản . Đăng nhập ngay
+                                  </Link>
+                                  
+                                </div>
                                 <button type="submit">
                                   <span>Đăng ký</span>
                                 </button>
+                                
                               </div>
                             </form>
                           </div>
                         </div>
-                      </Tab.Pane> */}
+                      </Tab.Pane>
                     </Tab.Content>
                   </Tab.Container>
                 </div>
@@ -225,8 +229,8 @@ const LoginRegister = ({ location }) => {
   );
 };
 
-LoginRegister.propTypes = {
+Register.propTypes = {
   location: PropTypes.object,
 };
 
-export default LoginRegister;
+export default Register;

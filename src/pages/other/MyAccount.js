@@ -6,40 +6,25 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import AddFlower from "./AddFlower";
 
-import AuthService from "../../services/AuthService";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
 import CreditCardForm from "./CreditCardForm1";
 import MyAccountService from "../../services/MyAccountService";
+import AuthService from "../../services/auth.service";
 
 const MyAccount = ({ location }) => {
+  const currentUser = AuthService.getCurrentUser();
   const { pathname } = location;
   const history = useHistory();
-  // const [userInfo, setUserInfo] = useState(null);
-  const [userInfo, setUserInfo] = useState({
-    username: "",
-    email: "",
-  });
-  useEffect(() => {
-    // Kiểm tra nếu chưa đăng nhập, chuyển hướng tới trang login.html
-    if (!localStorage.getItem("accessToken")) {
-      history.push("/home-flower-shop");
-    } else {
-      // Lấy thông tin người dùng từ local storage
-      const username = localStorage.getItem("username");
-      const email = localStorage.getItem("email");
-      setUserInfo({ username, email });
-    }
-  }, []);
-  // const [userShipping, setUserShipping] = useState("");
-  // useEffect(() => {
-  //   MyAccountService.getUserShipping().then((Response) => {
-  //     console.log(Response.data);
-  //     setUserShipping(Response.data);
-  //   });
-  // }, []);
+ 
+  // const [userInfo, setUserInfo] = useState({
+  //   username: "",
+  //   email: "",
+  // });
+  //shipping address
   const [userShippingList, setUserShippingList] = useState([]);
   const [userShippingCity, setUserShippingCity] = useState("");
   const [userShippingCountry, setUserShippingCountry] = useState("");
@@ -52,6 +37,16 @@ const MyAccount = ({ location }) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
+//credit card information
+
+  // const [cardName,setCardName] = useState("");
+  // const [cardNumber,setCardNumber] = useState("");
+  // const [cvc,setCvc] = useState("");
+  // const [defaultPayment,setDefaultPayment] = useState("");
+  // const [expiryMonth,setExpiryMonth] = useState("");
+  // const [expiryYear,setExpiryYear] = useState("");
+  // const [holderName,setHolderName] = useState("");
+  
 
   const handleSetUserShipping = (e) => {
     e.preventDefault();
@@ -81,20 +76,6 @@ const MyAccount = ({ location }) => {
       }
     );
   };
-  
-
-
-
-  useEffect(() => {
-    fetch('api/user-shipping')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data); // Kiểm tra dữ liệu phản hồi từ server
-        setUserShippingList(data);
-      })
-      .catch(error => console.error(error));
-  }, []);
-  console.log("userShipping", userShippingList);
   const accessToken = localStorage.getItem("accessToken");
   const [toggle, setToggle] = useState(false);
   const [addressList, setAddressList] = useState([]);
@@ -122,15 +103,15 @@ const MyAccount = ({ location }) => {
   return (
     <Fragment>
       <MetaTags>
-        <title>Flora | Tài khoản của tôi</title>
+        <title>Flone | Tài khoản </title>
         <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ </BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Tài khoản của tôi
+        Tài khoản 
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -140,12 +121,13 @@ const MyAccount = ({ location }) => {
             <div className="row">
               <div className="ml-auto mr-auto col-lg-9">
                 <div className="myaccount-wrapper">
+                  {/* <AddFlower/> */}
                   <Accordion defaultActiveKey="0">
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
                           <h3 className="panel-title">
-                            <span>1 .</span> Edit your account information{" "}
+                            <span>1 .</span> Thông tin cá nhân{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -153,13 +135,22 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Tài khoản của tôi</h4>
-                              <h5>Chi tiết</h5>
+                              <h4>
+                                Xin Chào   <strong>{currentUser.username}</strong>
+                                {currentUser.user_shipping_city}
+                              </h4>
+                              
                             </div>
                             <div className="row">
+                            <div className="col-lg-12 col-md-12">
+                                <div className="billing-info">
+                                  <label>User Name</label>
+                                  <input type="text" value = {currentUser.username} />
+                                </div>
+                              </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>First Name</label>
+                                  <label>Họ </label>
                                   <input type="text" />
                                 </div>
                               </div>
@@ -169,28 +160,29 @@ const MyAccount = ({ location }) => {
                                   <input type="text" />
                                 </div>
                               </div>
+                              
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Email Address</label>
-                                  <input type="email" />
+                                  <label>Email</label>
+                                  <input type="email" value={currentUser.email} />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
-                                  <label>Telephone</label>
+                                  <label>Số điện thoại </label>
                                   <input type="text" />
                                 </div>
                               </div>
-                              {/* <div className="col-lg-6 col-md-6">
+                              <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Fax</label>
                                   <input type="text" />
                                 </div>
-                              </div> */}
+                              </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Lưu </button>
                               </div>
                             </div>
                           </div>
@@ -201,7 +193,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
                           <h3 className="panel-title">
-                            <span>2 .</span> Change your password
+                            <span>2 .</span> Đổi mật khẩu
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -209,26 +201,26 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Change Password</h4>
-                              <h5>Your Password</h5>
+                              <h4>Đổi mật khẩu</h4>
+                              <h5>Mật khẩu cũ </h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password</label>
+                                  <label>Mật khẩu mới </label>
                                   <input type="password" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Password Confirm</label>
+                                  <label>Xác nhận mật khẩu </label>
                                   <input type="password" />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Lưu </button>
                               </div>
                             </div>
                           </div>
@@ -239,7 +231,7 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
                           <h3 className="panel-title">
-                            <span>3 .</span> Modify your address book entries{" "}
+                            <span>3 .</span> Thông tin tài khoản thanh toán{" "}
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
@@ -247,23 +239,32 @@ const MyAccount = ({ location }) => {
                         <Card.Body>
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
-                              <h4>Address Book Entries</h4>
+                              <h4></h4>
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-info text-center">
-                                    <p>John Doe</p>
-                                    <p>Paul Park </p>
-                                    <p>Lorem ipsum dolor set amet</p>
-                                    <p>NYC</p>
-                                    <p>New York</p>
+                                    <p>Tên </p>
+                                    <p>Số tài khoản </p>
+                                    <p>2352367828723897</p>
+                                    <p>Thời hạn </p>
+                                    <p>29</p>
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-edit-delete text-center">
-                                    <button className="edit">Edit</button>
-                                    <button>Delete</button>
+                                    <button
+                                      onClick={() => setToggle(!toggle)}
+                                      className="edit"
+                                    >
+                                      Chỉnh sửa
+                                    </button>
+                                    <button
+                                      onClick={(event) => onAddCreditCard()}
+                                    >
+                                      Thêm{" "}
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -295,7 +296,7 @@ const MyAccount = ({ location }) => {
 
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Continue</button>
+                                <button type="submit">Lưu </button>
                               </div>
                             </div>
                           </div>

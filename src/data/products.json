@@ -4,6 +4,7 @@
     "sku": "asdf123",
     "name": "Dễ Thương",
     "price": 500,
+    "stock":3,
     "discount": 10,
     "offerEnd": "October 5, 2023 12:11:00",
     "new": false,

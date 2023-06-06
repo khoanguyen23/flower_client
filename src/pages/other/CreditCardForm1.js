@@ -1,6 +1,7 @@
 import React from 'react'
+import axios from "axios";
 
-//TODO: Add components prop-types, add cvv animation
+//TODO: Add components prop-types, add Cvc animation
 
 const CURRENT_YEAR = new Date().getFullYear();
 const CURRENT_MONTH = new Date().getMonth();
@@ -16,9 +17,9 @@ class CreditCardForm extends React.Component {
     sliderLocation: "",
     cardNumber: "",
     cardName: "",
-    cardMonth: 0,
-    cardYear: 0,
-    cardCvv: "",
+    expiryMonth: 0,
+    expiryYear: 0,
+    cvc: "",
     cardType: "visa",
     toggleMonth: true,
     toggleYear: true,
@@ -43,19 +44,19 @@ class CreditCardForm extends React.Component {
       } else {
         this.setState({ [type]: value });
       }
-    } else if (type === "cardMonth") {
+    } else if (type === "expiryMonth") {
       value = Number(value);
       this.setState(prevState => ({
         [type]: value,
         toggleMonth: !prevState.toggleMonth
       }));
-    } else if (type === "cardYear") {
+    } else if (type === "expiryYear") {
       value = Number(value);
-      const { cardMonth } = this.state;
-      if (value === CURRENT_YEAR && cardMonth <= CURRENT_MONTH) {
+      const { expiryMonth } = this.state;
+      if (value === CURRENT_YEAR && expiryMonth <= CURRENT_MONTH) {
         this.setState(prevState => ({
-          cardMonth: 0,
-          cardYear: value,
+          expiryMonth: 0,
+          expiryYear: value,
           toggleYear: !prevState.toggleYear,
           toggleMonth: !prevState.toggleMonth
         }));
@@ -65,7 +66,7 @@ class CreditCardForm extends React.Component {
           toggleYear: !prevState.toggleYear
         }));
       }
-    } else if (type === "cardCvv") {
+    } else if (type === "cvc") {
       value = value.replace(/ /gi, "");
       if (isNaN(value)) {
         return;
@@ -77,17 +78,32 @@ class CreditCardForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
+    console.log(JSON.stringify(this.state));
+    
+    fetch('http://localhost:8080/api/user-payment', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    })
+      .then(function(response) {
+        
+        window.location.reload();
+        return response.json();
+      });
   };
+  
 
   canSubmit = () => {
-    const { cardNumber, cardName, cardMonth, cardYear, cardCvv } = this.state;
+    const { cardNumber, cardName, expiryMonth, expiryYear, cvc } = this.state;
 
     return (
       cardNumber.length === 16 &&
       cardName.length > 4 &&
-      cardCvv.length === 3 &&
-      cardMonth !== 0 &&
-      cardYear !== 0
+      cvc.length === 3 &&
+      expiryMonth !== 0 &&
+      expiryYear !== 0
     );
   };
 
@@ -106,7 +122,7 @@ class CreditCardForm extends React.Component {
   };
 
   handleClick = event => {
-    if (!this.cvvInput.contains(event.target)) {
+    if (!this.CvcInput.contains(event.target)) {
       this.setState({ cardFlipped: false });
     }
     if (
@@ -150,14 +166,16 @@ class CreditCardForm extends React.Component {
     return "visa";
   };
 
+ 
+
   render() {
     // console.log("RENDERING ", this.state);
     const {
       cardNumber,
       cardName,
-      cardMonth,
-      cardYear,
-      cardCvv,
+      expiryMonth,
+      expiryYear,
+      cvc,
       cardType,
       sliderLocation,
       toggleMonth,
@@ -262,7 +280,7 @@ class CreditCardForm extends React.Component {
                         toggleMonth ? "toggle1" : "toggle2"
                       }`}
                     >
-                      {cardMonth === 0 ? "MM" : `${cardMonth + 100}`.slice(-2)}
+                      {expiryMonth === 0 ? "MM" : `${expiryMonth + 100}`.slice(-2)}
                     </div>
                     <div className="double-digit">/</div>
                     <div
@@ -271,7 +289,7 @@ class CreditCardForm extends React.Component {
                       }`}
                       onClick={event => this.setFocus(event, "year")}
                     >
-                      {cardYear === 0 ? "YY" : `${cardYear}`.slice(-2)}
+                      {expiryYear === 0 ? "YY" : `${expiryYear}`.slice(-2)}
                     </div>
                   </div>
                 </div>
@@ -281,7 +299,7 @@ class CreditCardForm extends React.Component {
             </div>
 
             <div className="creditcard cover back">
-              <p>CVV</p>
+              <p>Cvc</p>
             </div>
           </div>
         </div>
@@ -314,12 +332,12 @@ class CreditCardForm extends React.Component {
               />
             </div>
             <div className="med-input">
-              <label htmlFor="cardMonth">Expiration Date</label>
+              <label htmlFor="expiryMonth">Expiration Date</label>
               <select
                 className="month-input"
-                id="cardMonth"
-                value={cardMonth}
-                onChange={event => this.handleChange(event, "cardMonth")}
+                id="expiryMonth"
+                value={expiryMonth}
+                onChange={event => this.handleChange(event, "expiryMonth")}
                 onFocus={event => this.moveSlider(event, "month")}
                 ref={node => (this.monthInput = node)}
               >
@@ -332,7 +350,7 @@ class CreditCardForm extends React.Component {
                     key={monthKey}
                     value={monthKey}
                     disabled={
-                      cardYear === CURRENT_YEAR &&
+                      expiryYear === CURRENT_YEAR &&
                       Number(monthKey) <= CURRENT_MONTH
                     }
                   >
@@ -342,9 +360,9 @@ class CreditCardForm extends React.Component {
               </select>
               <select
                 className="year-input"
-                id="cardYear"
-                value={cardYear}
-                onChange={event => this.handleChange(event, "cardYear")}
+                id="expiryYear"
+                value={expiryYear}
+                onChange={event => this.handleChange(event, "expiryYear")}
                 onFocus={event => this.moveSlider(event, "year")}
                 ref={node => (this.yearInput = node)}
               >
@@ -360,21 +378,21 @@ class CreditCardForm extends React.Component {
               </select>
             </div>
             <div className="sm-input">
-              <label htmlFor="cardCvv">CVV</label>
+              <label htmlFor="cvc">Cvc</label>
               <input
-                className="cvv-input"
-                id="cardCvv"
-                value={cardCvv}
-                onChange={event => this.handleChange(event, "cardCvv")}
+                className="Cvc-input"
+                id="cvc"
+                value={cvc}
+                onChange={event => this.handleChange(event, "cvc")}
                 onSelect={() => this.setState({ cardFlipped: true })}
-                ref={node => (this.cvvInput = node)}
+                ref={node => (this.CvcInput = node)}
                 maxLength="3"
                 
               />
             </div>
             <button
               className={`creditcard-lg-input ${canSubmit ? "disabled" : ""}`}
-              disabled={canSubmit}
+              disabled={canSubmit} type="submit"
             >
               Submit
             </button>

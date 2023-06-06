@@ -1,5 +1,16 @@
 // get products
+// import React,{useState,useEffect} from "react";
+// import FlowerService from "../services/FlowerService";
+// const [products, setProducts] = useState([]);
+//   useEffect(() => {
+//     FlowerService.getFlower().then((Response) => {
+//       console.log(Response.data);
+//       setProducts(Response.data);
+//     });
+//   }, []);
+//   console.log(products); 
 export const getProducts = (products, category, type, limit) => {
+  
   const finalProducts = category
     ? products.filter(
         product => product.category.filter(single => single === category)[0]

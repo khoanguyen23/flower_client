@@ -13,6 +13,7 @@ import App from "./App";
 import "./assets/scss/style.scss";
 import * as serviceWorker from "./serviceWorker";
 
+
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const store = createStore(
@@ -26,7 +27,9 @@ store.dispatch(fetchProducts(products));
 
 ReactDOM.render(
   <Provider store={store}>
+
     <App />
+  
   </Provider>,
   document.getElementById("root")
 );
