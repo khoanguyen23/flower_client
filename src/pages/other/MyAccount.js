@@ -19,13 +19,57 @@ const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
   const { pathname } = location;
   const history = useHistory();
- 
-  // const [userInfo, setUserInfo] = useState({
-  //   username: "",
-  //   email: "",
-  // });
-  //shipping address
+
+  // const [userShipping, setUserShipping] = useState(null);
+
+  const [defaultShippingId, setDefaultShippingId] = useState(null);
   const [userShippingList, setUserShippingList] = useState([]);
+
+  // useEffect(() => {
+  //   MyAccountService.getUserShipping()
+  //     .then((response) => {
+  //       setUserShipping(response.data);
+  //       console.log(response.data)
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi lấy thông tin user-shipping:", error);
+  //     });
+  // }, []);
+
+  //shipping address
+
+  useEffect(() => {
+    fetchUserShippingList();
+  }, []);
+
+  const fetchUserShippingList = () => {
+    MyAccountService.getUserShipping()
+      .then((response) => {
+        setUserShippingList(response.data);
+        console.log(response.data)
+        const defaultShipping = response.data.find(
+          (shipping) => shipping.userShippingDefault === true
+        );
+        if (defaultShipping) {
+          setDefaultShippingId(defaultShipping.id);
+        }
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin user-shipping:", error);
+      });
+  };
+
+  const handleSelectDefaultShipping = (shippingId) => {
+    MyAccountService.updateDefaultShipping(shippingId)
+      .then(() => {
+        setDefaultShippingId(shippingId);
+        fetchUserShippingList(); // Lấy lại danh sách user-shipping sau khi cập nhật
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật địa chỉ mặc định:", error);
+      });
+  };
+
   const [userShippingCity, setUserShippingCity] = useState("");
   const [userShippingCountry, setUserShippingCountry] = useState("");
   const [userShippingDefault, setUserShippingDefault] = useState(false);
@@ -37,7 +81,7 @@ const MyAccount = ({ location }) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-//credit card information
+  //credit card information
 
   // const [cardName,setCardName] = useState("");
   // const [cardNumber,setCardNumber] = useState("");
@@ -46,7 +90,6 @@ const MyAccount = ({ location }) => {
   // const [expiryMonth,setExpiryMonth] = useState("");
   // const [expiryYear,setExpiryYear] = useState("");
   // const [holderName,setHolderName] = useState("");
-  
 
   const handleSetUserShipping = (e) => {
     e.preventDefault();
@@ -59,7 +102,8 @@ const MyAccount = ({ location }) => {
       userShippingState,
       userShippingStreet1,
       userShippingStreet2,
-      userShippingZipcode).then(
+      userShippingZipcode
+    ).then(
       (response) => {
         window.location.reload();
       },
@@ -76,7 +120,7 @@ const MyAccount = ({ location }) => {
       }
     );
   };
-  const accessToken = localStorage.getItem("accessToken");
+
   const [toggle, setToggle] = useState(false);
   const [addressList, setAddressList] = useState([]);
   const [id, setId] = useState(0);
@@ -109,9 +153,11 @@ const MyAccount = ({ location }) => {
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ </BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>
+        Trang chủ{" "}
+      </BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Tài khoản 
+        Tài khoản
       </BreadcrumbsItem>
       <LayoutOne headerTop="visible">
         {/* breadcrumb */}
@@ -136,16 +182,17 @@ const MyAccount = ({ location }) => {
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
                               <h4>
-                                Xin Chào   <strong>{currentUser.username}</strong>
-                                {currentUser.user_shipping_city}
+                                Xin Chào <strong>{currentUser.username}</strong>
                               </h4>
-                              
                             </div>
                             <div className="row">
-                            <div className="col-lg-12 col-md-12">
+                              <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>User Name</label>
-                                  <input type="text" value = {currentUser.username} />
+                                  <input
+                                    type="text"
+                                    value={currentUser.username}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
@@ -160,11 +207,14 @@ const MyAccount = ({ location }) => {
                                   <input type="text" />
                                 </div>
                               </div>
-                              
+
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Email</label>
-                                  <input type="email" value={currentUser.email} />
+                                  <input
+                                    type="email"
+                                    value={currentUser.email}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
@@ -268,30 +318,29 @@ const MyAccount = ({ location }) => {
                                   </div>
                                 </div>
                               </div>
-                             
                             </div>
                             <div className="description">
-                                {creditCardList.map((creditcard) => {
-                                  return (
-                                    <>
-                                      <CreditCardForm />
+                              {creditCardList.map((creditcard) => {
+                                return (
+                                  <>
+                                    <CreditCardForm />
 
-                                      <div className="billing-back-btn">
-                                        <div className="billing-btn">
-                                          <button
-                                            className="billing-btn"
-                                            onClick={() =>
-                                              onRemoveCreditCard(creditcard)
-                                            }
-                                          >
-                                            Xóa địa chỉ
-                                          </button>
-                                        </div>
+                                    <div className="billing-back-btn">
+                                      <div className="billing-btn">
+                                        <button
+                                          className="billing-btn"
+                                          onClick={() =>
+                                            onRemoveCreditCard(creditcard)
+                                          }
+                                        >
+                                          Xóa địa chỉ
+                                        </button>
                                       </div>
-                                    </>
-                                  );
-                                })}
-                              </div>
+                                    </div>
+                                  </>
+                                );
+                              })}
+                            </div>
                             {toggle && <CreditCardForm />}
 
                             <div className="billing-back-btn">
@@ -322,11 +371,35 @@ const MyAccount = ({ location }) => {
                               <div className="row">
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-info text-center">
-                                    <p>John Doe</p>
-                                    <p>Paul Park </p>
-                                    <p>Lorem ipsum dolor set amet</p>
-                                    <p>NYC</p>
-                                    <p>New York</p>
+                                    <ul>
+                                      {userShippingList.map((shipping) => (
+                                        <li key={shipping.id}>
+                                          <div>
+                                            <h4>{shipping.userShippingCity}</h4>
+                                            <p>
+                                              {shipping.userShippingAddress}
+                                            </p>
+                                          </div>
+                                          <div>
+                                            <label>
+                                              <input
+                                                type="checkbox"
+                                                checked={
+                                                  defaultShippingId ===
+                                                  shipping.id
+                                                }
+                                                onChange={() =>
+                                                  handleSelectDefaultShipping(
+                                                    shipping.id
+                                                  )
+                                                }
+                                              />
+                                              Địa chỉ mặc định
+                                            </label>
+                                          </div>
+                                        </li>
+                                      ))}
+                                    </ul>
                                   </div>
                                 </div>
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
@@ -350,90 +423,124 @@ const MyAccount = ({ location }) => {
                             {toggle && (
                               <div className="myaccount-info-wrapper">
                                 <form onSubmit={handleSetUserShipping}>
-                                <div className="row">
-                                  <div className="col-lg-6 col-md-12">
-                                    <div className="billing-info">
-                                      <label>Tên </label>
-                                      <input type="text" 
-                                      value={userShippingName}
-                                      name="userShippingName"
-                                      onChange={(e) => setUserShippingName(e.target.value)}/>
+                                  <div className="row">
+                                    <div className="col-lg-6 col-md-12">
+                                      <div className="billing-info">
+                                        <label>Tên </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingName}
+                                          name="userShippingName"
+                                          onChange={(e) =>
+                                            setUserShippingName(e.target.value)
+                                          }
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="col-lg-6 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Số nhà </label>
-                                      <input type="text" 
-                                      value={userShippingStreet1}
-                                      name="userShippingStreet1"
-                                      onChange={(e) => setUserShippingStreet1(e.target.value)}
-                                      />
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Số nhà </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingStreet1}
+                                          name="userShippingStreet1"
+                                          onChange={(e) =>
+                                            setUserShippingStreet1(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="col-lg-12 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Số đường </label>
-                                      <input type="text"
-                                      value={userShippingStreet2}
-                                      name="userShippingStreet2"
-                                      onChange={(e) => setUserShippingStreet2(e.target.value)} />
+                                    <div className="col-lg-12 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Số đường </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingStreet2}
+                                          name="userShippingStreet2"
+                                          onChange={(e) =>
+                                            setUserShippingStreet2(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
                                     </div>
-                                  </div>
 
-                                  <div className="col-lg-6 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Quận/huyện </label>
-                                      <input type="text" 
-                                      value={userShippingState}
-                                      name="userShippingState"
-                                      onChange={(e) => setUserShippingState(e.target.value)}/>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Quận/huyện </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingState}
+                                          name="userShippingState"
+                                          onChange={(e) =>
+                                            setUserShippingState(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Tỉnh/ Thành phố </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingCity}
+                                          name="userShippingCity"
+                                          onChange={(e) =>
+                                            setUserShippingCity(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Quốc Gia </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingCountry}
+                                          name="userShippingCountry"
+                                          onChange={(e) =>
+                                            setUserShippingCountry(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Zipcode </label>
+                                        <input
+                                          type="text"
+                                          value={userShippingZipcode}
+                                          name="userShippingZipcode"
+                                          onChange={(e) =>
+                                            setUserShippingZipcode(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className="col-lg-6 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Tỉnh/ Thành phố </label>
-                                      <input type="text" 
-                                      value={userShippingCity}
-                                      name="userShippingCity"
-                                      onChange={(e) => setUserShippingCity(e.target.value)}/>
+                                  <div className="billing-back-btn">
+                                    <div className="billing-btn">
+                                      <button type="submit" className="save">
+                                        Lưu
+                                      </button>
+                                    </div>
+                                    <div className="billing-btn">
+                                      <button
+                                        onClick={() => setToggle(!toggle)}
+                                        className="cancel"
+                                      >
+                                        Hủy
+                                      </button>
                                     </div>
                                   </div>
-                                  <div className="col-lg-6 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Quốc Gia </label>
-                                      <input type="text" 
-                                      value={userShippingCountry}
-                                      name="userShippingCountry"
-                                      onChange={(e) => setUserShippingCountry(e.target.value)}/>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-6 col-md-6">
-                                    <div className="billing-info">
-                                      <label>Zipcode </label>
-                                      <input type="text"
-                                      value={userShippingZipcode}
-                                      name="userShippingZipcode"
-                                      onChange={(e) => setUserShippingZipcode(e.target.value)} />
-                                    </div>
-                                  </div>
-                                </div>
-                                <div className="billing-back-btn">
-                                  <div className="billing-btn">
-                                    <button 
-                                    type="submit"  
-                                    className="save">Lưu</button>
-                                  </div>
-                                  <div className="billing-btn">
-                                    <button
-                                      onClick={() => setToggle(!toggle)}
-                                      className="cancel"
-                                    >
-                                      Hủy
-                                    </button>
-                                  </div>
-                                </div>
                                 </form>
-                                
                               </div>
                             )}
                             <div className="description">

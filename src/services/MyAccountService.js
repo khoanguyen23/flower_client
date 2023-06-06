@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import axios from "axios";
-const API_URL = "http://localhost:8080/api";
+import AuthService from "./auth.service";
+import http from "../http-common"
+
+
 const getUserShipping = () => {
-    return axios.get(API_URL);
-  };
+  return http.get("/user-shipping");
+};
+const updateDefaultShipping = (shippingId) => {
+  return http.put(`/user-shipping/default/${shippingId}`);
+};
+
   const setUserShipping = (userShippingCity,
     userShippingCountry,
     userShippingDefault,
@@ -12,7 +19,8 @@ const getUserShipping = () => {
     userShippingStreet1,
     userShippingStreet2,
     userShippingZipcode) => {
-    return axios.post(`${API_URL}/user-shipping`,{userShippingCity,
+      return http.post("/user-shipping", {
+        userShippingCity,
         userShippingCountry,
         userShippingDefault,
         userShippingName,
@@ -21,8 +29,11 @@ const getUserShipping = () => {
         userShippingStreet2,
         userShippingZipcode,});
   };
+
 const MyAccountService ={
     setUserShipping,
+    getUserShipping,
+    updateDefaultShipping
 }
 
 export default MyAccountService;
