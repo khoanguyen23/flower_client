@@ -22,7 +22,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
           <li>
             <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
               {" "}
-              Của hàng
+              Cửa hàng
             </Link>
           </li>
           <li>

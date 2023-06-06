@@ -107,6 +107,8 @@ const Cart = lazy(() => import("./pages/other/Cart"));
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
+const OrderManagement = lazy(() => import("./pages/admin/OrderManagement"));
+const OrderDetails = lazy(() => import("./pages/admin/OrderDetails"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
@@ -425,6 +427,16 @@ const App = (props) => {
                 <Route
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}
+                />
+
+                <Route
+                  path={process.env.PUBLIC_URL + "/order-management"}
+                  component={OrderManagement}
+                />
+
+                <Route
+                  path={process.env.PUBLIC_URL + "/order-detail"}
+                  component={OrderDetails}
                 />
 
                 <Route exact component={NotFound} />

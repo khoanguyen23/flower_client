@@ -1,0 +1,20 @@
+.order-management{
+  &:hover > a,
+    &:hover > button {
+      color: $theme-color;
+    }
+  .tab-menu{
+    margin-bottom: 50px;
+
+  }
+
+  .order-content{
+    .table-features{
+      padding-top: 20px;
+      padding-bottom: 25px;
+      display: flex;
+      justify-content: right;
+    }
+
+  }
+}
