@@ -24,6 +24,8 @@ const MyAccount = ({ location }) => {
 
   const [defaultShippingId, setDefaultShippingId] = useState(null);
   const [userShippingList, setUserShippingList] = useState([]);
+  const [userPaymentList, setUserPaymentList] = useState([]);
+  const [defaultPaymentId, setDefaultPaymentId] = useState(null);
 
   // useEffect(() => {
   //   MyAccountService.getUserShipping()
@@ -40,7 +42,11 @@ const MyAccount = ({ location }) => {
 
   useEffect(() => {
     fetchUserShippingList();
+    // fetchUserPaymentList();
   }, []);
+  const fetchUserPaymentList = () => {
+    // MyAccountService.getUserShipping
+  }
 
   const fetchUserShippingList = () => {
     MyAccountService.getUserShipping()
@@ -169,6 +175,7 @@ const MyAccount = ({ location }) => {
                 <div className="myaccount-wrapper">
                   {/* <AddFlower/> */}
                   <Accordion defaultActiveKey="0">
+                    {/* Thông tin cá nhân */}
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="0">
@@ -239,6 +246,7 @@ const MyAccount = ({ location }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
+                    {/* Đổi mật khẩu */}
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
@@ -277,6 +285,7 @@ const MyAccount = ({ location }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
+                    {/* Tài khoản thanh toán */}
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="2">
@@ -352,7 +361,7 @@ const MyAccount = ({ location }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
-
+                    {/* Địa chỉ  */}
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="3">

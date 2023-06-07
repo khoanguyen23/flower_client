@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from "axios";
+import MyAccountService from '../../services/MyAccountService';
 
 //TODO: Add components prop-types, add Cvc animation
 
@@ -78,21 +79,37 @@ class CreditCardForm extends React.Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    console.log(JSON.stringify(this.state));
-    
-    fetch('http://localhost:8080/api/user-payment', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(this.state)
-    })
+    const {
+      cardNumber,
+      cardName,
+      expiryMonth,
+      expiryYear,
+      cvc,
+      cardType
+    } = this.state;
+  
+    // Gọi hàm setUserPayment từ MyAccountService
+    MyAccountService.setUserPayment(
+      cardNumber,
+      cardName,
+      expiryMonth,
+      expiryYear,
+      cvc,
+      cardType
+    )
       .then(function(response) {
-        
+        // Xử lý kết quả trả về ở đây
         window.location.reload();
         return response.json();
+      })
+      .catch(function(error) {
+        // Xử lý lỗi ở đây
+        console.error(error);
       });
   };
+  
+    
+   
   
 
   canSubmit = () => {
@@ -304,7 +321,7 @@ class CreditCardForm extends React.Component {
           </div>
         </div>
         <div className="creditcard-inputs">
-          <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
             <div className="creditcard-lg-input">
               <label htmlFor="cardNumber"> Card Number</label>
               <input

@@ -30,10 +30,29 @@ const updateDefaultShipping = (shippingId) => {
         userShippingZipcode,});
   };
 
+  const setUserPayment = (
+     cardNumber,
+     cardName,
+     expiryMonth,
+     expiryYear,
+     cvc,
+     cardType
+  ) => {
+    return http.post("/user-payment", {
+      cardNumber,
+     cardName,
+     expiryMonth,
+     expiryYear,
+     cvc,
+     cardType
+    })
+  }
+
 const MyAccountService ={
     setUserShipping,
     getUserShipping,
-    updateDefaultShipping
+    updateDefaultShipping,
+    setUserPayment
 }
 
 export default MyAccountService;

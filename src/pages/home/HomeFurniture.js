@@ -29,7 +29,7 @@ const HomeFurniture = () => {
         <BannerTwo spaceTopClass="pt-80" spaceBottomClass="pb-60" />
 
         {/* tab product */}
-        <TabProductTwo spaceBottomClass="pb-100" category="furniture" />
+        <TabProductTwo spaceBottomClass="pb-100" category="flower" />
         
 
         {/* countdown */}
