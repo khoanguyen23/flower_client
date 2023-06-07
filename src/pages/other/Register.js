@@ -9,7 +9,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { Modal, Button } from "react-bootstrap";
 
-import AuthService from "../../services/auth.service"
+import AuthService from "../../services/auth.service";
 import { useLocation } from 'react-router-dom';
 import { useState,useContext,  useEffect } from "react";
 import { useHistory } from "react-router-dom";

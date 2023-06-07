@@ -5,33 +5,18 @@ import LayoutOne from "../../layouts/LayoutOne";
 import SearchForm from "./SearchForm";
 import {
   Button,
-  Tabs,
-  Tab,
   Table,
   TableRow,
   TableHead,
   TableBody,
   TableCell,
   Chip,
-  Icon,
 } from "@material-ui/core";
-import { TextField, Autocomplete } from "@mui/material";
 
 //Icon
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import AddIcon from "@mui/icons-material/Add";
-
-const TABS = [
-  { label: "Quản lí sản phẩm", value: "product" },
-  { label: "Quản lí đơn hàng", value: "order" },
-];
 
 const OrderManagement = () => {
-  const [activeTab, setActiveTab] = useState(TABS[1].value);
-
-  const handleTabChange = (event, value) => {
-    setActiveTab(value);
-  };
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = (query) => {
@@ -48,33 +33,12 @@ const OrderManagement = () => {
 
       <div className="order-management pt-50 pb-50">
         <div className="container">
-          <div className="tab-menu">
-            <Tabs
-              value={activeTab}
-              onChange={handleTabChange}
-              indicatorColor="#6610f2"
-            >
-              {TABS.map((tab) => (
-                <Tab key={tab.value} label={tab.label} value={tab.value} />
-              ))}
-            </Tabs>
-          </div>
           <div className="order-content container">
             <h3>Quản lý đơn hàng</h3>
             <div className="row">
               <SearchForm onSearch={handleSearch} />
             </div>
             <div className="table-features row">
-              <div className="btn-create pr-20">
-                <Button
-                  variant="contained"
-                  startIcon={<AddIcon />}
-                  sx={{ color: "#D3D3D3" }}
-                >
-                  Tạo đơn hàng mới
-                </Button>
-              </div>
-
               <Button variant="outlined" startIcon={<DeleteForeverIcon />}>
                 {" "}
                 Xóa các đơn hàng đã chọn
