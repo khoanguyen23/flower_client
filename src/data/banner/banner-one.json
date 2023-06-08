@@ -1,26 +1,26 @@
 [
-  {
-    "id": 1,
-    "image": "/assets/img/banner/banner-1.jpeg",
-    "title": "Hoa hồng",
-    "subtitle": "Giá từ",
-    "price": "12.000 VND",
-    "link": "/shop-grid-standard"
-  },
-  {
-    "id": 2,
-    "image": "/assets/img/banner/banner-2.webp",
-    "title": "Hoa sen",
-    "subtitle": "Giá từ",
-    "price": "40.000 VND",
-    "link": "/shop-grid-standard"
-  },
-  {
-    "id": 3,
-    "image": "/assets/img/banner/banner-3.jpeg",
-    "title": "Hoa hướng dương",
-    "subtitle": "Giá từ",
-    "price": "50.000 VND",
-    "link": "/shop-grid-standard"
-  }
-]
+    {
+      "id": 1,
+      "image": "/assets/img/banner/banner-1.jpeg",
+      "title": "Hoa hồng",
+      "subtitle": "Giá từ",
+      "price": "12.000 VND",
+      "link": "/shop-grid-standard"
+    },
+    {
+      "id": 2,
+      "image": "/assets/img/banner/banner-2.webp",
+      "title": "Hoa sen",
+      "subtitle": "Giá từ",
+      "price": "40.000 VND",
+      "link": "/shop-grid-standard"
+    },
+    {
+      "id": 3,
+      "image": "/assets/img/banner/banner-3.jpeg",
+      "title": "Hoa hướng dương",
+      "subtitle": "Giá từ",
+      "price": "50.000 VND",
+      "link": "/shop-grid-standard"
+    }
+  ]

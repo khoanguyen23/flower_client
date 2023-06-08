@@ -1,12 +1,12 @@
 [
-  {
-    "id": "1",
-    "image": "/assets/img/banner/banner-10.png",
-    "link": "/shop-grid-standard"
-  },
-  {
-    "id": "2",
-    "image": "/assets/img/banner/banner-11.png",
-    "link": "/shop-grid-standard"
-  }
-]
+    {
+      "id": "1",
+      "image": "/assets/img/banner/bau-troi.jpg",
+      "link": "/shop-grid-standard"
+    },
+    {
+      "id": "2",
+      "image": "/assets/img/banner/dang-yeu.jpg",
+      "link": "/shop-grid-standard"
+    }
+  ]

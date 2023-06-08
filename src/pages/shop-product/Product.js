@@ -11,6 +11,7 @@ import ProductImageDescription from "../../wrappers/product/ProductImageDescript
 
 const Product = ({ location, product }) => {
   const { pathname } = location;
+ 
 
   return (
     <Fragment>
@@ -18,7 +19,7 @@ const Product = ({ location, product }) => {
         <title>Flone | Product Page</title>
         <meta
           name="description"
-          content="Product page of flone react minimalist eCommerce template."
+         
         />
       </MetaTags>
 

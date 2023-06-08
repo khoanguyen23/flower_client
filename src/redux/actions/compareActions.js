@@ -5,7 +5,7 @@ export const DELETE_FROM_COMPARE = "DELETE_FROM_COMPARE";
 export const addToCompare = (item, addToast) => {
   return dispatch => {
     if (addToast) {
-      addToast("Added To Compare", {
+      addToast("Đã thêm vào so sánh ", {
         appearance: "success",
         autoDismiss: true
       });
@@ -18,7 +18,7 @@ export const addToCompare = (item, addToast) => {
 export const deleteFromCompare = (item, addToast) => {
   return dispatch => {
     if (addToast) {
-      addToast("Removed From Compare", {
+      addToast("Xóa khỏi so sánh ", {
         appearance: "error",
         autoDismiss: true
       });

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FlowerService from "../../services/FlowerService";
 import axios from "axios";
-// const tinify = require("tinify");
-// tinify.key = "3xGf3C9kGxWLLQnwmQkXFlff0PCBccKs";
-
+import { Image } from "cloudinary-react";
 
 function AddFlower(props) {
   const [flowerName, setFlowername] = useState("");
@@ -16,69 +14,31 @@ function AddFlower(props) {
   const [products, setProducts] = useState("");
   const [fullDescription, setFullDescription] = useState("");
   const [tag, setTag] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
 
-  const tagList=["Hoa hồng", "Hoa tulip", "Hoa mẫu đơn", "Hoa layon","Hoa sen", "Hoa cúc"]
-  const handleTagButtonClick = (tagItem,e) => {
-    e.preventDefault();
-    if (tag.includes(tagItem)) {
-      setTag(tag.filter((item) => item !== tagItem));
-    } else {
-      setTag([...tag, tagItem]);
-    }
+  const uploadFile = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "c9yxxaie");
+
+    axios
+      .post("https://api.cloudinary.com/v1_1/diks0pj1d/image/upload", formData)
+      .then((res) => {
+        setImageUrl(res.data.secure_url);
+        setImages([...images, imageUrl]);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
-  
-  
-  
-  
-  // const uploadFile = (event) => {
-  //   const file = event.target.files[0];
-
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     const imageData = e.target.result; // Base64 data
-
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       const canvas = document.createElement("canvas");
-  //       const ctx = canvas.getContext("2d");
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-  //       ctx.drawImage(img, 0, 0);
-
-  //       canvas.toBlob(
-  //         (blob) => {
-  //           const fileReader = new FileReader();
-  //           fileReader.onload = (e) => {
-  //             const optimizedImageData = e.target.result; // Optimized Base64 data
-  //             setImages([...images, optimizedImageData]);
-  //           };
-  //           fileReader.readAsDataURL(blob);
-  //         },
-  //         "image/jpeg",
-  //         0.8 // JPEG image quality (adjust as needed)
-  //       );
-  //     };
-  //     img.src = imageData;
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
-  const uploadFile = async (e) => {
-    const image = e.target.files[0];
-    const imageURL = URL.createObjectURL(image);
-  
-    try {
-      // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
-      setImages([...images, imageURL]);
-    } catch (error) {
-      // Xử lý lỗi nếu có
-    }
-  };
   const removeFile = (index) => {
     const updatedImages = [...images];
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
+
   const formDataWithUrls = {
     name: flowerName,
     image: images,
@@ -90,14 +50,11 @@ function AddFlower(props) {
     discount: salePrice,
     fullDescription,
   };
-
-  console.log(formDataWithUrls)
+  console.log(formDataWithUrls);
   const handleSetFlower = async (e) => {
     e.preventDefault();
 
     try {
-      // Create the flower data with the uploaded image URLs
-     
       // Send the flower data to your API
       const response = await axios.post(
         "http://localhost:8080/api/flowers",
@@ -133,7 +90,7 @@ function AddFlower(props) {
               className="form-horizontal"
               role="form"
             >
-              <div className="image-container col-sm-5">
+              {/* <div className="image-container col-sm-6">
                 <div className="image-upload-preview product-img">
                   {images && images[0] ? (
                     <div className="main-image">
@@ -147,6 +104,7 @@ function AddFlower(props) {
                   )}
 
                   <div className="thumbnail-images">
+                    <div className="form-group"></div>
                     {images.slice(1).map((image, index) => (
                       <div key={index} className="thumbnail-image">
                         <img src={image} alt="..." />
@@ -158,6 +116,7 @@ function AddFlower(props) {
                     ))}
                   </div>
                 </div>
+                
 
                 <div className="form-group">
                   <input
@@ -167,31 +126,25 @@ function AddFlower(props) {
                     id="#inputFile"
                   />
                 </div>
-                <div className="form-group">
-                  <label htmlFor="category" className="col-sm-3 control-label">
-                    Tag
-                  </label>
-                  <div className="col-sm-9 checkbox-container-tag">
-                  <div className="sidebar-widget-tag">
-                  {tagList.map((tagItem) => (
-                    <div className="checkbox-element" key={tagItem}>
-                      <button
-                        className={`tag-button ${
-                          tag.includes(tagItem) ? "active" : ""
-                        }`}
-                        onClick={(e) => handleTagButtonClick(tagItem,e)}
-                      >
-                        {tagItem}
-                      </button>
-                    </div>
-                  ))}
-                </div>
-                  </div>
-                </div>
 
                 <div className="form-group"></div>
+              </div> */}
+              <label htmlFor="image" className="col-sm-3 control-label">
+                Image
+              </label>
+              <div className="col-sm-9">
+                {imageUrl ? (
+                  <Image cloudName="diks0pj1d" publicId={imageUrl} />
+                ) : (
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={uploadFile}
+                    id="image"
+                  />
+                )}
               </div>
-              <div className="input-container col-sm-7">
+              <div className="input-container col-sm-6">
                 <div className="form-group">
                   <label htmlFor="name" className="col-sm-6 control-label">
                     Tên hoa
@@ -313,8 +266,119 @@ function AddFlower(props) {
                     />
                   </div>
                 </div>
-             
-               
+                <div className="form-group">
+                  <label htmlFor="category" className="col-sm-3 control-label">
+                    Tag
+                  </label>
+                  <div className="col-sm-9 checkbox-container-tag">
+                    <div className="checkbox-row">
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-hong"
+                            checked={tag.includes("hoa-hong")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-hong"]
+                                  : prevTag.filter((c) => c !== "hoa-hong")
+                              )
+                            }
+                          />
+                          Hoa hồng
+                        </label>
+                      </div>
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-sen"
+                            checked={tag.includes("hoa-sen")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-sen"]
+                                  : prevTag.filter((c) => c !== "hoa-sen")
+                              )
+                            }
+                          />
+                          Hoa sen
+                        </label>
+                      </div>
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-tulip"
+                            checked={tag.includes("hoa-tulip")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-tulip"]
+                                  : prevTag.filter((c) => c !== "hoa-tulip")
+                              )
+                            }
+                          />
+                          Hoa tulip
+                        </label>
+                      </div>
+                    </div>
+                    <div className="checkbox-row">
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-cuc"
+                            checked={tag.includes("hoa-cuc")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-cuc"]
+                                  : prevTag.filter((c) => c !== "hoa-cuc")
+                              )
+                            }
+                          />
+                          Hoa cúc
+                        </label>
+                      </div>
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-mau-don"
+                            checked={tag.includes("hoa-mau-don")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-mau-don"]
+                                  : prevTag.filter((c) => c !== "hoa-mau-don")
+                              )
+                            }
+                          />
+                          Hoa mẫu đơn
+                        </label>
+                      </div>
+                      <div className="checkbox-element">
+                        <label>
+                          <input
+                            type="checkbox"
+                            value="hoa-lay-on"
+                            checked={tag.includes("hoa-lay-on")}
+                            onChange={(e) =>
+                              setTag((prevTag) =>
+                                e.target.checked
+                                  ? [...prevTag, "hoa-lay-on"]
+                                  : prevTag.filter((c) => c !== "hoa-lay-on")
+                              )
+                            }
+                          />
+                          Hoa lay ơn
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div className="form-group group-price">
                   <label className="col-sm-9">Giá</label>

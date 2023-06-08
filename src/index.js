@@ -23,7 +23,18 @@ const store = createStore(
 );
 
 // fetch products from json file
-store.dispatch(fetchProducts(products));
+//store.dispatch(fetchProducts(products));
+
+// Fetch products from localhost
+fetch("http://localhost:8080/api/flowers") // Thay đổi URL của localhost tại đây
+  .then((response) => response.json())
+  .then((products) => {
+    store.dispatch(fetchProducts(products));
+    
+  })
+  .catch((error) => {
+    console.error("Error fetching products:", error);
+  });
 
 ReactDOM.render(
   <Provider store={store}>

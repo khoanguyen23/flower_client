@@ -36,7 +36,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="newArrival">
               <div className="row three-column">
                 <ProductGridTwo
-                  category={category}
+                  category="hoa-tinh-yeu"
                   type="new"
                   limit={6}
                   spaceBottomClass="mb-25"
@@ -46,7 +46,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="bestSeller">
               <div className="row three-column">
                 <ProductGridTwo
-                  category={category}
+                  category="hoa-valentine"
                   type="bestSeller"
                   limit={6}
                   spaceBottomClass="mb-25"
@@ -56,7 +56,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="saleItems">
               <div className="row three-column">
                 <ProductGridTwo
-                  category={category}
+                  category="hoa-cuoi"
                   type="saleItems"
                   limit={6}
                   spaceBottomClass="mb-25"

@@ -74,8 +74,8 @@ const ProductGridListSingle = ({
                   disabled={wishlistItem !== undefined}
                   title={
                     wishlistItem !== undefined
-                      ? "Added to wishlist"
-                      : "Add to wishlist"
+                      ? "Đã thêm vào yêu thích "
+                      : "Thêm vào yêu thích "
                   }
                   onClick={() => addToWishlist(product, addToast)}
                 >
@@ -90,11 +90,11 @@ const ProductGridListSingle = ({
                     target="_blank"
                   >
                     {" "}
-                    Buy now{" "}
+                    Mua ngay {" "}
                   </a>
                 ) : product.variation && product.variation.length >= 1 ? (
                   <Link to={`${process.env.PUBLIC_URL}/product/${product.id}`}>
-                    Select Option
+                    Lựa chọn 
                   </Link>
                 ) : product.stock && product.stock > 0 ? (
                   <button
@@ -106,18 +106,18 @@ const ProductGridListSingle = ({
                     }
                     disabled={cartItem !== undefined && cartItem.quantity > 0}
                     title={
-                      cartItem !== undefined ? "Added to cart" : "Add to cart"
+                      cartItem !== undefined ? "Đã thêm vào giỏ hàng " : "Thêm vào giỏ hàng "
                     }
                   >
                     {" "}
                     <i className="pe-7s-cart"></i>{" "}
                     {cartItem !== undefined && cartItem.quantity > 0
-                      ? "Added"
-                      : "Add to cart"}
+                      ? "Đã thêm"
+                      : "Thêm vào giỏ hàng"}
                   </button>
                 ) : (
                   <button disabled className="active">
-                    Out of Stock
+                   Hết hàng 
                   </button>
                 )}
               </div>
@@ -257,19 +257,19 @@ const ProductGridListSingle = ({
                         }
                         title={
                           cartItem !== undefined
-                            ? "Added to cart"
-                            : "Add to cart"
+                            ? "Đã thêm vào giỏ hàng "
+                            : "Thêm vào giỏ hàng "
                         }
                       >
                         {" "}
                         <i className="pe-7s-cart"></i>{" "}
                         {cartItem !== undefined && cartItem.quantity > 0
-                          ? "Added"
-                          : "Add to cart"}
+                          ? "Đã thêm "
+                          : "Thêm vào giỏ hàng "}
                       </button>
                     ) : (
                       <button disabled className="active">
-                        Out of Stock
+                        Hết hàng 
                       </button>
                     )}
                   </div>
@@ -280,8 +280,8 @@ const ProductGridListSingle = ({
                       disabled={wishlistItem !== undefined}
                       title={
                         wishlistItem !== undefined
-                          ? "Added to wishlist"
-                          : "Add to wishlist"
+                          ? "Đã thêm vào yêu thích "
+                          : "Thêm vào yêu thích "
                       }
                       onClick={() => addToWishlist(product, addToast)}
                     >
@@ -294,8 +294,8 @@ const ProductGridListSingle = ({
                       disabled={compareItem !== undefined}
                       title={
                         compareItem !== undefined
-                          ? "Added to compare"
-                          : "Add to compare"
+                          ? "Đã thêm vào mục so sánh "
+                          : "Thêm vào mục so sánh"
                       }
                       onClick={() => addToCompare(product, addToast)}
                     >

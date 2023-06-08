@@ -5,22 +5,10 @@ const getFlower = () => {
   return axios.get(`${API_URL}/flowers`);
 };
 const setFlower = (
-    flowerName,
-    category,
-    desciption,
-    inStockNumber,
-    regularPrice,
-    salePrice,
-    image,
+  formData
 ) => {
   return axios.post(`${API_URL}/flowers`, {
-    flowerName,
-    category,
-    desciption,
-    inStockNumber,
-    regularPrice,
-    salePrice,
-    image,
+    formData
   });
 };
 
