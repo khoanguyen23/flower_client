@@ -33,7 +33,7 @@ const OrderManagement = () => {
               <SearchForm onSearch={handleSearch} />
             </div>
             <div className="table-features row">
-            <div className="btn-create pr-20">
+              <div className="btn-create pr-20">
                 <Button
                   variant="contained"
                   startIcon={<AddIcon />}
@@ -83,9 +83,7 @@ const OrderManagement = () => {
                 <TableCell>300000 VND</TableCell>
                 <TableCell>
                   <Link to="#">
-                    <Button>
-
-                    </Button>
+                    <Button></Button>
                   </Link>
                 </TableCell>
               </TableRow>

@@ -152,7 +152,7 @@
       }
     }
     .entries-wrapper {
-      border: 1px solid #eaeaea;
+      
       position: relative;
       @media #{$xs-layout} {
         padding: 30px 10px;
@@ -167,20 +167,76 @@
         width: 1px;
         left: 50%;
         top: 0;
-        background-color: #eaeaea;
+       
       }
       .entries-info {
-        padding: 30px 20px;
-        @media #{$xs-layout} {
-          padding: 0 10px 30px;
-        }
-        p {
-          color: #000;
-          font-size: 15px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        
+        
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+        
           margin: 0;
-          text-transform: capitalize;
+          padding: 0;
+          list-style: none;
+          
+          li {
+            
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+         
+         
+            
+            .shipping-info {
+              h4 {
+                /* Your styles for city heading */
+              }
+              
+              p {
+                /* Your styles for country paragraph */
+              }
+            }
+            
+            .shipping-default {
+              display: flex;
+              align-items: center;
+              font-size: 14px;
+              
+              label {
+                display: flex;
+                align-items: center;
+                margin-left: 5px;
+                
+                input[type="checkbox"] {
+                  width: 14px;
+                  height: 14px;
+                  margin-right: 5px;
+                  /* Your styles for the checkbox */
+                }
+              }
+            }
+          }
+          &::before {
+            position: absolute;
+            content: "";
+            height: 100%;
+            width: 1px;
+            // left: 50%;
+            // top: 0;
+            bottom : 50%;
+            right: 0;
+           background-color: #ebebeb;
+          }
         }
+        
       }
+      
       .entries-edit-delete {
         a,
         button {
@@ -208,3 +264,10 @@
     }
   }
 }
+
+.usershipping-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

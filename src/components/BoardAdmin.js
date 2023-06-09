@@ -8,7 +8,7 @@ import EventBus from "../common/EventBus";
 import AddFlower from "../pages/other/AddFlower";
 import OrderManagement from "../pages/admin/OrderManagement";
 import BlogManagement from "../pages/admin/BlogManagement";
-
+import ProductManagement from "../pages/admin/ProductManagement";
 const BoardAdmin = () => {
   const [content, setContent] = useState("");
 
@@ -56,7 +56,8 @@ const BoardAdmin = () => {
           </TabList>
         </Box>
         <TabPanel value="1">
-          <AddFlower />
+          {/* <AddFlower /> */}
+          <ProductManagement/>
         </TabPanel>
         <TabPanel value="2">
           <OrderManagement />

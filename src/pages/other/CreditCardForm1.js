@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from "axios";
+
 import MyAccountService from '../../services/MyAccountService';
 
 //TODO: Add components prop-types, add Cvc animation
@@ -25,7 +25,8 @@ class CreditCardForm extends React.Component {
     toggleMonth: true,
     toggleYear: true,
     showCard: false,
-    cardFlipped: false
+    cardFlipped: false, 
+    defaultPayment: true,
   };
 
   handleChange = (event, type) => {
@@ -76,7 +77,7 @@ class CreditCardForm extends React.Component {
       }
     }
   };
-
+  
   handleSubmit = event => {
     event.preventDefault();
     const {
@@ -85,8 +86,9 @@ class CreditCardForm extends React.Component {
       expiryMonth,
       expiryYear,
       cvc,
-      cardType
+      cardType,defaultPayment
     } = this.state;
+    console.log(this.state)
   
     // Gọi hàm setUserPayment từ MyAccountService
     MyAccountService.setUserPayment(
@@ -95,7 +97,7 @@ class CreditCardForm extends React.Component {
       expiryMonth,
       expiryYear,
       cvc,
-      cardType
+      cardType,defaultPayment
     )
       .then(function(response) {
         // Xử lý kết quả trả về ở đây

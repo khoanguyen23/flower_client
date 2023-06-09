@@ -1,58 +1,71 @@
 import React, { Component } from "react";
 import axios from "axios";
 import AuthService from "./auth.service";
-import http from "../http-common"
-
+import http from "../http-common";
 
 const getUserShipping = () => {
   return http.get("/user-shipping");
+};
+const getUserPayment = () => {
+  return http.get("/user-payment");
 };
 const updateDefaultShipping = (shippingId) => {
   return http.put(`/user-shipping/default/${shippingId}`);
 };
 
-  const setUserShipping = (userShippingCity,
+const updateDefaultPayment = (paymentId) => {
+  return http.put(`/user-payment/default/${paymentId}`);
+};
+
+const setUserShipping = (
+  userShippingCity,
+  userShippingCountry,
+  userShippingDefault,
+  userShippingName,
+  userShippingState,
+  userShippingStreet1,
+  userShippingStreet2,
+  userShippingZipcode
+) => {
+  return http.post("/user-shipping", {
+    userShippingCity,
     userShippingCountry,
     userShippingDefault,
     userShippingName,
     userShippingState,
     userShippingStreet1,
     userShippingStreet2,
-    userShippingZipcode) => {
-      return http.post("/user-shipping", {
-        userShippingCity,
-        userShippingCountry,
-        userShippingDefault,
-        userShippingName,
-        userShippingState,
-        userShippingStreet1,
-        userShippingStreet2,
-        userShippingZipcode,});
-  };
+    userShippingZipcode,
+  });
+};
 
-  const setUserPayment = (
-     cardNumber,
-     cardName,
-     expiryMonth,
-     expiryYear,
-     cvc,
-     cardType
-  ) => {
-    return http.post("/user-payment", {
-      cardNumber,
-     cardName,
-     expiryMonth,
-     expiryYear,
-     cvc,
-     cardType
-    })
-  }
+const setUserPayment = (
+  cardNumber,
+  cardName,
+  expiryMonth,
+  expiryYear,
+  cvc,
+  cardType,
+  defaultPayment
+) => {
+  return http.post("/user-payment", {
+    cardNumber,
+    cardName,
+    expiryMonth,
+    expiryYear,
+    cvc,
+    cardType,
+    defaultPayment,
+  });
+};
 
-const MyAccountService ={
-    setUserShipping,
-    getUserShipping,
-    updateDefaultShipping,
-    setUserPayment
-}
+const MyAccountService = {
+  setUserShipping,
+  getUserShipping,
+  updateDefaultShipping,
+  setUserPayment,
+  getUserPayment,
+  updateDefaultPayment,
+};
 
 export default MyAccountService;

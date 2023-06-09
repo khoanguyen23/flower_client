@@ -1,13 +1,14 @@
 import React, { Component } from "react";
-import axios from "axios";
-const API_URL = "http://localhost:8080/api";
+// import axios from "axios";
+// const API_URL = "http://localhost:8080/api";
+import http from "../http-common"
 const getFlower = () => {
-  return axios.get(`${API_URL}/flowers`);
+  return http.get("/flowers");
 };
 const setFlower = (
   formData
 ) => {
-  return axios.post(`${API_URL}/flowers`, {
+  return http.post("/flowers", {
     formData
   });
 };

@@ -42,17 +42,30 @@ const MyAccount = ({ location }) => {
 
   useEffect(() => {
     fetchUserShippingList();
-    // fetchUserPaymentList();
+     fetchUserPaymentList();
   }, []);
   const fetchUserPaymentList = () => {
-    // MyAccountService.getUserShipping
-  }
+    MyAccountService.getUserPayment()
+    .then((response) => {
+      setUserPaymentList(response.data);
+      console.log(response.data);
+      const defaultPayment  = response.data.find(
+        (payment ) => payment.userPaymentDefault === true
+      );
+      if (defaultPayment ) {
+        setDefaultPaymentId(defaultPayment.id);
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy thông tin user-payment :", error);
+    });
+  };
 
   const fetchUserShippingList = () => {
     MyAccountService.getUserShipping()
       .then((response) => {
         setUserShippingList(response.data);
-        console.log(response.data)
+        console.log(response.data);
         const defaultShipping = response.data.find(
           (shipping) => shipping.userShippingDefault === true
         );
@@ -73,6 +86,17 @@ const MyAccount = ({ location }) => {
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật địa chỉ mặc định:", error);
+      });
+  };
+
+  const handleSelectDefaultPayment = (paymentId) => {
+    MyAccountService.updateDefaultPayment(paymentId)
+      .then(() => {
+        setDefaultPaymentId(paymentId);
+        fetchUserPaymentList(); // Lấy lại danh sách user-shipping sau khi cập nhật
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật the thanh toan mặc định:", error);
       });
   };
 
@@ -301,7 +325,7 @@ const MyAccount = ({ location }) => {
                               <h4></h4>
                             </div>
                             <div className="entries-wrapper">
-                              <div className="row">
+                              {/* <div className="row">
                                 <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
                                   <div className="entries-info text-center">
                                     <p>Tên </p>
@@ -326,7 +350,69 @@ const MyAccount = ({ location }) => {
                                     </button>
                                   </div>
                                 </div>
+                              </div> */}
+                                <div className="entries-wrapper">
+                              <div className="row">
+                                <div className="entries-info text-center">
+                                  <ul>
+                                    {userPaymentList.map((payment) => (
+                                      <li key={payment.id}>
+                                        <div className="col-lg-9 col-md-9 usershipping-container entries-wrapper ">
+                                          <div className="col-lg-4 col-md-4">
+                                          <h4>{payment.cardName.toUpperCase()}</h4>
+                                          <p>
+                                            {payment.cardNumber},{" "}
+                                          </p>
+                                          <p>
+                                            {payment.expiryMonth}/{" "}
+                                            {payment.expiryYear},{" "}
+                                            {payment.cvc}
+                                          </p>
+                                          </div>
+                                          
+                                          <div className="shipping-default col-lg-4 col-md-4">
+                                            <label>
+                                              <input
+                                                type="checkbox"
+                                                checked={
+                                                  defaultPaymentId ===
+                                                  payment.id
+                                                }
+                                                onChange={() =>
+                                                  handleSelectDefaultPayment(
+                                                    payment.id
+                                                  )
+                                                }
+                                              />
+                                              Mặc định
+                                            </label>
+                                          </div>
+                                          
+                                        </div>
+                                        <div className="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
+                                          <div className="entries-edit-delete text-center">
+                                            <button
+                                              onClick={() => setToggle(true)}
+                                              className="edit"
+                                            >
+                                              Chỉnh sửa
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                                <div className="billing-back-btn">
+                              <div className="billing-btn">
+                              <button onClick={(event) => onAddBtnClick()}>
+                                  Thêm địa chỉ{" "}
+                                </button>
                               </div>
+                            </div>
+                               
+                              </div>
+                            </div>
                             </div>
                             <div className="description">
                               {creditCardList.map((creditcard) => {
@@ -378,18 +464,22 @@ const MyAccount = ({ location }) => {
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-info text-center">
-                                    <ul>
-                                      {userShippingList.map((shipping) => (
-                                        <li key={shipping.id}>
-                                          <div>
-                                            <h4>{shipping.userShippingCity}</h4>
-                                            <p>
-                                              {shipping.userShippingAddress}
-                                            </p>
+                                <div className="entries-info text-center">
+                                  <ul>
+                                    {userShippingList.map((shipping) => (
+                                      <li key={shipping.id}>
+                                        <div className="col-lg-9 col-md-9 usershipping-container entries-wrapper ">
+                                          <div className="col-lg-4 col-md-4">
+                                          <h4>{shipping.userShippingCity}</h4>
+                                          <p>
+                                            {shipping.userShippingStreet2},{" "}
+                                            {shipping.userShippingStreet1},{" "}
+                                            {shipping.userShippingState},{" "}
+                                            {shipping.userShippingCountry}
+                                          </p>
                                           </div>
-                                          <div>
+                                          
+                                          <div className="shipping-default col-lg-4 col-md-4">
                                             <label>
                                               <input
                                                 type="checkbox"
@@ -406,26 +496,30 @@ const MyAccount = ({ location }) => {
                                               Địa chỉ mặc định
                                             </label>
                                           </div>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  </div>
+                                          
+                                        </div>
+                                        <div className="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
+                                          <div className="entries-edit-delete text-center">
+                                            <button
+                                              onClick={() => setToggle(true)}
+                                              className="edit"
+                                            >
+                                              Chỉnh sửa
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
                                 </div>
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-edit-delete text-center">
-                                    <button
-                                      onClick={() => setToggle(!toggle)}
-                                      className="edit"
-                                    >
-                                      Chỉnh sửa
-                                    </button>
-                                    <button
-                                      onClick={(event) => onAddBtnClick()}
-                                    >
-                                      Thêm địa chỉ{" "}
-                                    </button>
-                                  </div>
-                                </div>
+                                <div className="billing-back-btn">
+                              <div className="billing-btn">
+                              <button onClick={(event) => onAddBtnClick()}>
+                                  Thêm địa chỉ{" "}
+                                </button>
+                              </div>
+                            </div>
+                               
                               </div>
                             </div>
 
@@ -542,7 +636,7 @@ const MyAccount = ({ location }) => {
                                     </div>
                                     <div className="billing-btn">
                                       <button
-                                        onClick={() => setToggle(!toggle)}
+                                        onClick={() => setToggle(false)}
                                         className="cancel"
                                       >
                                         Hủy
