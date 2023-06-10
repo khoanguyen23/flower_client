@@ -16,8 +16,8 @@ for (let i = 1; i <= 12; i++) {
 class CreditCardForm extends React.Component {
   state = {
     sliderLocation: "",
-    cardNumber: "",
-    cardName: "",
+    cardNumber: "0000000000",
+    cardName: "00000000",
     expiryMonth: 0,
     expiryYear: 0,
     cvc: "",

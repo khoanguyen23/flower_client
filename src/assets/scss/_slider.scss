@@ -46,7 +46,9 @@
 .single-slider {
   display: flex;
   align-items: flex-end;
-  background-color: #F8DAE9;
+  // background-color: #F8DAE9;
+  background-color: #fff;
+
   .slider-content {
     padding: 183px 0 0;
     @media #{$xl-layout} {
