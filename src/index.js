@@ -30,6 +30,7 @@ fetch("http://localhost:8080/api/flowers") // Thay đổi URL của localhost t�
   .then((response) => response.json())
   .then((products) => {
     store.dispatch(fetchProducts(products));
+    console.log(products)
     
   })
   .catch((error) => {

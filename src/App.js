@@ -64,7 +64,7 @@ const App = (props) => {
                 />
                 {/* Homepages */}
                 <Route
-                  path={process.env.PUBLIC_URL + "/home-furniture"}
+                  path={process.env.PUBLIC_URL + "/home-flowers"}
                   component={HomeFurniture}
                 />
                 {/* Shop pages */}

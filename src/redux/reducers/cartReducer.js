@@ -4,7 +4,7 @@ import {
   DECREASE_QUANTITY,
   DELETE_FROM_CART,
   DELETE_ALL_FROM_CART
-} from "../actions/cartActions";
+} from "../actions/cartActions"; 
 
 const initState = [];
 

@@ -1,8 +1,17 @@
 import React, { useState, useEffect } from "react";
 import FlowerService from "../../services/FlowerService";
 import axios from "axios";
-// const tinify = require("tinify");
-// tinify.key = "3xGf3C9kGxWLLQnwmQkXFlff0PCBccKs";
+import {storage} from "../../firebase";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { v4 } from "uuid";
+
+
 
 function AddFlower(props) {
   const [flowerName, setFlowername] = useState("");
@@ -16,6 +25,17 @@ function AddFlower(props) {
   const [fullDescription, setFullDescription] = useState("");
   const [tag, setTag] = useState([]);
   const [errors, setErrors] = useState({});
+
+  const [file, setFile] = useState("");
+  const [imageUpload, setImageUpload] = useState(null);
+  const [imageUrls, setImageUrls] = useState([]);
+  
+  
+  const imagesListRef = ref(storage, "images/");
+
+  const storageRef = ref(storage);
+
+
 
   const tagList = [
     "Hoa hồng",
@@ -34,38 +54,89 @@ function AddFlower(props) {
       setTag([...tag, tagItem]);
     }
   };
+  const changeBoth = (e) => {
+    uploadFile(e);
+    setImageUpload(e.target.files[0]);
+    // setFile(e.target.files[0]);
+ 
+  };
 
+  // const uploadImageToFirestore = async (imageUpload) => {
+  //   try {
+  //     const imageRef = ref(imagesRef, v4()); // Tạo tham chiếu tới một tên tệp ngẫu nhiên
+  //     await uploadBytes(imageRef, imageUpload); // Tải lên ảnh lên Firestore
+  //     const imageUrl = await getDownloadURL(imageRef); // Lấy URL tải xuống của ảnh đã tải lên
+  //     return imageUrl;
+  //   } catch (error) {
+  //     console.error("Error uploading image to Firestore:", error);
+  //     throw error;
+  //   }
+  // };
+
+
+  // const uploadImageToFirestore = async (imageUpload) => {
+  //   try {
+  //     // const imageRef = ref(storage, `images/${fileName}`);
+  //     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+  //     // const imageRef = ref(imagesRef, v4()); // Tạo tham chiếu tới một tên tệp ngẫu nhiên
+  //     await uploadBytes(imageRef, imageUpload); // Tải lên ảnh lên Firestore
+  //     const imageUrl = await getDownloadURL(imageRef); // Lấy URL tải xuống của ảnh đã tải lên
+  //     return imageUrl;
+  //   } catch (error) {
+  //     console.error("Error uploading image to Firestore:", error);
+  //     throw error;
+  //   }
+  // };
+
+  const uploadImageToFirestore = async (imageUpload) => {
+    return new Promise((resolve, reject) => {
+      const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+  
+      // uploadBytes(imageRef, imageUpload)
+      //   .then(() => getDownloadURL(imageRef))
+      //   .then((imageUrl) => resolve(imageUrl))
+      //   .catch((error) => reject(error));
+      uploadBytes(imageRef, imageUpload).then(() => {
+        getDownloadURL(imageRef).then((imageUrl) => resolve(imageUrl));
+      })
+    });
+  };
+  
+  
   const uploadFile = async (e) => {
     const image = e.target.files[0];
-    const imageURL = URL.createObjectURL(image);
-
+    console.log(image)
+    // const imageURL = URL.createObjectURL(image);
     try {
-      // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
-      setImages([...images, imageURL]);
+      const imageUrl = await uploadImageToFirestore(image);
+      console.log(imageUrl)
+      setImages([...images, imageUrl]);
+      
+      // setImageUpload(imageUrl)
+      // setImages([...images, imageURL]);
     } catch (error) {
-      // Xử lý lỗi nếu có
     }
   };
+
   const removeFile = (index) => {
     const updatedImages = [...images];
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
-  const formDataWithUrls = {
-    name: flowerName,
-    image: images,
-    tag,
-    category,
-    shortDescription: description,
-    stock: inStockNumber,
-    price: regularPrice,
-    discount: salePrice,
-    fullDescription,
-  };
-
-  console.log(formDataWithUrls);
-
+  // const formDataWithUrls = {
+  //   name: flowerName,
+  //   image: images,
+  //   tag,
+  //   category,
+  //   shortDescription: description,
+  //   stock: inStockNumber,
+  //   price: regularPrice,
+  //   discount: salePrice,
+  //   fullDescription,
+  // };
   
+
+  // console.log(formDataWithUrls);
   const handleSetFlower = async (e) => {
     e.preventDefault();
     const errors = {};
@@ -106,11 +177,30 @@ function AddFlower(props) {
       return;
     }
     try {
+      const imageUrls = [];
+
+      for (const image of images) {
+        const imageUrl = await uploadImageToFirestore(image);
+        imageUrls.push(imageUrl);
+      }
+  
+  
+      const formDataWithUrls = {
+        name: flowerName,
+        image: images,
+        tag,
+        category,
+        shortDescription: description,
+        stock: inStockNumber,
+        price: regularPrice,
+        discount: salePrice,
+        fullDescription,
+      };
+
       const response = await axios.post(
         "http://localhost:8080/api/flowers",
         formDataWithUrls
       );
-      console.log(response.data);
       window.location.reload();
     } catch (error) {
       console.error(error);
@@ -175,9 +265,16 @@ function AddFlower(props) {
                   <input
                     type="file"
                     className="form-control"
-                    onChange={uploadFile}
-                    id="#inputFile"
+                    onChange={changeBoth}
+                    id="file"
                   />
+                  {/* <input
+                    type="file"
+                    className="form-control"
+                    id="#inputFile"
+                    onChange={(e) => setFile(e.target.files[0])}
+                    // style={{ display: "none" }}
+                  /> */}
                 </div>
                 <div className="form-group">
                   <label htmlFor="category" className="col-sm-3 control-label">

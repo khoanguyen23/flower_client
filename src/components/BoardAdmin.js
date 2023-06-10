@@ -44,7 +44,7 @@ const BoardAdmin = () => {
     <div className="container">
       <header className="jumbotron">
         <h3>{content}</h3>
-        <a href="/home-furniture">Trang chủ</a>
+        <a href="/home-flowers">Trang chủ</a>
       </header>
       <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
