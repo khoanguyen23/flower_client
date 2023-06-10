@@ -61,7 +61,7 @@ const ShopGridStandard = ({location, products}) => {
                 {/* breadcrumb */}
                 <Breadcrumb />
 
-                <div className="shop-area pt-95 pb-100">
+                <div className="shop-area pt-95 ">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">

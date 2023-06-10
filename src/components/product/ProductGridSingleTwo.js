@@ -64,7 +64,7 @@ const ProductGridSingleTwo = ({
                 ) : (
                   ""
                 )}
-                {product.new ? <span className="purple">New</span> : ""}
+                {product.new ? <span className="purple">Mới</span> : ""}
               </div>
             ) : (
               ""
@@ -98,19 +98,19 @@ const ProductGridSingleTwo = ({
                   }
                   disabled={cartItem !== undefined && cartItem.quantity > 0}
                   title={
-                    cartItem !== undefined ? "Added to cart" : "Add to cart"
+                    cartItem !== undefined ? "Đã thêm vào giỏ hàng " : "Thêm vào giỏ hàng"
                   }
                 >
                   {" "}
                   <i className="fa fa-shopping-cart"></i>{" "}
                 </button>
               ) : (
-                <button disabled className="active" title="Out of stock">
+                <button disabled className="active" title="Hết hàng">
                   <i className="fa fa-shopping-cart"></i>
                 </button>
               )}
 
-              <button onClick={() => setModalShow(true)} title="Quick View">
+              <button onClick={() => setModalShow(true)} title="Xem nhanh">
                 <i className="fa fa-eye"></i>
               </button>
 

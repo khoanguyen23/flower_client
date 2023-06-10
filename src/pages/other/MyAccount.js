@@ -325,32 +325,7 @@ const MyAccount = ({ location }) => {
                               <h4></h4>
                             </div>
                             <div className="entries-wrapper">
-                              {/* <div className="row">
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-info text-center">
-                                    <p>Tên </p>
-                                    <p>Số tài khoản </p>
-                                    <p>2352367828723897</p>
-                                    <p>Thời hạn </p>
-                                    <p>29</p>
-                                  </div>
-                                </div>
-                                <div className="col-lg-6 col-md-6 d-flex align-items-center justify-content-center">
-                                  <div className="entries-edit-delete text-center">
-                                    <button
-                                      onClick={() => setToggle(!toggle)}
-                                      className="edit"
-                                    >
-                                      Chỉnh sửa
-                                    </button>
-                                    <button
-                                      onClick={(event) => onAddCreditCard()}
-                                    >
-                                      Thêm{" "}
-                                    </button>
-                                  </div>
-                                </div>
-                              </div> */}
+                             
                                 <div className="entries-wrapper">
                               <div className="row">
                                 <div className="entries-info text-center">

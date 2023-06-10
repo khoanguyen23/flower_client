@@ -7,7 +7,7 @@ import TabProductTwo from "../../wrappers/product/TabProductTwo";
 import CountDownOne from "../../wrappers/countdown/CountDownOne";
 import FeatureIconTwo from "../../wrappers/feature-icon/FeatureIconTwo";
 import BlogFeatured from "../../wrappers/blog-featured/BlogFeatured";
-import Newsletter from "../../wrappers/newsletter/Newsletter";
+
 
 const HomeFurniture = () => {
   return (
@@ -30,7 +30,7 @@ const HomeFurniture = () => {
 
         {/* tab product */}
         {/* <TabProductTwo spaceBottomClass="pb-100" category="flower" /> */}
-        <TabProductTwo spaceBottomClass="pb-100" category="hoa-cuoi" />
+        <TabProductTwo spaceBottomClass="pb-100" category="Hoa cưới" />
         {/* <TabProductTwo spaceBottomClass="pb-100" category={["hoa-cuoi", "hoa-tinh-yeu", "hoa-valentine"]} /> */}
 
         

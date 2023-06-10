@@ -4,10 +4,12 @@
   position: relative;
 
   overflow: hidden;
+  width: 520px;
+  height: 400px;
   a {
     img {
       width: 100%;
-
+      object-position: center;
       transition: all 0.5s ease 0s;
       transform: scale(1);
     }

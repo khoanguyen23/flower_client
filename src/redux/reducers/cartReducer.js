@@ -115,6 +115,7 @@ const cartReducer = (state = initState, action) => {
       return false;
     });
   }
+  console.log("cart item",cartItems)
 
   return state;
 };

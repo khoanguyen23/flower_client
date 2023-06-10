@@ -5,14 +5,14 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 import UserService from "../services/user.service";
 import EventBus from "../common/EventBus";
-import AddFlower from "../pages/other/AddFlower";
+
 import OrderManagement from "../pages/admin/OrderManagement";
 import BlogManagement from "../pages/admin/BlogManagement";
 import ProductManagement from "../pages/admin/ProductManagement";
 const BoardAdmin = () => {
   const [content, setContent] = useState("");
 
-  const [value, setValue] = React.useState('3');
+  const [value, setValue] = React.useState('1');
 
   const handleChange = (event, newValue) => {
     setValue(newValue); 

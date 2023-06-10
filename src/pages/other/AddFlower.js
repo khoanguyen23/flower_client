@@ -4,7 +4,6 @@ import axios from "axios";
 // const tinify = require("tinify");
 // tinify.key = "3xGf3C9kGxWLLQnwmQkXFlff0PCBccKs";
 
-
 function AddFlower(props) {
   const [flowerName, setFlowername] = useState("");
   const [category, setCategory] = useState([]);
@@ -16,9 +15,18 @@ function AddFlower(props) {
   const [products, setProducts] = useState("");
   const [fullDescription, setFullDescription] = useState("");
   const [tag, setTag] = useState([]);
+  const [errors, setErrors] = useState({});
 
-  const tagList=["Hoa hồng", "Hoa tulip", "Hoa mẫu đơn", "Hoa layon","Hoa sen", "Hoa cúc"]
-  const handleTagButtonClick = (tagItem,e) => {
+  const tagList = [
+    "Hoa hồng",
+    "Hoa tulip",
+    "Hoa mẫu đơn",
+    "Hoa layon",
+    "Hoa sen",
+    "Hoa cúc",
+    "Hoa chibi"
+  ];
+  const handleTagButtonClick = (tagItem, e) => {
     e.preventDefault();
     if (tag.includes(tagItem)) {
       setTag(tag.filter((item) => item !== tagItem));
@@ -27,46 +35,10 @@ function AddFlower(props) {
     }
   };
 
-  
-  
-  
-  
-  // const uploadFile = (event) => {
-  //   const file = event.target.files[0];
-
-  //   const reader = new FileReader();
-  //   reader.onload = (e) => {
-  //     const imageData = e.target.result; // Base64 data
-
-  //     const img = new Image();
-  //     img.onload = () => {
-  //       const canvas = document.createElement("canvas");
-  //       const ctx = canvas.getContext("2d");
-  //       canvas.width = img.width;
-  //       canvas.height = img.height;
-  //       ctx.drawImage(img, 0, 0);
-
-  //       canvas.toBlob(
-  //         (blob) => {
-  //           const fileReader = new FileReader();
-  //           fileReader.onload = (e) => {
-  //             const optimizedImageData = e.target.result; // Optimized Base64 data
-  //             setImages([...images, optimizedImageData]);
-  //           };
-  //           fileReader.readAsDataURL(blob);
-  //         },
-  //         "image/jpeg",
-  //         0.8 // JPEG image quality (adjust as needed)
-  //       );
-  //     };
-  //     img.src = imageData;
-  //   };
-  //   reader.readAsDataURL(file);
-  // };
   const uploadFile = async (e) => {
     const image = e.target.files[0];
     const imageURL = URL.createObjectURL(image);
-  
+
     try {
       // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
       setImages([...images, imageURL]);
@@ -91,14 +63,49 @@ function AddFlower(props) {
     fullDescription,
   };
 
-  console.log(formDataWithUrls)
+  console.log(formDataWithUrls);
+
+  
   const handleSetFlower = async (e) => {
     e.preventDefault();
+    const errors = {};
+    if (!flowerName) {
+      errors.flowerName = "Tên hoa không được để trống.";
+    }
+    if (!inStockNumber) {
+      errors.inStockNumber = "Số lượng không được để trống.";
+    }
+    if (tag.length === 0) {
+      errors.tag = "Phải chọn ít nhất một tag.";
+    }
+    if (images.length === 0) {
+      errors.images = "Phải tải lên ít nhất một hình ảnh.";
+    }
+    if (category.length === 0) {
+      errors.category = "Phải chọn ít nhất một loại hoa.";
+    }
+    if (!regularPrice.trim()) {
+      errors.regularPrice = "Giá thường không được bỏ trống";
+    } else if (isNaN(Number(regularPrice))) {
+      errors.regularPrice = "Giá thường phải là một số";
+    }
+    if (isNaN(Number(salePrice))) {
+      errors.salePrice = "Giá sale phải là một số";
+    }
+    // Validate description
+    if (!description.trim()) {
+      errors.description = "Mô tả không được bỏ trống";
+    }
 
+    // Validate fullDescription
+    if (!fullDescription.trim()) {
+      errors.fullDescription = "Mô tả đầy đủ không được bỏ trống";
+    }
+    if (Object.keys(errors).length > 0) {
+      setErrors(errors);
+      return;
+    }
     try {
-      // Create the flower data with the uploaded image URLs
-     
-      // Send the flower data to your API
       const response = await axios.post(
         "http://localhost:8080/api/flowers",
         formDataWithUrls
@@ -119,6 +126,8 @@ function AddFlower(props) {
         console.error(error);
       });
   }, []);
+
+
   //console.log(products);
   return (
     <div>
@@ -157,6 +166,9 @@ function AddFlower(props) {
                       </div>
                     ))}
                   </div>
+                  {errors.images && (
+                    <span className="error">{errors.images}</span>
+                  )}
                 </div>
 
                 <div className="form-group">
@@ -172,20 +184,21 @@ function AddFlower(props) {
                     Tag
                   </label>
                   <div className="col-sm-9 checkbox-container-tag">
-                  <div className="sidebar-widget-tag">
-                  {tagList.map((tagItem) => (
-                    <div className="checkbox-element" key={tagItem}>
-                      <button
-                        className={`tag-button ${
-                          tag.includes(tagItem) ? "active" : ""
-                        }`}
-                        onClick={(e) => handleTagButtonClick(tagItem,e)}
-                      >
-                        {tagItem}
-                      </button>
+                    <div className="sidebar-widget-tag">
+                      {tagList.map((tagItem) => (
+                        <div className="checkbox-element" key={tagItem}>
+                          <button
+                            className={`tag-button ${
+                              tag.includes(tagItem) ? "active" : ""
+                            }`}
+                            onClick={(e) => handleTagButtonClick(tagItem, e)}
+                          >
+                            {tagItem}
+                          </button>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                    {errors.tag && <span className="error">{errors.tag}</span>}
                   </div>
                 </div>
 
@@ -206,6 +219,9 @@ function AddFlower(props) {
                       onChange={(e) => setFlowername(e.target.value)}
                       placeholder="Tên hoa"
                     />
+                    {errors.flowerName && (
+                      <span className="error">{errors.flowerName}</span>
+                    )}
                   </div>
                 </div>
 
@@ -219,14 +235,14 @@ function AddFlower(props) {
                         <label>
                           <input
                             type="checkbox"
-                            value="hoa-tinh-yeu"
-                            checked={category.includes("hoa-tinh-yeu")}
+                            value="Hoa tình yêu"
+                            checked={category.includes("Hoa tình yêu")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-tinh-yeu"]
+                                  ? [...prevCategory, "Hoa tình yêu"]
                                   : prevCategory.filter(
-                                      (c) => c !== "hoa-tinh-yeu"
+                                      (c) => c !== "Hoa tình yêu"
                                     )
                               )
                             }
@@ -238,14 +254,14 @@ function AddFlower(props) {
                         <label>
                           <input
                             type="checkbox"
-                            value="hoa-valentine"
-                            checked={category.includes("hoa-valentine")}
+                            value="Hoa Valentine"
+                            checked={category.includes("Hoa Valentine")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-valentine"]
+                                  ? [...prevCategory, "Hoa Valentine"]
                                   : prevCategory.filter(
-                                      (c) => c !== "hoa-valentine"
+                                      (c) => c !== "Hoa Valentine"
                                     )
                               )
                             }
@@ -259,13 +275,13 @@ function AddFlower(props) {
                         <label>
                           <input
                             type="checkbox"
-                            value="hoa-cuoi"
-                            checked={category.includes("hoa-cuoi")}
+                            value="Hoa cưới"
+                            checked={category.includes("Hoa cưới ")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-cuoi"]
-                                  : prevCategory.filter((c) => c !== "hoa-cuoi")
+                                  ? [...prevCategory, "Hoa cưới"]
+                                  : prevCategory.filter((c) => c !== "Hoa cưới")
                               )
                             }
                           />
@@ -276,13 +292,13 @@ function AddFlower(props) {
                         <label>
                           <input
                             type="checkbox"
-                            value="qua-tang"
-                            checked={category.includes("qua-tang")}
+                            value="Quà tặng"
+                            checked={category.includes("Quà tặng")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "qua-tang"]
-                                  : prevCategory.filter((c) => c !== "qua-tang")
+                                  ? [...prevCategory, "Quà tặng"]
+                                  : prevCategory.filter((c) => c !== "Quà tặng")
                               )
                             }
                           />
@@ -290,7 +306,11 @@ function AddFlower(props) {
                         </label>
                       </div>
                     </div>
+                   
                   </div>
+                  {errors.category && (
+                      <span className="error">{errors.category}</span>
+                    )}
                 </div>
 
                 <div className="form-group">
@@ -311,10 +331,11 @@ function AddFlower(props) {
                       onChange={(e) => setInStockNumber(e.target.value)}
                       placeholder="Số lượng"
                     />
+                    {errors.inStockNumber && (
+                      <span className="error">{errors.inStockNumber}</span>
+                    )}
                   </div>
                 </div>
-             
-               
 
                 <div className="form-group group-price">
                   <label className="col-sm-9">Giá</label>
@@ -327,6 +348,9 @@ function AddFlower(props) {
                         value={regularPrice}
                         onChange={(e) => setRegularPrice(e.target.value)}
                       />
+                      {errors.regularPrice && (
+                        <span className="error">{errors.regularPrice}</span>
+                      )}
                     </div>
                   </div>
                   <div className="col-lg-4 col-md-4">
@@ -338,6 +362,9 @@ function AddFlower(props) {
                         value={salePrice}
                         onChange={(e) => setSalePrice(e.target.value)}
                       />
+                      {errors.salePrice && (
+                        <span className="error">{errors.salePrice}</span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -354,6 +381,9 @@ function AddFlower(props) {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     ></textarea>
+                    {errors.description && (
+                      <span className="error">{errors.description}</span>
+                    )}
                   </div>
                 </div>
                 <div className="form-group">
@@ -369,13 +399,16 @@ function AddFlower(props) {
                       value={fullDescription}
                       onChange={(e) => setFullDescription(e.target.value)}
                     ></textarea>
+                    {errors.fullDescription && (
+                      <span className="error">{errors.fullDescription}</span>
+                    )}
                   </div>
                 </div>
                 <div className="form-group">
-                  <div className="col-sm-offset-3 col-sm-9">
-                    <button type="submit" className="btn btn-primary">
-                      Lưu
-                    </button>
+                  <div className="billing-back-btn">
+                    <div className=" addflower-btn">
+                      <button type="submit">Lưu </button>
+                    </div>
                   </div>
                 </div>
               </div>

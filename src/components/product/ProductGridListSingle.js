@@ -183,7 +183,7 @@ const ProductGridListSingle = ({
                       ) : (
                         ""
                       )}
-                      {product.new ? <span className="purple">New</span> : ""}
+                      {product.new ? <span className="purple">Mới</span> : ""}
                     </div>
                   ) : (
                     ""
@@ -242,7 +242,7 @@ const ProductGridListSingle = ({
                       <Link
                         to={`${process.env.PUBLIC_URL}/product/${product.id}`}
                       >
-                        Select Option
+                        Lựa chọn 
                       </Link>
                     ) : product.stock && product.stock > 0 ? (
                       <button
