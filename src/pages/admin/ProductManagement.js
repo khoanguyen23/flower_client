@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 
 import { connect } from "react-redux";
-import LayoutOne from "../../layouts/LayoutOne";
+
 import SearchForm from "./SearchForm";
 import PropTypes from "prop-types";
 import AddFlower from "../other/AddFlower";

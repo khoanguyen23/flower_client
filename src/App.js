@@ -69,7 +69,7 @@ const App = (props) => {
                 />
                 {/* Shop pages */}
                 <Route
-                  path={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                  path={process.env.PUBLIC_URL + "/shop"}
                   component={ShopGridStandard}
                 />
                 {/* Shop product pages */}
@@ -81,7 +81,7 @@ const App = (props) => {
                 />
                 {/* Blog pages */}
                 <Route
-                  path={process.env.PUBLIC_URL + "/blog-standard"}
+                  path={process.env.PUBLIC_URL + "/blog"}
                   component={Blog}
                 />
                 {/* Other pages */}

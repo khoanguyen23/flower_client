@@ -247,8 +247,8 @@
   position: relative;
   .product-img {
     position: relative;
-    width: 270px;
-    height: 350px;
+    width: 280px;
+    height: 360px;
 
     overflow: hidden;
     img {
@@ -1411,12 +1411,15 @@
 
 .product-wrap-2 {
   position: relative;
-
+  width: 367px;
+  height: 455px;
   overflow: hidden;
   .product-img {
     position: relative;
     img {
       width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     span {
       font-size: 14px;

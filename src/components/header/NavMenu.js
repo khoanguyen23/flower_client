@@ -55,13 +55,13 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+            <Link to={process.env.PUBLIC_URL + "/shop"}>
               {" "}
               Cửa hàng
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/blog-standard"}>Bài viết</Link>
+            <Link to={process.env.PUBLIC_URL + "/blog"}>Bài viết</Link>
           </li>
           <li>
             <Link to={process.env.PUBLIC_URL + "/contact"}>Liên hệ</Link>
@@ -76,7 +76,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
            {showAdminBoard && (
             <li className="nav-item">
               <Link to={"/admin"} className="nav-link">
-                Admin Board
+                Trang quản lý
               </Link>
             </li>
           )}

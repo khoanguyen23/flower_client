@@ -10,7 +10,10 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
   return (
     <div className={`product-area ${spaceBottomClass ? spaceBottomClass : ""}`}>
       <div className="container">
-        <SectionTitle titleText="ƯU ĐÃI HÀNG NGÀY!" positionClass="text-center" />
+        <SectionTitle
+          titleText="ƯU ĐÃI HÀNG NGÀY!"
+          positionClass="text-center"
+        />
         <Tab.Container defaultActiveKey="bestSeller">
           <Nav
             variant="pills"
@@ -36,7 +39,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="newArrival">
               <div className="row three-column">
                 <ProductGridTwo
-                  category="hoa-tinh-yeu"
+                  category="Hoa "
                   type="new"
                   limit={6}
                   spaceBottomClass="mb-25"
@@ -46,7 +49,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="bestSeller">
               <div className="row three-column">
                 <ProductGridTwo
-                  category="hoa-valentine"
+                  category="Hoa valentine"
                   type="bestSeller"
                   limit={6}
                   spaceBottomClass="mb-25"
@@ -56,7 +59,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="saleItems">
               <div className="row three-column">
                 <ProductGridTwo
-                  category="hoa-cuoi"
+                  category="Hoa cưới"
                   type="saleItems"
                   limit={6}
                   spaceBottomClass="mb-25"
@@ -80,7 +83,7 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
 
 TabProductTwo.propTypes = {
   category: PropTypes.string,
-  spaceBottomClass: PropTypes.string
+  spaceBottomClass: PropTypes.string,
 };
 
 export default TabProductTwo;
