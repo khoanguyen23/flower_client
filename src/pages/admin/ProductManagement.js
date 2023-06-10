@@ -20,7 +20,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
 import { Modal } from "@mui/material";
-
+import CloseIcon from "@material-ui/icons/Close";
 import EditProductForm from "./EditProductForm";
 
 //Icon
@@ -33,6 +33,7 @@ const ProductManagement = ({ products }) => {
   const [show, setShow] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const pageLimit = 10;
 
@@ -67,26 +68,13 @@ const ProductManagement = ({ products }) => {
         const updatedProducts = products.filter(
           (product) => product.id !== productId
         );
-        setCurrentData(updatedProducts)
+        setCurrentData(updatedProducts);
         // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
       })
       .catch((error) => {
         console.error("Lỗi khi xóa hoa:", error);
       });
   };
-
-  console.log(currentData)
-
-  // const deleteSelectedProducts = (selectedProducts) => {
-  //   FlowerService.deleteSelectedProduct(selectedProducts)
-
-  //     .then(() => {
-  //       FlowerService.getFlower();
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi xoa flower:", error);
-  //     });
-  // };
 
   useEffect(() => {
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
@@ -98,24 +86,10 @@ const ProductManagement = ({ products }) => {
     sortedProducts = filterSortedProducts;
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    
   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
   const handleSearch = (query) => {
     const searchResults = products.filter((product) => {
-      // const productName = product.name.toLowerCase();
-      // const tags = product.tag.map((tag) => tag.toLowerCase());
-      // const category = product.category.toLowerCase();
-
-      // // Kiểm tra nếu query tồn tại trong productName, tags hoặc category
-      // if (
-      //   productName.includes(query.toLowerCase()) ||
-      //   tags.includes(query.toLowerCase()) ||
-      //   category.includes(query.toLowerCase())
-      // ) {
-      //   return true;
-      // }
-
       return false;
     });
 
@@ -136,7 +110,7 @@ const ProductManagement = ({ products }) => {
         <div className="table-features row">
           <Button
             variant="contained"
-            onClick={(event) => setShow(true)}
+            onClick={() => setIsAddModalOpen(true)}
             startIcon={<AddIcon />}
             sx={{ color: "#D3D3D3" }}
           >
@@ -150,27 +124,31 @@ const ProductManagement = ({ products }) => {
             Xóa các sản phẩm đã chọn
           </Button>
         </div>
-        <div className="table-features ">
-          {show && (
-            <>
-              <Button
-                variant="contained"
-                onClick={(event) => setShow(false)}
-                startIcon={<AddIcon />}
-                sx={{ color: "#D3D3D3" }}
-              >
-                Hủy
-              </Button>
+        {isAddModalOpen && (
+          <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+            <div className="modal-content">
+              <div className="modal-heading">
+              <h3 className="panel-title">Thêm sản phẩm</h3>
+                <Button
+                  onClick={() => setIsAddModalOpen(false)}
+                  color="inherit"
+                  size="small"
+                  className="close-icon"
+                  startIcon={<CloseIcon />}
+                />
+               
+              </div>
+
               <AddFlower />
-            </>
-          )}
-        </div>
+            </div>
+          </Modal>
+        )}
       </div>
 
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell></TableCell>
+           
             <TableCell>ID</TableCell>
 
             <TableCell>Tên hoa</TableCell>
@@ -186,22 +164,7 @@ const ProductManagement = ({ products }) => {
           {currentData.map((data) => {
             return (
               <TableRow key={data.id}>
-                <TableCell>
-                  <input
-                    type="checkbox"
-                    checked={selectedProducts.includes(data.id)}
-                    onChange={(e) => {
-                      const productId = data.id;
-                      if (e.target.checked) {
-                        setSelectedProducts([...selectedProducts, productId]);
-                      } else {
-                        setSelectedProducts(
-                          selectedProducts.filter((id) => id !== productId)
-                        );
-                      }
-                    }}
-                  />
-                </TableCell>
+              
                 <TableCell>{data.id} </TableCell>
                 <TableCell>{data.name} </TableCell>
                 <TableCell>{data.shortDescription} </TableCell>
@@ -217,6 +180,12 @@ const ProductManagement = ({ products }) => {
                       onClose={() => setIsModalOpen(false)}
                     >
                       <div className="modal-content">
+                        <Button
+                          onClick={() => setIsModalOpen(false)}
+                          color="inherit"
+                          size="small"
+                          startIcon={<CloseIcon />}
+                        />
                         <EditProductForm
                           product={editingProduct}
                           onUpdate={handleUpdate}
@@ -224,13 +193,14 @@ const ProductManagement = ({ products }) => {
                       </div>
                     </Modal>
                   ) : (
-                    <Button
-                      onClick={() => handleEdit(data)}
-                      className={"edit-btn"}
-                    >
-                      Chỉnh sửa{" "}
-                    </Button>
+                    <></>
                   )}
+                  <Button
+                    onClick={() => handleEdit(data)}
+                    className={"edit-btn"}
+                  >
+                    Chỉnh sửa{" "}
+                  </Button>
                 </TableCell>
                 <TableCell>
                   <Button

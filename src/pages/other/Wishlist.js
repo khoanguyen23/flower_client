@@ -172,7 +172,7 @@ const Wishlist = ({
                                     >
                                       {cartItem !== undefined &&
                                       cartItem.quantity > 0
-                                        ? "Đã thêm"
+                                        ? "Đã thêm vào giỏ hàng "
                                         : "Thêm vào giỏ hàng "}
                                     </button>
                                   ) : (

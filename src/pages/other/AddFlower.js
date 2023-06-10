@@ -24,6 +24,7 @@ function AddFlower(props) {
     "Hoa layon",
     "Hoa sen",
     "Hoa cúc",
+    "Hoa lavender",
     "Hoa chibi"
   ];
   const handleTagButtonClick = (tagItem, e) => {
@@ -131,12 +132,10 @@ function AddFlower(props) {
   //console.log(products);
   return (
     <div>
-      <div className="container">
-        <div className="panel-heading">
-          <h3 className="panel-title">Thêm sản phẩm</h3>
-        </div>
+      <div className="addflower-container">
+       
         <section className="panel">
-          <div className="panel-body col-sm-12">
+          <div className="panel-body ">
             <form
               onSubmit={handleSetFlower}
               className="form-horizontal"
@@ -183,8 +182,8 @@ function AddFlower(props) {
                   <label htmlFor="category" className="col-sm-3 control-label">
                     Tag
                   </label>
-                  <div className="col-sm-9 checkbox-container-tag">
-                    <div className="sidebar-widget-tag">
+                  <div className=" checkbox-container-tag">
+                    
                       {tagList.map((tagItem) => (
                         <div className="checkbox-element" key={tagItem}>
                           <button
@@ -197,7 +196,7 @@ function AddFlower(props) {
                           </button>
                         </div>
                       ))}
-                    </div>
+                   
                     {errors.tag && <span className="error">{errors.tag}</span>}
                   </div>
                 </div>
@@ -209,7 +208,7 @@ function AddFlower(props) {
                   <label htmlFor="name" className="col-sm-6 control-label">
                     Tên hoa
                   </label>
-                  <div className="col-sm-9">
+                  <div className="col-sm-12">
                     <input
                       type="text"
                       className="form-control"
@@ -229,7 +228,7 @@ function AddFlower(props) {
                   <label htmlFor="category" className="col-sm-3 control-label">
                     Loại hoa
                   </label>
-                  <div className="col-sm-9 checkbox-container">
+                  <div className="col-sm-12 checkbox-container">
                     <div className="checkbox-row">
                       <div className="checkbox-element">
                         <label>
@@ -320,7 +319,7 @@ function AddFlower(props) {
                   >
                     Số lượng
                   </label>
-                  <div className="col-sm-9">
+                  <div className="col-sm-12">
                     <input
                       type="number"
                       min="0"
@@ -338,8 +337,8 @@ function AddFlower(props) {
                 </div>
 
                 <div className="form-group group-price">
-                  <label className="col-sm-9">Giá</label>
-                  <div className="col-lg-4 col-md-4">
+                  <label className="col-sm-12">Giá</label>
+                  <div className="col-lg-6 col-md-6">
                     <div className="">
                       <input
                         type="text"
@@ -353,7 +352,7 @@ function AddFlower(props) {
                       )}
                     </div>
                   </div>
-                  <div className="col-lg-4 col-md-4">
+                  <div className="col-lg-6 col-md-6">
                     <div className="">
                       <input
                         type="text"
@@ -375,7 +374,7 @@ function AddFlower(props) {
                   >
                     Mô tả
                   </label>
-                  <div className="col-sm-9">
+                  <div className="col-sm-12">
                     <textarea
                       className="form-control"
                       value={description}
@@ -393,7 +392,7 @@ function AddFlower(props) {
                   >
                     Mô tả đầy đủ
                   </label>
-                  <div className="col-sm-9">
+                  <div className="col-sm-12">
                     <textarea
                       className="form-control"
                       value={fullDescription}

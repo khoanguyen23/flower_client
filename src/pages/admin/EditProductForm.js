@@ -5,6 +5,7 @@ import {
 } from "@material-ui/core";
 
 const EditProductForm = ({ product, onUpdate }) => {
+  console.log(product)
   const [name, setName] = useState(product.name);
   const [category, setCategory] = useState(product.category);
   const [shortDescription, setShortDescription] = useState(
@@ -13,7 +14,7 @@ const EditProductForm = ({ product, onUpdate }) => {
   const [stock, setStock] = useState(product.stock);
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
-  const [image, setImage] = useState(price.image);
+  const [image, setImage] = useState(product.image);
   const [fullDescription, setFullDescription] = useState(
     product.fullDescription
   );
@@ -88,7 +89,7 @@ const EditProductForm = ({ product, onUpdate }) => {
               </div>
             ) }
 
-            {/* <div className="thumbnail-images">
+            <div className="thumbnail-images">
               {image.slice(1).map((image, index) => (
                 <div key={index} className="thumbnail-image">
                   <img src={image} alt="..." />
@@ -98,7 +99,7 @@ const EditProductForm = ({ product, onUpdate }) => {
                   ></button>
                 </div>
               ))}
-            </div> */}
+            </div>
           </div>
 
           <div className="form-group">
@@ -128,7 +129,7 @@ const EditProductForm = ({ product, onUpdate }) => {
 
           
         </div>
-        <div className="input-container ">
+        <div className="input-container col-sm-7">
           <div className="form-group">
             <label htmlFor="name" className="col-sm-6 control-label">
               Tên hoa
@@ -153,13 +154,13 @@ const EditProductForm = ({ product, onUpdate }) => {
                   <label>
                     <input
                       type="checkbox"
-                      value="hoa-tinh-yeu"
-                      checked={category.includes("hoa-tinh-yeu")}
+                      value="Hoa tình yêu"
+                      checked={category.includes("Hoa tình yêu")}
                       onChange={(e) =>
                         setCategory((prevCategory) =>
                           e.target.checked
-                            ? [...prevCategory, "hoa-tinh-yeu"]
-                            : prevCategory.filter((c) => c !== "hoa-tinh-yeu")
+                            ? [...prevCategory, "Hoa tình yêu"]
+                            : prevCategory.filter((c) => c !== "Hoa tình yêu")
                         )
                       }
                     />
@@ -170,13 +171,13 @@ const EditProductForm = ({ product, onUpdate }) => {
                   <label>
                     <input
                       type="checkbox"
-                      value="hoa-valentine"
-                      checked={category.includes("hoa-valentine")}
+                      value=" Hoa valentine"
+                      checked={category.includes(" Hoa valentine")}
                       onChange={(e) =>
                         setCategory((prevCategory) =>
                           e.target.checked
-                            ? [...prevCategory, "hoa-valentine"]
-                            : prevCategory.filter((c) => c !== "hoa-valentine")
+                            ? [...prevCategory, " Hoa valentine"]
+                            : prevCategory.filter((c) => c !== " Hoa valentine")
                         )
                       }
                     />
@@ -189,13 +190,13 @@ const EditProductForm = ({ product, onUpdate }) => {
                   <label>
                     <input
                       type="checkbox"
-                      value="hoa-cuoi"
-                      checked={category.includes("hoa-cuoi")}
+                      value="Hoa cưới"
+                      checked={category.includes("Hoa cưới")}
                       onChange={(e) =>
                         setCategory((prevCategory) =>
                           e.target.checked
-                            ? [...prevCategory, "hoa-cuoi"]
-                            : prevCategory.filter((c) => c !== "hoa-cuoi")
+                            ? [...prevCategory, "Hoa cưới"]
+                            : prevCategory.filter((c) => c !== "Hoa cưới")
                         )
                       }
                     />
@@ -206,13 +207,13 @@ const EditProductForm = ({ product, onUpdate }) => {
                   <label>
                     <input
                       type="checkbox"
-                      value="qua-tang"
-                      checked={category.includes("qua-tang")}
+                      value=" Quà tặng"
+                      checked={category.includes(" Quà tặng")}
                       onChange={(e) =>
                         setCategory((prevCategory) =>
                           e.target.checked
-                            ? [...prevCategory, "qua-tang"]
-                            : prevCategory.filter((c) => c !== "qua-tang")
+                            ? [...prevCategory, " Quà tặng"]
+                            : prevCategory.filter((c) => c !== " Quà tặng")
                         )
                       }
                     />

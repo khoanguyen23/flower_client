@@ -309,8 +309,10 @@
   }
 }
 .checkbox-container-tag {
+  display: flex;
+  flex-wrap: wrap;
   .checkbox-row {
-    display: flex;
+    
   }
 
   .checkbox-element {
@@ -395,6 +397,7 @@
   color: #ffffff;
 }
 .addflower-btn {
+  position: absolute;
   button {
     background-color: #a749ff;
     border: medium none;
@@ -408,6 +411,9 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.3s ease 0s;
+    position: relative;
+    right: 0;
+    margin: 0 auto;
     
   }
 }
