@@ -17,7 +17,6 @@ import {
   TableHead,
   TableBody,
   TableCell,
-
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
 import { Modal } from "@mui/material";
@@ -26,6 +25,8 @@ import EditProductForm from "./EditProductForm";
 
 //Icon
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
+import FlowerService from "../../services/FlowerService";
 
 const ProductManagement = ({ products }) => {
   const [selectedProducts, setSelectedProducts] = useState([]);
@@ -45,8 +46,6 @@ const ProductManagement = ({ products }) => {
   const [sortedProducts, setSortedProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
 
-
-
   // Function to handle the edit button click
   const handleEdit = (product) => {
     setEditingProduct(product);
@@ -61,11 +60,33 @@ const ProductManagement = ({ products }) => {
     setIsModalOpen(false); // Close the modal
   };
 
-  const deleteSelectedProducts = () => {
-    console.log("Đã xóa thành công ", selectedProducts);
+  const handleDelete = (productId) => {
+    FlowerService.deleteFlower(productId)
+      .then(() => {
+        // Xóa thành công, cập nhật danh sách sản phẩm
+        const updatedProducts = products.filter(
+          (product) => product.id !== productId
+        );
+        setCurrentData(updatedProducts)
+        // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
+      })
+      .catch((error) => {
+        console.error("Lỗi khi xóa hoa:", error);
+      });
   };
 
- 
+  console.log(currentData)
+
+  // const deleteSelectedProducts = (selectedProducts) => {
+  //   FlowerService.deleteSelectedProduct(selectedProducts)
+
+  //     .then(() => {
+  //       FlowerService.getFlower();
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi xoa flower:", error);
+  //     });
+  // };
 
   useEffect(() => {
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
@@ -77,6 +98,7 @@ const ProductManagement = ({ products }) => {
     sortedProducts = filterSortedProducts;
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
+    
   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
 
   const handleSearch = (query) => {
@@ -84,7 +106,7 @@ const ProductManagement = ({ products }) => {
       // const productName = product.name.toLowerCase();
       // const tags = product.tag.map((tag) => tag.toLowerCase());
       // const category = product.category.toLowerCase();
-  
+
       // // Kiểm tra nếu query tồn tại trong productName, tags hoặc category
       // if (
       //   productName.includes(query.toLowerCase()) ||
@@ -93,13 +115,12 @@ const ProductManagement = ({ products }) => {
       // ) {
       //   return true;
       // }
-  
+
       return false;
     });
-  
+
     setCurrentData(searchResults);
   };
-  
 
   return (
     <Fragment>
@@ -124,7 +145,7 @@ const ProductManagement = ({ products }) => {
           <Button
             variant="outlined"
             startIcon={<DeleteForeverIcon />}
-            onClick={deleteSelectedProducts}
+            //onClick={deleteSelectedProducts}
           >
             Xóa các sản phẩm đã chọn
           </Button>
@@ -157,6 +178,7 @@ const ProductManagement = ({ products }) => {
             <TableCell>Mô tả</TableCell>
             <TableCell>Số lượng</TableCell>
             <TableCell>Giá</TableCell>
+            <TableCell>Chi tiết</TableCell>
             <TableCell>Chi tiết</TableCell>
           </TableRow>
         </TableHead>
@@ -205,11 +227,18 @@ const ProductManagement = ({ products }) => {
                     <Button
                       onClick={() => handleEdit(data)}
                       className={"edit-btn"}
-                    
                     >
                       Chỉnh sửa{" "}
                     </Button>
                   )}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    onClick={() => handleDelete(data.id)}
+                    startIcon={<DeleteForeverIcon />}
+                  >
+                    Xóa
+                  </Button>
                 </TableCell>
               </TableRow>
             );

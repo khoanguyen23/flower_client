@@ -13,12 +13,25 @@ const setFlower = (
   });
 };
 
+const deleteFlower = async (flowerId) => {
+  try {
+    await http.delete(`/flowers/${flowerId}`);
+    // Dispatch an action to update the store (assuming you have defined the appropriate action)
+    // For example:
+    
+  } catch (error) {
+    console.error("Error deleting flower:", error);
+  }
+};
+
+
 // const setFlower = (flowerData) => {
 //   return axios.post(`${API_URL}/flowers`, flowerData);
 // }
 const FlowerService = {
   setFlower,
   getFlower,
+  deleteFlower
 };
 
 export default FlowerService;

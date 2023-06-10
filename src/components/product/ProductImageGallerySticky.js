@@ -11,7 +11,7 @@ const productImageGallerySticky = ({ product }) => {
           ) : (
             ""
           )}
-          {product.new ? <span className="purple">New</span> : ""}
+          {product.new ? <span className="purple">Mới</span> : ""}
         </div>
       ) : (
         ""

@@ -6,7 +6,7 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-import AddFlower from "./AddFlower";
+
 
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";

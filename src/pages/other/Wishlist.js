@@ -139,14 +139,14 @@ const Wishlist = ({
                                       target="_blank"
                                     >
                                       {" "}
-                                      Buy now{" "}
+                                      Mua ngay {" "}
                                     </a>
                                   ) : wishlistItem.variation &&
                                     wishlistItem.variation.length >= 1 ? (
                                     <Link
                                       to={`${process.env.PUBLIC_URL}/product/${wishlistItem.id}`}
                                     >
-                                      Select option
+                                      Lựa chọn
                                     </Link>
                                   ) : wishlistItem.stock &&
                                     wishlistItem.stock > 0 ? (
@@ -166,14 +166,14 @@ const Wishlist = ({
                                       }
                                       title={
                                         wishlistItem !== undefined
-                                          ? "Added to cart"
-                                          : "Add to cart"
+                                          ? "Đã thêm vào giỏ hàng "
+                                          : "Thêm vào giỏ hàng "
                                       }
                                     >
                                       {cartItem !== undefined &&
                                       cartItem.quantity > 0
-                                        ? "Added"
-                                        : "Add to cart"}
+                                        ? "Đã thêm"
+                                        : "Thêm vào giỏ hàng "}
                                     </button>
                                   ) : (
                                     <button disabled className="active">
