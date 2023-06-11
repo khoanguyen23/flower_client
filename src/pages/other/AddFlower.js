@@ -63,32 +63,7 @@ function AddFlower(props) {
  
   };
 
-  // const uploadImageToFirestore = async (imageUpload) => {
-  //   try {
-  //     const imageRef = ref(imagesRef, v4()); // Tạo tham chiếu tới một tên tệp ngẫu nhiên
-  //     await uploadBytes(imageRef, imageUpload); // Tải lên ảnh lên Firestore
-  //     const imageUrl = await getDownloadURL(imageRef); // Lấy URL tải xuống của ảnh đã tải lên
-  //     return imageUrl;
-  //   } catch (error) {
-  //     console.error("Error uploading image to Firestore:", error);
-  //     throw error;
-  //   }
-  // };
-
-
-  // const uploadImageToFirestore = async (imageUpload) => {
-  //   try {
-  //     // const imageRef = ref(storage, `images/${fileName}`);
-  //     const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
-  //     // const imageRef = ref(imagesRef, v4()); // Tạo tham chiếu tới một tên tệp ngẫu nhiên
-  //     await uploadBytes(imageRef, imageUpload); // Tải lên ảnh lên Firestore
-  //     const imageUrl = await getDownloadURL(imageRef); // Lấy URL tải xuống của ảnh đã tải lên
-  //     return imageUrl;
-  //   } catch (error) {
-  //     console.error("Error uploading image to Firestore:", error);
-  //     throw error;
-  //   }
-  // };
+  
 
   const uploadImageToFirestore = async (imageUpload) => {
     return new Promise((resolve, reject) => {
@@ -236,12 +211,12 @@ function AddFlower(props) {
                   )}
 
                   <div className="thumbnail-images">
-                    {images.slice(1).map((image, index) => (
+                    {images.map((image, index) => (
                       <div key={index} className="thumbnail-image">
                         <img src={image} alt="..." />
                         <button
                           type="button"
-                          onClick={() => removeFile(index + 1)}
+                          onClick={() => removeFile(index)}
                         ></button>
                       </div>
                     ))}

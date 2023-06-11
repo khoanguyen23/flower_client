@@ -35,7 +35,7 @@ const Checkout = ({ location, cartItems, currency }) => {
     fetchUserShipping();
     fetchUserPayment();
   }, []);
-  console.log(userPayment);
+  
 
   const fetchUserShipping = async () => {
     try {
@@ -50,6 +50,7 @@ const Checkout = ({ location, cartItems, currency }) => {
       //  console.log(defaultShipping[0].userShippingCity);
       // Do something with the default shipping information
       setUserShipping(defaultShipping[0]);
+      
     } catch (error) {
       console.error("Error retrieving user shipping:", error);
       // Handle the error
@@ -65,7 +66,7 @@ const Checkout = ({ location, cartItems, currency }) => {
         (payment) => payment.defaultPayment === true
       );
 
-      console.log(defaultPayment[0]);
+     
       // Do something with the default Payment information
       setUserPayment(defaultPayment[0]);
     } catch (error) {
@@ -237,7 +238,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                                   <Link
                                     to={
                                       process.env.PUBLIC_URL +
-                                      "/shop-grid-standard"
+                                      "/shop"
                                     }
                                   >
                                     MUA NGAY
@@ -288,7 +289,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                                   value={userPayment.expiryMonth}
                                 />
                               </div>
-                              <div className="col-lg-12 col-md-12">
+                              <div className="col-lg-12 col-md-6">
                                 <div className="billing-info mb-20">
                                   <label>Loại thẻ </label>
                                   <input type="text" value={userPayment.type} />

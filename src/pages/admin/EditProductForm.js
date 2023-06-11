@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import FlowerService from "../../services/FlowerService";
-import axios from 'axios';
-
+import axios from "axios";
+import { storage } from "../../firebase";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  listAll,
+  list,
+} from "firebase/storage";
+import { v4 } from "uuid";
 
 const EditProductForm = ({ product, onUpdate }) => {
- 
+  const [imageUpload, setImageUpload] = useState(null);
   const [name, setName] = useState(product.name);
   const [category, setCategory] = useState(product.category);
   const [shortDescription, setShortDescription] = useState(
@@ -20,20 +28,53 @@ const EditProductForm = ({ product, onUpdate }) => {
     product.fullDescription
   );
   const [tag, setTag] = useState(product.tag);
+console.log(image)
+  const changeBoth = (e) => {
+    uploadFile(e);
+    setImageUpload(e.target.files[0]);
+    // setFile(e.target.files[0]);
+  };
+  const uploadImageToFirestore = async (imageUpload) => {
+    return new Promise((resolve, reject) => {
+      const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
 
-  
+      // uploadBytes(imageRef, imageUpload)
+      //   .then(() => getDownloadURL(imageRef))
+      //   .then((imageUrl) => resolve(imageUrl))
+      //   .catch((error) => reject(error));
+      uploadBytes(imageRef, imageUpload).then(() => {
+        getDownloadURL(imageRef).then((imageUrl) => resolve(imageUrl));
+      });
+    });
+  };
 
   const uploadFile = async (e) => {
     const file = e.target.files[0];
-    const imageURL = URL.createObjectURL(file);
-
+    
+    // const imageURL = URL.createObjectURL(image);
     try {
-      // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
-      setImage([...image, imageURL]);
-    } catch (error) {
-      // Xử lý lỗi nếu có
-    }
+      const imageUrl = await uploadImageToFirestore(file);
+      console.log(imageUrl);
+      setImage([...image, imageUrl]);
+      console.log(image);
+      
+
+      // setImageUpload(imageUrl)
+      // setImages([...images, imageURL]);
+    } catch (error) {}
   };
+
+  // const uploadFile = async (e) => {
+  //   const file = e.target.files[0];
+  //   const imageURL = URL.createObjectURL(file);
+
+  //   try {
+  //     // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
+  //     setImage([...image, imageURL]);
+  //   } catch (error) {
+  //     // Xử lý lỗi nếu có
+  //   }
+  // };
   const removeFile = (index) => {
     const updatedImages = [...image];
     updatedImages.splice(index, 1);
@@ -55,88 +96,46 @@ const EditProductForm = ({ product, onUpdate }) => {
       setTag([...tag, tagItem]);
     }
   };
-  
-const handleSubmit = (e) => {
-  e.preventDefault();
 
-  const flowerData = {
-    flowerId: flowerId,
-    name: name,
-    image: image,
-    tag: tag,
-    category: category,
-    shortDescription: shortDescription,
-    stock: stock,
-    price: price,
-    discount: discount,
-    fullDescription: fullDescription
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const imageUrls = [];
+
+      for (const image of image) {
+        const imageUrl = await uploadImageToFirestore(image);
+        imageUrls.push(imageUrl);
+      }
+
+      const flowerData = {
+        flowerId: flowerId,
+        name: name,
+        image: image, // Đảm bảo bạn đã sử dụng tên biến đúng là `images`
+        tag: tag,
+        category: category,
+        shortDescription: shortDescription,
+        stock: stock,
+        price: price,
+        discount: discount,
+        fullDescription: fullDescription,
+      };
+
+      axios
+        .put(`http://localhost:8080/api/flowers/${flowerId}`, flowerData)
+        .then((response) => {
+          console.log("Flower updated:", response.data);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.error("Error updating flower:", error);
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
-  axios.put(`http://localhost:8080/api/flowers/${flowerId}`, flowerData)
-    .then((response) => {
-      console.log("Flower updated:", response.data);
-      window.location.reload();
-    })
-    .catch((error) => {
-      console.error("Error updating flower:", error);
-    });
-};
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   // Tạo đối tượng sản phẩm mới từ các trường dữ liệu
-  //   const flowerData = {
+ 
   
-  //     flowerId: flowerId,
-  //     name: name,
-  //     image: image,
-  //     tag: tag,
-  //     category: category,
-  //     shortDescription : shortDescription,
-  //     stock: stock,
-  //     price: price,
-  //     discount: discount,
-  //     fullDescription: fullDescription
-  //   };
-  //   // console.log(updatedProduct);
-
-  //   FlowerService.updateFlower("flowerId", flowerData)
-  //   .then((response) => {
-  //      // Xử lý kết quả khi yêu cầu thành công
-  //      console.log("Flower updated:", response.data);
-  //   })
-  //   .catch((error)=>{
-  //     // Xử lý kết quả khi yêu cầu thất bại
-  //     console.error("Error updating flower:", error);
-  //   })
-  // };
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const updatedProduct = {
-  //     ...product,
-  //     name,
-  //     image,
-  //     tag,
-  //     category,
-  //     shortDescription,
-  //     stock,
-  //     price,
-  //     discount,
-  //     fullDescription,
-  //   };
-  //   console.log(updatedProduct);
-
-  //   FlowerService.updateFlower(product.id, updatedProduct)
-  //     .then(() => {
-        
-  //       onUpdate(updatedProduct);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi cập nhật hoa:", error);
-  //     });
-  // };
-
   return (
     <div className="modal-content-wrapper">
       <form onSubmit={handleSubmit} className="edit-container">
@@ -149,12 +148,12 @@ const handleSubmit = (e) => {
             )}
 
             <div className="thumbnail-images">
-              {image.slice(1).map((image, index) => (
+              {image.map((image, index) => (
                 <div key={index} className="thumbnail-image">
                   <img src={image} alt="..." />
                   <button
                     type="button"
-                    onClick={() => removeFile(index + 1)}
+                    onClick={() => removeFile(index)}
                   ></button>
                 </div>
               ))}
@@ -162,27 +161,26 @@ const handleSubmit = (e) => {
           </div>
 
           <div className="form-group">
-            <input type="file" className="form-control" onChange={uploadFile} />
+            <input type="file" className="form-control" onChange={changeBoth} />
           </div>
           <div className="form-group">
             <label htmlFor="category" className="col-sm-3 control-label">
               Tag
             </label>
-            
-              <div className="sidebar-widget-tag">
-                {tagList.map((tagItem) => (
-                  <div className="checkbox-element" key={tagItem}>
-                    <button
-                      className={`tag-button ${
-                        tag.includes(tagItem) ? "active" : ""
-                      }`}
-                      onClick={(e) => handleTagButtonClick(tagItem, e)}
-                    >
-                      {tagItem}
-                    </button>
-                  </div>
-                ))}
-             
+
+            <div className="sidebar-widget-tag">
+              {tagList.map((tagItem) => (
+                <div className="checkbox-element" key={tagItem}>
+                  <button
+                    className={`tag-button ${
+                      tag.includes(tagItem) ? "active" : ""
+                    }`}
+                    onClick={(e) => handleTagButtonClick(tagItem, e)}
+                  >
+                    {tagItem}
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -350,12 +348,12 @@ const handleSubmit = (e) => {
           </div>
 
           <div className="form-group">
-                  <div className="billing-back-btn">
-                    <div className="col-sm-6 addflower-btn">
-                      <button type="submit">Cập nhật </button>
-                    </div>
-                  </div>
-                </div>
+            <div className="billing-back-btn">
+              <div className="col-sm-6 addflower-btn">
+                <button type="submit">Cập nhật </button>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
