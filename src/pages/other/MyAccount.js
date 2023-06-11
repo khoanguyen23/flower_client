@@ -300,8 +300,8 @@ const MyAccount = ({ location }) => {
       userShippingName: userShippingName,
       userShippingState: userShippingState,
       userShippingStreet1: userShippingStreet1,
-      userShippingStreet2: userShippingStreet1,
-      userShippingZipcode: userShippingStreet2,
+      userShippingStreet2: userShippingStreet2,
+      userShippingZipcode: userShippingZipcode,
     };
     axios
       .put(
