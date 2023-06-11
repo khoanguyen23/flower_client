@@ -44,6 +44,9 @@ const MyAccount = ({ location }) => {
 
   //shipping address
 
+  const [shippingToDelete, setShippingToDelete] = useState(null);
+
+
   useEffect(() => {
     fetchUserShippingList();
     fetchUserPaymentList();
@@ -69,7 +72,6 @@ const MyAccount = ({ location }) => {
     MyAccountService.getUserShipping()
       .then((response) => {
         setUserShippingList(response.data);
-        console.log(response.data);
         const defaultShipping = response.data.find(
           (shipping) => shipping.userShippingDefault === true
         );
@@ -103,6 +105,9 @@ const MyAccount = ({ location }) => {
         console.error("Lỗi khi cập nhật the thanh toan mặc định:", error);
       });
   };
+  const handleEditUserShipping = (shippingId) =>{
+
+  }
 
   const [userShippingCity, setUserShippingCity] = useState("");
   const [userShippingCountry, setUserShippingCountry] = useState("");
@@ -115,15 +120,7 @@ const MyAccount = ({ location }) => {
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
 
-  //credit card information
-
-  // const [cardName,setCardName] = useState("");
-  // const [cardNumber,setCardNumber] = useState("");
-  // const [cvc,setCvc] = useState("");
-  // const [defaultPayment,setDefaultPayment] = useState("");
-  // const [expiryMonth,setExpiryMonth] = useState("");
-  // const [expiryYear,setExpiryYear] = useState("");
-  // const [holderName,setHolderName] = useState("");
+ 
 
   const handleSetUserShipping = (e) => {
     e.preventDefault();
@@ -177,6 +174,24 @@ const MyAccount = ({ location }) => {
   const onRemoveBtnClick = (id) => {
     setAddressList(addressList.filter((address) => address !== id));
   };
+
+  const handleDelete= (shippingid) => {
+    
+    console.log("da xoa thanh cong",shippingid)
+  }
+
+  // MyAccountService.deleteUserShipping(id)
+    //   .then(() => {
+    //     // Xóa thành công, cập nhật danh sách sản phẩm
+    //     const updatedShipping = userShippingList.filter(
+    //       (shipping) =>shipping.id !== id
+    //     );
+    //     setUserShippingList()
+    //     // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
+    //   })
+    //   .catch((error) => {
+    //     console.error("Lỗi khi xóa hoa:", error);
+    //   });
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -443,7 +458,7 @@ const MyAccount = ({ location }) => {
                                     </ul>
                                   </div>
                                   <div className="billing-back-btn">
-                                    <div className="billing-btn">
+                                    <div className="billing-btn row">
                                       <button
                                         onClick={(event) => onAddCreditCard()}
                                       >
@@ -538,12 +553,18 @@ const MyAccount = ({ location }) => {
                                           </div>
                                         </div>
                                         <div className="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
-                                          <div className="entries-edit-delete text-center">
+                                          <div className="entries-edit-delete text-center row">
                                             <button
                                               onClick={() => setToggle(true)}
                                               className="edit"
                                             >
                                               Chỉnh sửa
+                                            </button>
+                                            <button
+                                             onClick={handleDelete(shipping.id)}
+                                              className="delete"
+                                            >
+                                              Xóa
                                             </button>
                                           </div>
                                         </div>
@@ -565,7 +586,7 @@ const MyAccount = ({ location }) => {
 
                             {toggle && (
                               <div className="myaccount-info-wrapper">
-                                <form onSubmit={handleSetUserShipping}>
+                                <form onSubmit={handleEditUserShipping}>
                                   <div className="row">
                                     <div className="col-lg-6 col-md-12">
                                       <div className="billing-info">

@@ -26,7 +26,7 @@ class CreditCardForm extends React.Component {
     toggleYear: true,
     showCard: false,
     cardFlipped: false, 
-    defaultPayment: true,
+    defaultPayment: false,
   };
 
   handleChange = (event, type) => {

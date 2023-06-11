@@ -281,20 +281,22 @@ const Checkout = ({ location, cartItems, currency }) => {
                               </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
-                              <label>Ngày hết hạn </label>
+                              <label>Tháng </label>
                               <div className="billing-info mb-20">
                                 <input
                                   type="text"
                                   value={userPayment.expiryMonth}
                                 />
                               </div>
-                              <div className="col-lg-6 col-md-6"><div className="billing-info mb-20">
-                                <label>Loại thẻ </label>
-                                <input type="text" value={userPayment.type} />
-                              </div></div>
-                              
+                              <div className="col-lg-12 col-md-12">
+                                <div className="billing-info mb-20">
+                                  <label>Loại thẻ </label>
+                                  <input type="text" value={userPayment.type} />
+                                </div>
+                              </div>
                             </div>
                             <div className="col-lg-6 col-md-6">
+                              <label> Năm </label>
                               <div className="billing-info mb-20">
                                 <input
                                   type="text"

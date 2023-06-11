@@ -4,7 +4,16 @@ import AuthService from "./auth.service";
 import http from "../http-common";
 
 
-
+const deleteUserShipping= async  (shippingId)=>{
+  try {
+    await http.delete(`/user-shipping/${shippingId}`);
+    // Dispatch an action to update the store (assuming you have defined the appropriate action)
+    // For example:
+    
+  } catch (error) {
+    console.error("Error deleting flower:", error);
+  }
+}
 const getUserShipping = () => {
   return http.get("/user-shipping");
 };
@@ -68,6 +77,7 @@ const MyAccountService = {
   setUserPayment,
   getUserPayment,
   updateDefaultPayment,
+  deleteUserShipping
 };
 
 export default MyAccountService;

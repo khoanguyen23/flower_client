@@ -23,7 +23,7 @@ const deleteFlower = async (flowerId) => {
     console.error("Error deleting flower:", error);
   }
 };
-const updateFlower = (flowerId,updatedProduct) => {
+const updateFlower = (flowerId) => {
   return http.put(`/flowers/${flowerId}`);
 };
 

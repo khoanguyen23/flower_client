@@ -181,14 +181,14 @@ const Cart = ({
                                 </td>
                                 <td className="product-subtotal">
                                   {discountedPrice !== null
-                                    ? currency.currencySymbol +
+                                    ? 
                                       (
                                         finalDiscountedPrice * cartItem.quantity
-                                      ).toFixed(2)
-                                    : currency.currencySymbol +
+                                      )  +"VND"
+                                    : 
                                       (
                                         finalProductPrice * cartItem.quantity
-                                      ).toFixed(2)}
+                                      ) +"VND"}
                                 </td>
 
                                 <td className="product-remove">
@@ -213,7 +213,7 @@ const Cart = ({
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
                         <Link
-                          to={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                          to={process.env.PUBLIC_URL + "/sho"}
                         >
                           Tiếp tục mua sắm
                         </Link>
@@ -291,14 +291,14 @@ const Cart = ({
                       <h5>
                         Tổng số tiền{" "}
                         <span>
-                          {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                          { cartTotalPrice +"VND"}
                         </span>
                       </h5>
 
                       <h4 className="grand-totall-title">
                         Tổng thanh toán{" "}
                         <span>
-                          {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                          { cartTotalPrice  +"VND"}
                         </span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
@@ -317,7 +317,7 @@ const Cart = ({
                     </div>
                     <div className="item-empty-area__text">
                       Không tìm thấy sản phẩm trong giỏ hàng <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/shop"}>
                         MUA NGAY
                       </Link>
                     </div>

@@ -57,7 +57,7 @@ const ProductManagement = ({ products }) => {
   // Function to handle the update operation in the EditProductForm component
   const handleUpdate = (updatedProduct) => {
     // Thực hiện cập nhật dữ liệu sản phẩm tại đây, ví dụ:
-    FlowerService.updateFlower(updatedProduct.id, updatedProduct)
+    FlowerService.updateFlower(updatedProduct.id)
       .then(() => {
         // Cập nhật danh sách sản phẩm hoặc gọi action để cập nhật trong Redux store
         // ...
