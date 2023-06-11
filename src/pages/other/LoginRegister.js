@@ -69,6 +69,8 @@ const LoginRegister = ({ location }) => {
       .catch((error) => {
         console.error("Đăng nhập thất bại:", error);
         setLoginSuccess(false);
+        setPassword("");
+        setUsername("");
       });
   };
 

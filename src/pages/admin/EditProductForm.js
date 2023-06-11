@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "@material-ui/core";
 import FlowerService from "../../services/FlowerService";
+import axios from 'axios';
 
 
 const EditProductForm = ({ product, onUpdate }) => {
@@ -14,6 +15,7 @@ const EditProductForm = ({ product, onUpdate }) => {
   const [price, setPrice] = useState(product.price);
   const [discount, setDiscount] = useState(product.discount);
   const [image, setImage] = useState(product.image);
+  const [flowerId, setFlowerId] = useState(product.id);
   const [fullDescription, setFullDescription] = useState(
     product.fullDescription
   );
@@ -53,26 +55,61 @@ const EditProductForm = ({ product, onUpdate }) => {
       setTag([...tag, tagItem]);
     }
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    // Tạo đối tượng sản phẩm mới từ các trường dữ liệu
-    const updatedProduct = {
-      id: product.id, // Giữ nguyên ID
-      name,
-      image,
-      tag,
-      category,
-      shortDescription,
-      stock,
-      price,
-      discount,
-      fullDescription,
-    };
-    console.log(updatedProduct);
-
-    onUpdate(updatedProduct); // Gọi hàm onUpdate để cập nhật sản phẩm
+  const flowerData = {
+    flowerId: flowerId,
+    name: name,
+    image: image,
+    tag: tag,
+    category: category,
+    shortDescription: shortDescription,
+    stock: stock,
+    price: price,
+    discount: discount,
+    fullDescription: fullDescription
   };
+
+  axios.put(`http://localhost:8080/api/flowers/${flowerId}`, flowerData)
+    .then((response) => {
+      console.log("Flower updated:", response.data);
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error("Error updating flower:", error);
+    });
+};
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   // Tạo đối tượng sản phẩm mới từ các trường dữ liệu
+  //   const flowerData = {
+  
+  //     flowerId: flowerId,
+  //     name: name,
+  //     image: image,
+  //     tag: tag,
+  //     category: category,
+  //     shortDescription : shortDescription,
+  //     stock: stock,
+  //     price: price,
+  //     discount: discount,
+  //     fullDescription: fullDescription
+  //   };
+  //   // console.log(updatedProduct);
+
+  //   FlowerService.updateFlower("flowerId", flowerData)
+  //   .then((response) => {
+  //      // Xử lý kết quả khi yêu cầu thành công
+  //      console.log("Flower updated:", response.data);
+  //   })
+  //   .catch((error)=>{
+  //     // Xử lý kết quả khi yêu cầu thất bại
+  //     console.error("Error updating flower:", error);
+  //   })
+  // };
   // const handleSubmit = (e) => {
   //   e.preventDefault();
 

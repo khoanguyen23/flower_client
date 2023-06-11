@@ -14,6 +14,10 @@ const deleteUserShipping= async  (shippingId)=>{
     console.error("Error deleting flower:", error);
   }
 }
+const updateUserShipping = (shippingId) => {
+  return http.put(`/user-shipping/${shippingId}`);
+}
+
 const getUserShipping = () => {
   return http.get("/user-shipping");
 };
@@ -77,7 +81,8 @@ const MyAccountService = {
   setUserPayment,
   getUserPayment,
   updateDefaultPayment,
-  deleteUserShipping
+  deleteUserShipping,
+  updateUserShipping,
 };
 
 export default MyAccountService;
