@@ -18,6 +18,7 @@ import MyAccountService from "../../services/MyAccountService";
 import AuthService from "../../services/auth.service";
 import CreditCardForm1 from "./CreditCardForm1";
 import warning from "warning";
+import axios from 'axios';
 
 const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
@@ -72,11 +73,26 @@ const MyAccount = ({ location }) => {
     MyAccountService.getUserShipping()
       .then((response) => {
         setUserShippingList(response.data);
+        console.log(response.data)
+
+        
+        
         const defaultShipping = response.data.find(
           (shipping) => shipping.userShippingDefault === true
         );
         if (defaultShipping) {
           setDefaultShippingId(defaultShipping.id);
+        }
+        if (response.data.length > 0) {
+          setShippingId(response.data[0].id);
+          setUserShippingCity(response.data[0].userShippingCity);
+          setUserShippingCountry(response.data[0].userShippingCountry);
+          setUserShippingDefault(response.data[0].userShippingDefault);
+          setUserShippingName(response.data[0].userShippingName);
+          setUserShippingState(response.data[0].userShippingState);
+          setUserShippingStreet1(response.data[0].userShippingStreet1);
+          setUserShippingStreet2(response.data[0].userShippingStreet2);
+          setUserShippingZipcode(response.data[0].userShippingZipcode);
         }
       })
       .catch((error) => {
@@ -105,9 +121,7 @@ const MyAccount = ({ location }) => {
         console.error("Lỗi khi cập nhật the thanh toan mặc định:", error);
       });
   };
-  const handleEditUserShipping = (shippingId) =>{
-
-  }
+ 
 
   const [userShippingCity, setUserShippingCity] = useState("");
   const [userShippingCountry, setUserShippingCountry] = useState("");
@@ -119,6 +133,7 @@ const MyAccount = ({ location }) => {
   const [userShippingZipcode, setUserShippingZipcode] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
+  const [shippingId, setShippingId] = useState("")
 
  
 
@@ -226,6 +241,29 @@ const MyAccount = ({ location }) => {
         });
     }
   };
+  const handleEditUserShipping = (e) =>{
+    e.preventDefault();
+    const shippingData = {
+      shippingId : shippingId,
+      userShippingCity: userShippingCity,
+      userShippingCountry: userShippingCountry,
+      userShippingDefault: userShippingDefault,
+      userShippingName: userShippingName,
+      userShippingState: userShippingState,
+      userShippingStreet1: userShippingStreet1,
+      userShippingStreet2:userShippingStreet1,
+      userShippingZipcode:userShippingStreet2,
+    }
+    axios.put(`http://localhost:8080/api/user-shipping/${shippingId}`, shippingData)
+    .then((response)=>{
+      console.log('User Shipping updated:', response.data);
+      window.location.reload();
+    })
+    .catch((error)=>{
+      console.error('Error updating User Shipping:', error);
+    })
+
+  }
 
   return (
     <Fragment>
@@ -561,7 +599,7 @@ const MyAccount = ({ location }) => {
                                               Chỉnh sửa
                                             </button>
                                             <button
-                                             onClick={handleDelete(shipping.id)}
+                                            //  onClick={handleDelete(shipping.id)}
                                               className="delete"
                                             >
                                               Xóa
@@ -715,7 +753,7 @@ const MyAccount = ({ location }) => {
                                       <div className="row">
                                         <div className="col-lg-6 col-md-12">
                                           <div className="billing-info">
-                                            <label>Tên </label>
+                                            <label>Tên  </label>
                                             <input
                                               type="text"
                                               value={userShippingName}
@@ -758,7 +796,6 @@ const MyAccount = ({ location }) => {
                                             />
                                           </div>
                                         </div>
-
                                         <div className="col-lg-6 col-md-6">
                                           <div className="billing-info">
                                             <label>Quận/huyện </label>

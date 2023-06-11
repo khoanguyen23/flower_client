@@ -224,7 +224,7 @@ const Compare = ({
                     </div>
                     <div className="item-empty-area__text">
                         Không tìm thấy sản phẩm để so sánh <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/shop"}>
                         Thêm sản phẩm
                       </Link>
                     </div>
