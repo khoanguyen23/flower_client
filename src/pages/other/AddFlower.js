@@ -21,6 +21,7 @@ function AddFlower(props) {
   const [regularPrice, setRegularPrice] = useState("");
   const [salePrice, setSalePrice] = useState("");
   const [images, setImages] = useState([]);
+  const [rating, setRating] = useState(5);
   const [products, setProducts] = useState("");
   const [fullDescription, setFullDescription] = useState("");
   const [tag, setTag] = useState([]);
@@ -124,17 +125,6 @@ function AddFlower(props) {
     updatedImages.splice(index, 1);
     setImages(updatedImages);
   };
-  // const formDataWithUrls = {
-  //   name: flowerName,
-  //   image: images,
-  //   tag,
-  //   category,
-  //   shortDescription: description,
-  //   stock: inStockNumber,
-  //   price: regularPrice,
-  //   discount: salePrice,
-  //   fullDescription,
-  // };
   
 
   // console.log(formDataWithUrls);
@@ -196,6 +186,7 @@ function AddFlower(props) {
         price: regularPrice,
         discount: salePrice,
         fullDescription,
+        rating,
       };
 
       const response = await axios.post(

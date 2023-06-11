@@ -30,7 +30,7 @@ const HomeFurniture = () => {
 
         {/* tab product */}
         {/* <TabProductTwo spaceBottomClass="pb-100" category="flower" /> */}
-        <TabProductTwo spaceBottomClass="pb-100" category="Hoa cưới" />
+        <TabProductTwo spaceBottomClass="pb-100"  />
         {/* <TabProductTwo spaceBottomClass="pb-100" category={["hoa-cuoi", "hoa-tinh-yeu", "hoa-valentine"]} /> */}
 
         

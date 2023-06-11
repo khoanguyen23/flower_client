@@ -35,6 +35,7 @@
           border-color: #e7e7e7;
           &.product-image-title {
             padding: 27px 10px 35px;
+            
             @media #{$xs-layout} {
               min-width: 220px;
             }
@@ -63,10 +64,17 @@
             & .image {
               clear: both;
               width: 100%;
-              margin: 14px 0 7px;
+              // margin: 14px 0 7px;
               display: block;
+              width: 365px;
+            height: 455px;
+            text-align: center;
+            margin: 0 auto;
+
               img {
-                width: auto;
+                // width: auto;
+                width: 100%;
+                height: 100%;
               }
             }
             & .category {

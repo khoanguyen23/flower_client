@@ -48,21 +48,13 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                         {single.name}{" "}
                       </Link>
                     </h4>
-                    <h6>Qty: {single.quantity}</h6>
+                    <h6>Số lượng : {single.quantity}</h6>
                     <span>
                       {discountedPrice !== null
-                        ? currency.currencySymbol + finalDiscountedPrice
-                        : currency.currencySymbol + finalProductPrice}
+                        ?  + finalDiscountedPrice + "VND"
+                        :  + finalProductPrice+ "VND"}
                     </span>
-                    {single.selectedProductColor &&
-                    single.selectedProductSize ? (
-                      <div className="cart-item-variation">
-                        <span>Color: {single.selectedProductColor}</span>
-                        <span>Size: {single.selectedProductSize}</span>
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    
                   </div>
                   <div className="shopping-cart-delete">
                     <button onClick={() => deleteFromCart(single, addToast)}>
@@ -75,26 +67,26 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
           </ul>
           <div className="shopping-cart-total">
             <h4>
-              Total :{" "}
+              Tổng cộng :{" "}
               <span className="shop-total">
-                {currency.currencySymbol + cartTotalPrice.toFixed(2)}
+                { + cartTotalPrice.toFixed(2) + "VND"}
               </span>
             </h4>
           </div>
           <div className="shopping-cart-btn btn-hover text-center">
             <Link className="default-btn" to={process.env.PUBLIC_URL + "/cart"}>
-              view cart
+              Xem giỏ hàng
             </Link>
             <Link
               className="default-btn"
               to={process.env.PUBLIC_URL + "/checkout"}
             >
-              checkout
+             Thanh toán
             </Link>
           </div>
         </Fragment>
       ) : (
-        <p className="text-center">No items added to cart</p>
+        <p className="text-center">Không có sản phẩm nào trong giỏ hàng</p>
       )}
     </div>
   );

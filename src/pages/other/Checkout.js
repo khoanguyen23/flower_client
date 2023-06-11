@@ -9,6 +9,8 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
+import MyAccountService from "../../services/MyAccountService";
+import { useState, useEffect } from "react";
 import {
   Table,
   TableRow,
@@ -22,10 +24,54 @@ const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
 
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = useState(true);
+  const [userShipping, setUserShipping] = useState("");
+  const [userPayment, setUserPayment] = useState("");
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+  };
+  useEffect(() => {
+    fetchUserShipping();
+    fetchUserPayment();
+  }, []);
+  console.log(userPayment);
+
+  const fetchUserShipping = async () => {
+    try {
+      const response = await MyAccountService.getUserShipping();
+      const userShippingData = response.data;
+
+      // Filter the userShippingData array to get the shipping with defaultShipping=true
+      const defaultShipping = userShippingData.filter(
+        (shipping) => shipping.userShippingDefault === true
+      );
+
+      //  console.log(defaultShipping[0].userShippingCity);
+      // Do something with the default shipping information
+      setUserShipping(defaultShipping[0]);
+    } catch (error) {
+      console.error("Error retrieving user shipping:", error);
+      // Handle the error
+    }
+  };
+  const fetchUserPayment = async () => {
+    try {
+      const response = await MyAccountService.getUserPayment();
+      const userPaymentData = response.data;
+
+      // Filter the userPaymentData array to get the Payment with defaultPayment=true
+      const defaultPayment = userPaymentData.filter(
+        (payment) => payment.defaultPayment === true
+      );
+
+      console.log(defaultPayment[0]);
+      // Do something with the default Payment information
+      setUserPayment(defaultPayment[0]);
+    } catch (error) {
+      console.error("Error retrieving user Payment:", error);
+      // Handle the error
+    }
   };
 
   return (
@@ -112,44 +158,44 @@ const Checkout = ({ location, cartItems, currency }) => {
                               </div>
                               <div className="col-lg-12">
                                 <div className="billing-select mb-20">
-                                  <label>Tỉnh thành</label>
-                                  <select>
-                                    <option>Chọn địa chỉ của bạn</option>
-                                    <option>Đà Nẵng</option>
-                                    <option>Lâm Đồng</option>
-                                    <option>Quảng Trị</option>
-                                    <option>Hồ Chí Minh</option>
-                                    <option>Ninh Thuận</option>
-                                  </select>
+                                  <label>Tỉnh/ Thành phố </label>
                                 </div>
                               </div>
                               <div className="col-lg-12">
                                 <div className="billing-info mb-20">
                                   <label>Tên đường, Tòa nhà, Số nhà.</label>
+
                                   <input
-                                    className="billing-address"
-                                    placeholder="Tên đường, Tòa nhà"
                                     type="text"
+                                    value={userShipping.userShippingStreet1}
                                   />
-                                  <input placeholder="Số nhà" type="text" />
                                 </div>
                               </div>
                               <div className="col-lg-12">
                                 <div className="billing-info mb-20">
                                   <label>Tỉnh/Thành phố</label>
-                                  <input type="text" />
+                                  <input
+                                    type="text"
+                                    value={userShipping.userShippingCity}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info mb-20">
                                   <label>Quận/Huyện</label>
-                                  <input type="text" />
+                                  <input
+                                    type="text"
+                                    value={userShipping.userShippingState}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info mb-20">
                                   <label>Phường/Xã</label>
-                                  <input type="text" />
+                                  <input
+                                    type="text"
+                                    value={userShipping.userShippingStreet2}
+                                  />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
@@ -213,7 +259,52 @@ const Checkout = ({ location, cartItems, currency }) => {
                       </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="1">
-                      <Card.Body></Card.Body>
+                      <Card.Body>
+                        <div className="billing-info-wrap">
+                          <div className="row">
+                            <div className="col-lg-6 col-md-6">
+                              <div className="billing-info mb-20">
+                                <label>Tên </label>
+                                <input
+                                  type="text"
+                                  value={userPayment.cardName}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="billing-info mb-20">
+                                <label>Số thẻ</label>
+                                <input
+                                  type="text"
+                                  value={userPayment.cardNumber}
+                                />
+                              </div>
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <label>Ngày hết hạn </label>
+                              <div className="billing-info mb-20">
+                                <input
+                                  type="text"
+                                  value={userPayment.expiryMonth}
+                                />
+                              </div>
+                              <div className="col-lg-6 col-md-6"><div className="billing-info mb-20">
+                                <label>Loại thẻ </label>
+                                <input type="text" value={userPayment.type} />
+                              </div></div>
+                              
+                            </div>
+                            <div className="col-lg-6 col-md-6">
+                              <div className="billing-info mb-20">
+                                <input
+                                  type="text"
+                                  value={userPayment.expiryYear}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Card.Body>
                     </Accordion.Collapse>
                   </Card>
                   <Card className="single-my-account mb-20">
@@ -248,12 +339,10 @@ const Checkout = ({ location, cartItems, currency }) => {
                               cartItem.price,
                               cartItem.discount
                             );
-                            const finalProductPrice = (
-                              cartItem.price * currency.currencyRate
-                            ).toFixed(2);
-                            const finalDiscountedPrice = (
-                              discountedPrice * currency.currencyRate
-                            ).toFixed(2);
+                            const finalProductPrice =
+                              cartItem.price * currency.currencyRate;
+                            const finalDiscountedPrice =
+                              discountedPrice * currency.currencyRate;
 
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -267,14 +356,10 @@ const Checkout = ({ location, cartItems, currency }) => {
                                 </span>{" "}
                                 <span className="order-price">
                                   {discountedPrice !== null
-                                    ? currency.currencySymbol +
-                                      (
-                                        finalDiscountedPrice * cartItem.quantity
-                                      ).toFixed(2)
-                                    : currency.currencySymbol +
-                                      (
-                                        finalProductPrice * cartItem.quantity
-                                      ).toFixed(2)}
+                                    ? finalDiscountedPrice * cartItem.quantity +
+                                      "VND"
+                                    : finalProductPrice * cartItem.quantity +
+                                      "VND"}
                                 </span>
                               </li>
                             );
@@ -290,10 +375,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                       <div className="your-order-total">
                         <ul>
                           <li className="order-total">Tổng thanh toán</li>
-                          <li>
-                            {currency.currencySymbol +
-                              cartTotalPrice.toFixed(2)}
-                          </li>
+                          <li>{cartTotalPrice + "VND"}</li>
                         </ul>
                       </div>
                     </div>

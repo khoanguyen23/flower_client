@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import {
-  Button,
-  
-} from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import FlowerService from "../../services/FlowerService";
+
 
 const EditProductForm = ({ product, onUpdate }) => {
-  console.log(product)
+ 
   const [name, setName] = useState(product.name);
   const [category, setCategory] = useState(product.category);
   const [shortDescription, setShortDescription] = useState(
@@ -20,23 +19,12 @@ const EditProductForm = ({ product, onUpdate }) => {
   );
   const [tag, setTag] = useState(product.tag);
 
-  const updatedProduct = {
-    id: product.id,
-    name: name,
-    image: image,
-    tag: tag,
-    category: category,
-    shortDescription: shortDescription,
-    stock: stock,
-    price: price,
-    discount: discount,
-    fullDescription: fullDescription,
-  };
-  console.log(updatedProduct)
+  
+
   const uploadFile = async (e) => {
     const file = e.target.files[0];
     const imageURL = URL.createObjectURL(file);
-  
+
     try {
       // const cloudinaryURL = await uploadImageToCloudinary(imageURL);
       setImage([...image, imageURL]);
@@ -49,8 +37,15 @@ const EditProductForm = ({ product, onUpdate }) => {
     updatedImages.splice(index, 1);
     setImage(updatedImages);
   };
-  const tagList=["Hoa hồng", "Hoa tulip", "Hoa mẫu đơn", "Hoa layon","Hoa sen", "Hoa cúc"]
-  const handleTagButtonClick = (tagItem,e) => {
+  const tagList = [
+    "Hoa hồng",
+    "Hoa tulip",
+    "Hoa mẫu đơn",
+    "Hoa layon",
+    "Hoa sen",
+    "Hoa cúc",
+  ];
+  const handleTagButtonClick = (tagItem, e) => {
     e.preventDefault();
     if (tag.includes(tagItem)) {
       setTag(tag.filter((item) => item !== tagItem));
@@ -58,36 +53,63 @@ const EditProductForm = ({ product, onUpdate }) => {
       setTag([...tag, tagItem]);
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform the update operation and pass the updated product data to the parent component
+
+    // Tạo đối tượng sản phẩm mới từ các trường dữ liệu
     const updatedProduct = {
-      id: product.id,
-      name: name,
-      image: image,
-      tag: tag,
-      category: category,
-      shortDescription: shortDescription,
-      stock: stock,
-      price: price,
-      discount: discount,
-      fullDescription: fullDescription,
+      id: product.id, // Giữ nguyên ID
+      name,
+      image,
+      tag,
+      category,
+      shortDescription,
+      stock,
+      price,
+      discount,
+      fullDescription,
     };
-    onUpdate(updatedProduct);
+    console.log(updatedProduct);
+
+    onUpdate(updatedProduct); // Gọi hàm onUpdate để cập nhật sản phẩm
   };
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   const updatedProduct = {
+  //     ...product,
+  //     name,
+  //     image,
+  //     tag,
+  //     category,
+  //     shortDescription,
+  //     stock,
+  //     price,
+  //     discount,
+  //     fullDescription,
+  //   };
+  //   console.log(updatedProduct);
+
+  //   FlowerService.updateFlower(product.id, updatedProduct)
+  //     .then(() => {
+        
+  //       onUpdate(updatedProduct);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi cập nhật hoa:", error);
+  //     });
+  // };
 
   return (
     <div className="modal-content-wrapper">
-    
       <form onSubmit={handleSubmit} className="edit-container">
         <div className="image-container col-sm-5">
           <div className="image-upload-preview product-img">
-            {image &&  (
+            {image && (
               <div className="main-image">
                 {image.length > 0 && <img src={image[0]} alt="..." />}
               </div>
-            ) }
+            )}
 
             <div className="thumbnail-images">
               {image.slice(1).map((image, index) => (
@@ -109,7 +131,7 @@ const EditProductForm = ({ product, onUpdate }) => {
             <label htmlFor="category" className="col-sm-3 control-label">
               Tag
             </label>
-            <div className="col-sm-9 checkbox-container-tag">
+            
               <div className="sidebar-widget-tag">
                 {tagList.map((tagItem) => (
                   <div className="checkbox-element" key={tagItem}>
@@ -123,18 +145,16 @@ const EditProductForm = ({ product, onUpdate }) => {
                     </button>
                   </div>
                 ))}
-              </div>
+             
             </div>
           </div>
-
-          
         </div>
         <div className="input-container col-sm-7">
           <div className="form-group">
             <label htmlFor="name" className="col-sm-6 control-label">
               Tên hoa
             </label>
-            <div className="col-sm-9">
+            <div className="col-sm-12">
               <input
                 type="text"
                 value={name}
@@ -148,7 +168,7 @@ const EditProductForm = ({ product, onUpdate }) => {
             <label htmlFor="category" className="col-sm-3 control-label">
               Loại hoa
             </label>
-            <div className="col-sm-9 checkbox-container">
+            <div className="col-sm-12 checkbox-container">
               <div className="checkbox-row">
                 <div className="checkbox-element">
                   <label>
@@ -228,7 +248,7 @@ const EditProductForm = ({ product, onUpdate }) => {
             <label htmlFor="stock" className="col-sm-3 control-label">
               Số lượng
             </label>
-            <div className="col-sm-9">
+            <div className="col-sm-12">
               <input
                 type="number"
                 min="0"
@@ -244,7 +264,7 @@ const EditProductForm = ({ product, onUpdate }) => {
 
           <div className="form-group group-price">
             <label className="col-sm-9">Giá</label>
-            <div className="col-lg-4 col-md-4">
+            <div className="col-sm-6">
               <div className="">
                 <input
                   type="text"
@@ -255,7 +275,7 @@ const EditProductForm = ({ product, onUpdate }) => {
                 />
               </div>
             </div>
-            <div className="col-lg-4 col-md-4">
+            <div className="col-sm-6">
               <div className="">
                 <input
                   type="text"
@@ -271,7 +291,7 @@ const EditProductForm = ({ product, onUpdate }) => {
             <label htmlFor="description" className="col-sm-3 control-label">
               Mô tả
             </label>
-            <div className="col-sm-9">
+            <div className="col-sm-12">
               <textarea
                 className="form-control"
                 value={shortDescription}
@@ -283,7 +303,7 @@ const EditProductForm = ({ product, onUpdate }) => {
             <label htmlFor="fullDescription" className="col-sm-3 control-label">
               Mô tả đầy đủ
             </label>
-            <div className="col-sm-9">
+            <div className="col-sm-12">
               <textarea
                 className="form-control"
                 value={fullDescription}
@@ -292,13 +312,15 @@ const EditProductForm = ({ product, onUpdate }) => {
             </div>
           </div>
 
-          <Button type="submit">Cập nhật</Button>
-          
+          <div className="form-group">
+                  <div className="billing-back-btn">
+                    <div className="col-sm-6 addflower-btn">
+                      <button type="submit">Cập nhật </button>
+                    </div>
+                  </div>
+                </div>
         </div>
-
-        
       </form>
-
     </div>
   );
 };

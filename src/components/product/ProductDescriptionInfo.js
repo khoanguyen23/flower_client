@@ -46,13 +46,13 @@ const ProductDescriptionInfo = ({
       <div className="product-details-price">
         {discountedPrice !== null ? (
           <Fragment>
-            <span>{currency.currencySymbol + finalDiscountedPrice}</span>{" "}
+            <span>{ finalDiscountedPrice+ "VND"}</span>{" "}
             <span className="old">
-              {currency.currencySymbol + finalProductPrice}
+              { finalProductPrice+ "VND"}
             </span>
           </Fragment>
         ) : (
-          <span>{currency.currencySymbol + finalProductPrice} </span>
+          <span>{ finalProductPrice+ "VND"} </span>
         )}
       </div>
       {product.rating && product.rating > 0 ? (
@@ -145,7 +145,7 @@ const ProductDescriptionInfo = ({
               rel="noopener noreferrer"
               target="_blank"
             >
-              Buy Now
+             Mua ngay
             </a>
           </div>
         </div>
@@ -194,10 +194,10 @@ const ProductDescriptionInfo = ({
                 disabled={productCartQty >= productStock}
               >
                 {" "}
-                Add To Cart{" "}
+               Thêm vào giỏ hàng {" "}
               </button>
             ) : (
-              <button disabled>Out of Stock</button>
+              <button disabled>Hết hàng </button>
             )}
           </div>
           <div className="pro-details-wishlist">
@@ -206,8 +206,8 @@ const ProductDescriptionInfo = ({
               disabled={wishlistItem !== undefined}
               title={
                 wishlistItem !== undefined
-                  ? "Added to wishlist"
-                  : "Add to wishlist"
+                  ? "Đã thêm vào yêu thích "
+                  : "Thêm vào yêu thích "
               }
               onClick={() => addToWishlist(product, addToast)}
             >
@@ -220,8 +220,8 @@ const ProductDescriptionInfo = ({
               disabled={compareItem !== undefined}
               title={
                 compareItem !== undefined
-                  ? "Added to compare"
-                  : "Add to compare"
+                  ? "Đã thêm vào so sánh"
+                  : "Thêm vào so sánh"
               }
               onClick={() => addToCompare(product, addToast)}
             >
@@ -237,7 +237,7 @@ const ProductDescriptionInfo = ({
             {product.category.map((single, key) => {
               return (
                 <li key={key}>
-                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                  <Link to={process.env.PUBLIC_URL + "/shop"}>
                     {single}
                   </Link>
                 </li>
@@ -255,7 +255,7 @@ const ProductDescriptionInfo = ({
             {product.tag.map((single, key) => {
               return (
                 <li key={key}>
-                  <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                  <Link to={process.env.PUBLIC_URL + "/shop"}>
                     {single}
                   </Link>
                 </li>

@@ -116,37 +116,25 @@ const Cart = ({
                                   >
                                     {cartItem.name}
                                   </Link>
-                                  {cartItem.selectedProductColor &&
-                                  cartItem.selectedProductSize ? (
-                                    <div className="cart-item-variation">
-                                      <span>
-                                        Color: {cartItem.selectedProductColor}
-                                      </span>
-                                      <span>
-                                        Size: {cartItem.selectedProductSize}
-                                      </span>
-                                    </div>
-                                  ) : (
-                                    ""
-                                  )}
+                                  
                                 </td>
 
                                 <td className="product-price-cart">
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {currency.currencySymbol +
-                                          finalProductPrice}
+                                        {
+                                          finalProductPrice + "VND"}
                                       </span>
                                       <span className="amount">
-                                        {currency.currencySymbol +
-                                          finalDiscountedPrice}
+                                        {
+                                          finalDiscountedPrice+ "VND"}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {currency.currencySymbol +
-                                        finalProductPrice}
+                                      {
+                                        finalProductPrice+ "VND"}
                                     </span>
                                   )}
                                 </td>

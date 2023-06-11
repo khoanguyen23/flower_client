@@ -33,7 +33,7 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
     >
       <div className="container">
         <SectionTitle
-          titleText="Related Products"
+          titleText="Sản phẩm liên quan"
           positionClass="text-center"
           spaceClass="mb-50"
         />
@@ -41,7 +41,7 @@ const RelatedProductSlider = ({ spaceBottomClass, category }) => {
           <Swiper {...settings}>
             <ProductGrid
               category={category}
-              limit={6}
+              limit={10}
               sliderClassName="swiper-slide"
             />
           </Swiper>

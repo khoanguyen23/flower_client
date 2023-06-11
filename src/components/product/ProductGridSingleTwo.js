@@ -76,7 +76,7 @@ const ProductGridSingleTwo = ({
                   href={product.affiliateLink}
                   rel="noopener noreferrer"
                   target="_blank"
-                  title="Buy now"
+                  title="Mua ngay"
                 >
                   {" "}
                   <i className="fa fa-shopping-cart"></i>{" "}
@@ -84,7 +84,7 @@ const ProductGridSingleTwo = ({
               ) : product.variation && product.variation.length >= 1 ? (
                 <Link
                   to={`${process.env.PUBLIC_URL}/product/${product.id}`}
-                  title="Select options"
+                  title="Lựa chọn"
                 >
                   <i className="fa fa-cog"></i>
                 </Link>
@@ -119,8 +119,8 @@ const ProductGridSingleTwo = ({
                 disabled={compareItem !== undefined}
                 title={
                   compareItem !== undefined
-                    ? "Added to compare"
-                    : "Add to compare"
+                    ? "Đã thêm vào so sánh "
+                    : "Thêm vào so sánh "
                 }
                 onClick={() => addToCompare(product, addToast)}
               >
@@ -143,14 +143,14 @@ const ProductGridSingleTwo = ({
                 {discountedPrice !== null ? (
                   <Fragment>
                     <span>
-                      {currency.currencySymbol + finalDiscountedPrice}
+                      {finalDiscountedPrice + "VND"}
                     </span>{" "}
                     <span className="old">
-                      {currency.currencySymbol + finalProductPrice}
+                      {finalProductPrice+ "VND"}
                     </span>
                   </Fragment>
                 ) : (
-                  <span>{currency.currencySymbol + finalProductPrice} </span>
+                  <span>{finalProductPrice+ "VND"} </span>
                 )}
               </div>
             </div>
@@ -160,8 +160,8 @@ const ProductGridSingleTwo = ({
                 disabled={wishlistItem !== undefined}
                 title={
                   wishlistItem !== undefined
-                    ? "Added to wishlist"
-                    : "Add to wishlist"
+                    ? "Đã thêm vào yêu thích "
+                    : "Thêm vào yêu thích "
                 }
                 onClick={() => addToWishlist(product, addToast)}
               >

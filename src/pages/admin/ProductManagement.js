@@ -7,6 +7,7 @@ import SearchForm from "./SearchForm";
 import PropTypes from "prop-types";
 import AddFlower from "../other/AddFlower";
 import Paginator from "react-hooks-paginator";
+import MobileSearch from "../../components/header/sub-components/MobileSearch";
 
 import { getSortedProducts } from "../../helpers/product";
 
@@ -19,6 +20,7 @@ import {
   TableCell,
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
+import EditIcon from "@mui/icons-material/Edit";
 import { Modal } from "@mui/material";
 import CloseIcon from "@material-ui/icons/Close";
 import EditProductForm from "./EditProductForm";
@@ -29,7 +31,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import FlowerService from "../../services/FlowerService";
 
 const ProductManagement = ({ products }) => {
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [show, setShow] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,10 +56,17 @@ const ProductManagement = ({ products }) => {
 
   // Function to handle the update operation in the EditProductForm component
   const handleUpdate = (updatedProduct) => {
-    // Perform the update operation using the updatedProduct data
-    console.log("Updated product:", updatedProduct);
-    setEditingProduct(null); // Clear the editingProduct state
-    setIsModalOpen(false); // Close the modal
+    // Thực hiện cập nhật dữ liệu sản phẩm tại đây, ví dụ:
+    FlowerService.updateFlower(updatedProduct.id, updatedProduct)
+      .then(() => {
+        // Cập nhật danh sách sản phẩm hoặc gọi action để cập nhật trong Redux store
+        // ...
+
+        setIsModalOpen(false); // Đóng modal
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật sản phẩm:", error);
+      });
   };
 
   const handleDelete = (productId) => {
@@ -105,9 +113,10 @@ const ProductManagement = ({ products }) => {
       <div className="order-content container">
         <h3>Quản lý sản phẩm </h3>
         <div className="row">
+       
           <SearchForm onSearch={handleSearch} />
         </div>
-        <div className="table-features row">
+        <div className="table-features row ">
           <Button
             variant="contained"
             onClick={() => setIsAddModalOpen(true)}
@@ -128,7 +137,7 @@ const ProductManagement = ({ products }) => {
           <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
             <div className="modal-content">
               <div className="modal-heading">
-              <h3 className="panel-title">Thêm sản phẩm</h3>
+                <h3 className="panel-title">Thêm sản phẩm</h3>
                 <Button
                   onClick={() => setIsAddModalOpen(false)}
                   color="inherit"
@@ -136,7 +145,6 @@ const ProductManagement = ({ products }) => {
                   className="close-icon"
                   startIcon={<CloseIcon />}
                 />
-               
               </div>
 
               <AddFlower />
@@ -148,7 +156,6 @@ const ProductManagement = ({ products }) => {
       <Table>
         <TableHead>
           <TableRow>
-           
             <TableCell>ID</TableCell>
 
             <TableCell>Tên hoa</TableCell>
@@ -157,18 +164,17 @@ const ProductManagement = ({ products }) => {
             <TableCell>Số lượng</TableCell>
             <TableCell>Giá</TableCell>
             <TableCell>Chi tiết</TableCell>
-            <TableCell>Chi tiết</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {currentData.map((data) => {
             return (
               <TableRow key={data.id}>
-              
                 <TableCell>{data.id} </TableCell>
                 <TableCell>{data.name} </TableCell>
-                <TableCell>{data.shortDescription} </TableCell>
                 <TableCell>{data.category} </TableCell>
+                <TableCell>{data.shortDescription} </TableCell>
+
                 <TableCell>{data.stock} </TableCell>
                 <TableCell>{data.price} </TableCell>
                 <TableCell>
@@ -179,13 +185,15 @@ const ProductManagement = ({ products }) => {
                       open={isModalOpen}
                       onClose={() => setIsModalOpen(false)}
                     >
-                      <div className="modal-content">
-                        <Button
+                      <div className="modal-content modal-heading">
+                        <button
                           onClick={() => setIsModalOpen(false)}
                           color="inherit"
                           size="small"
-                          startIcon={<CloseIcon />}
-                        />
+                          className="close-icon"
+                        >
+                          <CloseIcon />
+                        </button>
                         <EditProductForm
                           product={editingProduct}
                           onUpdate={handleUpdate}
@@ -198,14 +206,14 @@ const ProductManagement = ({ products }) => {
                   <Button
                     onClick={() => handleEdit(data)}
                     className={"edit-btn"}
+                    startIcon={<EditIcon />}
                   >
-                    Chỉnh sửa{" "}
+                    Sửa{" "}
                   </Button>
-                </TableCell>
-                <TableCell>
                   <Button
                     onClick={() => handleDelete(data.id)}
                     startIcon={<DeleteForeverIcon />}
+                    className={"deleteButton"}
                   >
                     Xóa
                   </Button>

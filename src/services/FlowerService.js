@@ -23,6 +23,9 @@ const deleteFlower = async (flowerId) => {
     console.error("Error deleting flower:", error);
   }
 };
+const updateFlower = (flowerId,updatedProduct) => {
+  return http.put(`/flowers/${flowerId}`);
+};
 
 
 // const setFlower = (flowerData) => {
@@ -31,7 +34,7 @@ const deleteFlower = async (flowerId) => {
 const FlowerService = {
   setFlower,
   getFlower,
-  deleteFlower
+  deleteFlower,updateFlower
 };
 
 export default FlowerService;

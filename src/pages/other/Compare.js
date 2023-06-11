@@ -128,14 +128,14 @@ const Compare = ({
                                         }
                                         title={
                                           compareItem !== undefined
-                                            ? "Added to cart"
-                                            : "Add to cart"
+                                            ? "Đã thêm vào giỏ hàng"
+                                            : "Thêm vào giỏ hàng"
                                         }
                                       >
                                         {cartItem !== undefined &&
                                         cartItem.quantity > 0
-                                          ? "Added"
-                                          : "Add to cart"}
+                                          ? "Đã thêm"
+                                          : "Thêm vào giỏ hàng"}
                                       </button>
                                     ) : (
                                       <button disabled className="active">
@@ -165,18 +165,18 @@ const Compare = ({
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {currency.currencySymbol +
-                                          finalProductPrice}
+                                        {
+                                          finalProductPrice + "VND"}
                                       </span>
                                       <span className="amount">
-                                        {currency.currencySymbol +
-                                          finalDiscountedPrice}
+                                        {
+                                          finalDiscountedPrice + "VND"}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {currency.currencySymbol +
-                                        finalProductPrice}
+                                      {
+                                        finalProductPrice + "VND"}
                                     </span>
                                   )}
                                 </td>
