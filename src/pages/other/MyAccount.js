@@ -18,7 +18,7 @@ import MyAccountService from "../../services/MyAccountService";
 import AuthService from "../../services/auth.service";
 import CreditCardForm1 from "./CreditCardForm1";
 import warning from "warning";
-import axios from 'axios';
+import axios from "axios";
 
 const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
@@ -47,7 +47,6 @@ const MyAccount = ({ location }) => {
 
   const [shippingToDelete, setShippingToDelete] = useState(null);
 
-
   useEffect(() => {
     fetchUserShippingList();
     fetchUserPaymentList();
@@ -69,14 +68,15 @@ const MyAccount = ({ location }) => {
       });
   };
 
+  // let userShipping = null;
+
   const fetchUserShippingList = () => {
     MyAccountService.getUserShipping()
       .then((response) => {
+        //  userShipping = response.data;
         setUserShippingList(response.data);
-        console.log(response.data)
+        // console.log(userShipping);
 
-        
-        
         const defaultShipping = response.data.find(
           (shipping) => shipping.userShippingDefault === true
         );
@@ -84,7 +84,8 @@ const MyAccount = ({ location }) => {
           setDefaultShippingId(defaultShipping.id);
         }
         if (response.data.length > 0) {
-          setShippingId(response.data[0].id);
+          setShippingId(shippingId);
+          // setShippingId(response.data[0].id);
           setUserShippingCity(response.data[0].userShippingCity);
           setUserShippingCountry(response.data[0].userShippingCountry);
           setUserShippingDefault(response.data[0].userShippingDefault);
@@ -93,6 +94,15 @@ const MyAccount = ({ location }) => {
           setUserShippingStreet1(response.data[0].userShippingStreet1);
           setUserShippingStreet2(response.data[0].userShippingStreet2);
           setUserShippingZipcode(response.data[0].userShippingZipcode);
+          // setSelectedShipping(userShippingList[0]);
+          // setUserShippingCity(userShippingList[0].userShippingCity);
+          // setUserShippingCountry(userShippingList[0].userShippingCountry);
+          // setUserShippingDefault(userShippingList[0].userShippingDefault);
+          // setUserShippingName(userShippingList[0].userShippingName);
+          // setUserShippingState(userShippingList[0].userShippingState);
+          // setUserShippingStreet1(userShippingList[0].userShippingStreet1);
+          // setUserShippingStreet2(userShippingList[0].userShippingStreet2);
+          // setUserShippingZipcode(userShippingList[0].userShippingZipcode);
         }
       })
       .catch((error) => {
@@ -121,7 +131,6 @@ const MyAccount = ({ location }) => {
         console.error("Lỗi khi cập nhật the thanh toan mặc định:", error);
       });
   };
- 
 
   const [userShippingCity, setUserShippingCity] = useState("");
   const [userShippingCountry, setUserShippingCountry] = useState("");
@@ -133,9 +142,51 @@ const MyAccount = ({ location }) => {
   const [userShippingZipcode, setUserShippingZipcode] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
-  const [shippingId, setShippingId] = useState("")
+  const [shippingId, setShippingId] = useState("");
+  const [editShipping, setEditShipping] = useState(null);
+  // const handleEditButtonClick = (shippingId) => {
+  //   handleEditUserShipping(shippingId);
+  // };
 
- 
+  // const handleEditShipping = (shippingId) => {
+  //   const shippingToEdit = userShippingList.find(
+  //     (shipping) => shipping.id === shippingId
+  //   );
+  //   setEditShipping(shippingToEdit);
+  //   setToggle(true);
+  // };
+  const handleEditShipping = (shippingId) => {
+    const shippingToEdit = userShippingList.find(
+      (shipping) => shipping.id === shippingId
+    );
+
+    setShippingId(shippingId);
+    setUserShippingCity(shippingToEdit.userShippingCity);
+    setUserShippingCountry(shippingToEdit.userShippingCountry);
+    setUserShippingDefault(shippingToEdit.userShippingDefault);
+    setUserShippingName(shippingToEdit.userShippingName);
+    setUserShippingState(shippingToEdit.userShippingState);
+    setUserShippingStreet1(shippingToEdit.userShippingStreet1);
+    setUserShippingStreet2(shippingToEdit.userShippingStreet2);
+    setUserShippingZipcode(shippingToEdit.userShippingZipcode);
+
+    setToggle(true);
+  };
+
+  // const [selectedShipping, setSelectedShipping] = useState(null);
+
+  // const handleEditShipping = (shipping) => {
+  //   setSelectedShipping(shipping);
+  //   // Cập nhật các giá trị state của địa chỉ được chọn
+  //   setUserShippingCity(shipping.userShippingCity);
+  //   setUserShippingCountry(shipping.userShippingCountry);
+  //   setUserShippingDefault(shipping.userShippingDefault);
+  //   setUserShippingName(shipping.userShippingName);
+  //   setUserShippingState(shipping.userShippingState);
+  //   setUserShippingStreet1(shipping.userShippingStreet1);
+  //   setUserShippingStreet2(shipping.userShippingStreet2);
+  //   setUserShippingZipcode(shipping.userShippingZipcode);
+  // };
 
   const handleSetUserShipping = (e) => {
     e.preventDefault();
@@ -190,23 +241,22 @@ const MyAccount = ({ location }) => {
     setAddressList(addressList.filter((address) => address !== id));
   };
 
-  const handleDelete= (shippingid) => {
-    
-    console.log("da xoa thanh cong",shippingid)
-  }
+  const handleDelete = (shippingid) => {
+    console.log("da xoa thanh cong", shippingid);
+  };
 
   // MyAccountService.deleteUserShipping(id)
-    //   .then(() => {
-    //     // Xóa thành công, cập nhật danh sách sản phẩm
-    //     const updatedShipping = userShippingList.filter(
-    //       (shipping) =>shipping.id !== id
-    //     );
-    //     setUserShippingList()
-    //     // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
-    //   })
-    //   .catch((error) => {
-    //     console.error("Lỗi khi xóa hoa:", error);
-    //   });
+  //   .then(() => {
+  //     // Xóa thành công, cập nhật danh sách sản phẩm
+  //     const updatedShipping = userShippingList.filter(
+  //       (shipping) =>shipping.id !== id
+  //     );
+  //     setUserShippingList()
+  //     // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
+  //   })
+  //   .catch((error) => {
+  //     console.error("Lỗi khi xóa hoa:", error);
+  //   });
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -230,7 +280,6 @@ const MyAccount = ({ location }) => {
           setCurrentPassword("");
           setNewPassword("");
           setConfirmPassword("");
-        
         })
         .catch((error) => {
           if (error.response && error.response.data) {
@@ -241,29 +290,32 @@ const MyAccount = ({ location }) => {
         });
     }
   };
-  const handleEditUserShipping = (e) =>{
+  const handleEditUserShipping = (e) => {
     e.preventDefault();
     const shippingData = {
-      shippingId : shippingId,
+      shippingId: shippingId,
       userShippingCity: userShippingCity,
       userShippingCountry: userShippingCountry,
       userShippingDefault: userShippingDefault,
       userShippingName: userShippingName,
       userShippingState: userShippingState,
       userShippingStreet1: userShippingStreet1,
-      userShippingStreet2:userShippingStreet1,
-      userShippingZipcode:userShippingStreet2,
-    }
-    axios.put(`http://localhost:8080/api/user-shipping/${shippingId}`, shippingData)
-    .then((response)=>{
-      console.log('User Shipping updated:', response.data);
-      window.location.reload();
-    })
-    .catch((error)=>{
-      console.error('Error updating User Shipping:', error);
-    })
-
-  }
+      userShippingStreet2: userShippingStreet1,
+      userShippingZipcode: userShippingStreet2,
+    };
+    axios
+      .put(
+        `http://localhost:8080/api/user-shipping/${shippingId}`,
+        shippingData
+      )
+      .then((response) => {
+        console.log("User Shipping updated:", response.data);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error updating User Shipping:", error);
+      });
+  };
 
   return (
     <Fragment>
@@ -489,6 +541,7 @@ const MyAccount = ({ location }) => {
                                               >
                                                 Chỉnh sửa
                                               </button>
+                                              
                                             </div>
                                           </div>
                                         </li>
@@ -592,14 +645,25 @@ const MyAccount = ({ location }) => {
                                         </div>
                                         <div className="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
                                           <div className="entries-edit-delete text-center row">
-                                            <button
+                                            {/* <button
                                               onClick={() => setToggle(true)}
                                               className="edit"
                                             >
                                               Chỉnh sửa
-                                            </button>
+                                            </button> */}
                                             <button
-                                            //  onClick={handleDelete(shipping.id)}
+                                                onClick={() => {
+                                                  handleEditShipping(
+                                                    shipping.id
+                                                  ); // Gọi handleEditShipping với shipping.id tương ứng
+                                                  setToggle(true);
+                                                }}
+                                                className="edit"
+                                              >
+                                                Chỉnh sửa
+                                              </button>
+                                            <button
+                                              //  onClick={handleDelete(shipping.id)}
                                               className="delete"
                                             >
                                               Xóa
@@ -624,6 +688,153 @@ const MyAccount = ({ location }) => {
 
                             {toggle && (
                               <div className="myaccount-info-wrapper">
+                                {/* <form onSubmit={handleEditUserShipping}>
+                                  <div className="row">
+                                    <div className="col-lg-6 col-md-12">
+                                      <div className="billing-info">
+                                        <label>Tên </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingName
+                                              : ""
+                                          }
+                                          name="userShippingName"
+                                          onChange={(e) =>
+                                            setUserShippingName(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Số nhà </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingStreet1
+                                              : ""
+                                          }
+                                          name="userShippingStreet1"
+                                          onChange={(e) =>
+                                            setUserShippingStreet1(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-12 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Số đường </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingStreet2
+                                              : ""
+                                          }
+                                          name="userShippingStreet2"
+                                          onChange={(e) =>
+                                            setUserShippingStreet2(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Quận/huyện </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingState
+                                              : ""
+                                          }
+                                          name="userShippingState"
+                                          onChange={(e) =>
+                                            setUserShippingState(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Tỉnh/ Thành phố </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingCity
+                                              : ""
+                                          }
+                                          name="userShippingCity"
+                                          onChange={(e) =>
+                                            setUserShippingCity(e.target.value)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Quốc Gia </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingCountry
+                                              : ""
+                                          }
+                                          name="userShippingCountry"
+                                          onChange={(e) =>
+                                            setUserShippingCountry(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                    <div className="col-lg-6 col-md-6">
+                                      <div className="billing-info">
+                                        <label>Zipcode </label>
+                                        <input
+                                          type="text"
+                                          value={
+                                            editShipping
+                                              ? editShipping.userShippingZipcode
+                                              : ""
+                                          }
+                                          name="userShippingZipcode"
+                                          onChange={(e) =>
+                                            setUserShippingZipcode(
+                                              e.target.value
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div className="billing-back-btn">
+                                    <div className="billing-btn">
+                                      <button type="submit" className="save">
+                                        Lưu
+                                      </button>
+                                    </div>
+                                    <div className="billing-btn">
+                                      <button
+                                        onClick={() => setToggle(false)}
+                                        className="cancel"
+                                      >
+                                        Hủy
+                                      </button>
+                                    </div>
+                                  </div>
+                                </form> */}
                                 <form onSubmit={handleEditUserShipping}>
                                   <div className="row">
                                     <div className="col-lg-6 col-md-12">
@@ -753,7 +964,7 @@ const MyAccount = ({ location }) => {
                                       <div className="row">
                                         <div className="col-lg-6 col-md-12">
                                           <div className="billing-info">
-                                            <label>Tên  </label>
+                                            <label>Tên </label>
                                             <input
                                               type="text"
                                               value={userShippingName}
