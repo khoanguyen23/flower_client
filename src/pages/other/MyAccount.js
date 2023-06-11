@@ -6,6 +6,9 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { Alert } from "@mui/material";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
@@ -14,6 +17,7 @@ import CreditCardForm from "./CreditCardForm1";
 import MyAccountService from "../../services/MyAccountService";
 import AuthService from "../../services/auth.service";
 import CreditCardForm1 from "./CreditCardForm1";
+import warning from "warning";
 
 const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
@@ -174,6 +178,40 @@ const MyAccount = ({ location }) => {
     setAddressList(addressList.filter((address) => address !== id));
   };
 
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isPasswordChanged, setPasswordChanged] = useState(false);
+
+  const handleChangePassword = () => {
+    const currentUser = AuthService.getCurrentUser();
+    if (currentUser) {
+      AuthService.changePassword(
+        currentUser.id,
+        currentPassword,
+        newPassword,
+        confirmPassword
+      )
+        .then((response) => {
+          console.log(response);
+          setError("");
+          setPasswordChanged(true);
+          setCurrentPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+        
+        })
+        .catch((error) => {
+          if (error.response && error.response.data) {
+            setError(error.response.data.message);
+          } else {
+            setError("Có lỗi xảy ra. Vui lòng thử lại sau.");
+          }
+        });
+    }
+  };
+
   return (
     <Fragment>
       <MetaTags>
@@ -284,27 +322,55 @@ const MyAccount = ({ location }) => {
                           <div className="myaccount-info-wrapper">
                             <div className="account-info-wrapper">
                               <h4>Đổi mật khẩu</h4>
-                              <h5>Mật khẩu cũ </h5>
                             </div>
                             <div className="row">
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
-                                  <label>Mật khẩu mới </label>
-                                  <input type="password" />
+                                  <label>Mật khẩu cũ </label>
+                                  <input
+                                    type="password"
+                                    value={currentPassword}
+                                    onChange={(e) =>
+                                      setCurrentPassword(e.target.value)
+                                    }
+                                  />
                                 </div>
                               </div>
+
+                              <div className="col-lg-12 col-md-12">
+                                <div className="billing-info">
+                                  <label>Mật khẩu mới </label>
+                                  <input
+                                    type="password"
+                                    value={newPassword}
+                                    onChange={(e) =>
+                                      setNewPassword(e.target.value)
+                                    }
+                                  />
+                                </div>
+                              </div>
+
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Xác nhận mật khẩu </label>
-                                  <input type="password" />
+                                  <input
+                                    type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) =>
+                                      setConfirmPassword(e.target.value)
+                                    }
+                                  />
                                 </div>
                               </div>
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Lưu </button>
+                                <button onClick={handleChangePassword}>
+                                  Lưu
+                                </button>
                               </div>
                             </div>
+                            {error && <Alert severity="warning">{error}</Alert>}
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -414,7 +480,7 @@ const MyAccount = ({ location }) => {
 
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button >Lưu </button>
+                                <button>Lưu </button>
                               </div>
                             </div>
                           </div>
@@ -768,6 +834,20 @@ const MyAccount = ({ location }) => {
             </div>
           </div>
         </div>
+        <Modal
+          show={isPasswordChanged}
+          onHide={() => setPasswordChanged(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Thông báo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Mật khẩu đã được thay đổi thành công.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={() => setPasswordChanged(false)}>
+              Đóng
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </LayoutOne>
     </Fragment>
   );

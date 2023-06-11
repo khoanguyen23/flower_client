@@ -1,10 +1,13 @@
 import {
   ADD_TO_WISHLIST,
   DELETE_FROM_WISHLIST,
-  DELETE_ALL_FROM_WISHLIST
+  DELETE_ALL_FROM_WISHLIST,
+  FETCH_USER_WISHLIST_SUCCESS,
 } from "../actions/wishlistActions";
 
-const initState = [];
+const initState = {
+ 
+};
 
 const wishlistReducer = (state = initState, action) => {
   const wishlistItems = state,
@@ -33,7 +36,15 @@ const wishlistReducer = (state = initState, action) => {
     });
   }
 
-  return wishlistItems;
+  if (action.type === FETCH_USER_WISHLIST_SUCCESS) {
+    return {
+      ...state,
+      userWishlist: action.payload,
+    };
+  }
+  
+
+  return state;
 };
 
 export default wishlistReducer;
