@@ -45,8 +45,6 @@ const MyAccount = ({ location }) => {
 
   //shipping address
 
-  const [shippingToDelete, setShippingToDelete] = useState(null);
-
   useEffect(() => {
     fetchUserShippingList();
     fetchUserPaymentList();
@@ -54,10 +52,15 @@ const MyAccount = ({ location }) => {
   const fetchUserPaymentList = () => {
     MyAccountService.getUserPayment()
       .then((response) => {
+        const userPaymentCheckout = response.data;
+        localStorage.setItem(
+          "userPayment",
+          JSON.stringify(userPaymentCheckout)
+        );
         setUserPaymentList(response.data);
         console.log(response.data);
         const defaultPayment = response.data.find(
-          (payment) => payment.userPaymentDefault === true
+          (payment) => payment.defaultPayment === true
         );
         if (defaultPayment) {
           setDefaultPaymentId(defaultPayment.id);
@@ -73,7 +76,11 @@ const MyAccount = ({ location }) => {
   const fetchUserShippingList = () => {
     MyAccountService.getUserShipping()
       .then((response) => {
-        //  userShipping = response.data;
+        const userShippingCheckout = response.data;
+        localStorage.setItem(
+          "userShipping",
+          JSON.stringify(userShippingCheckout)
+        );
         setUserShippingList(response.data);
         // console.log(userShipping);
 
@@ -108,6 +115,20 @@ const MyAccount = ({ location }) => {
       .catch((error) => {
         console.error("Lỗi khi lấy thông tin user-shipping:", error);
       });
+  };
+
+  const handleAddUserShipping = () => {
+    // Thiết lập giá trị ban đầu cho các trường thông tin địa chỉ
+    setUserShippingName("");
+    setUserShippingStreet1("");
+    setUserShippingStreet2("");
+    setUserShippingState("");
+    setUserShippingCity("");
+    setUserShippingCountry("");
+    setUserShippingZipcode("");
+
+    // Các xử lý khác khi thêm địa chỉ
+    // ...
   };
 
   const handleSelectDefaultShipping = (shippingId) => {
@@ -241,23 +262,6 @@ const MyAccount = ({ location }) => {
     setAddressList(addressList.filter((address) => address !== id));
   };
 
-  const handleDelete = (shippingid) => {
-    console.log("da xoa thanh cong", shippingid);
-  };
-
-  // MyAccountService.deleteUserShipping(id)
-  //   .then(() => {
-  //     // Xóa thành công, cập nhật danh sách sản phẩm
-  //     const updatedShipping = userShippingList.filter(
-  //       (shipping) =>shipping.id !== id
-  //     );
-  //     setUserShippingList()
-  //     // Cập nhật state products hoặc gọi action để cập nhật trong Redux store
-  //   })
-  //   .catch((error) => {
-  //     console.error("Lỗi khi xóa hoa:", error);
-  //   });
-
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -314,6 +318,20 @@ const MyAccount = ({ location }) => {
       })
       .catch((error) => {
         console.error("Error updating User Shipping:", error);
+      });
+  };
+
+  const handleDeleteShipping = (shippingId) => {
+    MyAccountService.deleteUserShipping(shippingId)
+      .then((response) => {
+        // Xử lý thành công sau khi xóa
+        window.location.reload();
+        console.log("Xóa thành công");
+        // Thực hiện cập nhật danh sách địa chỉ vận chuyển hoặc các hoạt động khác sau khi xóa thành công
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu xảy ra
+        console.error("Lỗi khi xóa địa chỉ vận chuyển:", error);
       });
   };
 
@@ -541,7 +559,6 @@ const MyAccount = ({ location }) => {
                                               >
                                                 Chỉnh sửa
                                               </button>
-                                              
                                             </div>
                                           </div>
                                         </li>
@@ -624,7 +641,6 @@ const MyAccount = ({ location }) => {
                                               {shipping.userShippingCountry}
                                             </p>
                                           </div>
-
                                           <div className="shipping-default col-lg-4 col-md-4">
                                             <label>
                                               <input
@@ -652,18 +668,20 @@ const MyAccount = ({ location }) => {
                                               Chỉnh sửa
                                             </button> */}
                                             <button
-                                                onClick={() => {
-                                                  handleEditShipping(
-                                                    shipping.id
-                                                  ); // Gọi handleEditShipping với shipping.id tương ứng
-                                                  setToggle(true);
-                                                }}
-                                                className="edit"
-                                              >
-                                                Chỉnh sửa
-                                              </button>
+                                              onClick={() => {
+                                                handleEditShipping(shipping.id); // Gọi handleEditShipping với shipping.id tương ứng
+                                                setToggle(true);
+                                              }}
+                                              className="edit"
+                                            >
+                                              Chỉnh sửa
+                                            </button>
                                             <button
-                                              //  onClick={handleDelete(shipping.id)}
+                                              onClick={() =>
+                                                handleDeleteShipping(
+                                                  shipping.id
+                                                )
+                                              }
                                               className="delete"
                                             >
                                               Xóa
@@ -676,10 +694,18 @@ const MyAccount = ({ location }) => {
                                 </div>
                                 <div className="billing-back-btn">
                                   <div className="billing-btn">
-                                    <button
+                                    {/* <button
                                       onClick={(event) => onAddBtnClick()}
                                     >
                                       Thêm địa chỉ{" "}
+                                    </button> */}
+                                    <button
+                                      onClick={(event) => {
+                                        handleAddUserShipping();
+                                        onAddBtnClick();
+                                      }}
+                                    >
+                                      Thêm địa chỉ
                                     </button>
                                   </div>
                                 </div>

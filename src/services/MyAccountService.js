@@ -4,15 +4,9 @@ import AuthService from "./auth.service";
 import http from "../http-common";
 
 
-const deleteUserShipping= async  (shippingId)=>{
-  try {
-    await http.delete(`/user-shipping/${shippingId}`);
-    // Dispatch an action to update the store (assuming you have defined the appropriate action)
-    // For example:
-    
-  } catch (error) {
-    console.error("Error deleting flower:", error);
-  }
+const deleteUserShipping= (shippingId)=>{
+  return http.delete(`/user-shipping/${shippingId}`);
+
 }
 
 const getUserShipping = () => {
