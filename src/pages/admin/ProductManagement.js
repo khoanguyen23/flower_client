@@ -7,7 +7,7 @@ import SearchForm from "./SearchForm";
 import PropTypes from "prop-types";
 import AddFlower from "../other/AddFlower";
 import Paginator from "react-hooks-paginator";
-import MobileSearch from "../../components/header/sub-components/MobileSearch";
+import { Modal } from "react-bootstrap";
 
 import { getSortedProducts } from "../../helpers/product";
 
@@ -21,7 +21,7 @@ import {
 } from "@material-ui/core";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
-import { Modal } from "@mui/material";
+
 import CloseIcon from "@material-ui/icons/Close";
 import EditProductForm from "./EditProductForm";
 
@@ -47,11 +47,13 @@ const ProductManagement = ({ products }) => {
   const [currentData, setCurrentData] = useState([]);
   const [sortedProducts, setSortedProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   // Function to handle the edit button click
   const handleEdit = (product) => {
     setEditingProduct(product);
     setIsModalOpen(true);
+    console.log(isModalOpen);
   };
 
   // Function to handle the update operation in the EditProductForm component
@@ -95,14 +97,41 @@ const ProductManagement = ({ products }) => {
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
+  const filter = (e) => {
+    const keyword = e.target.value.toLowerCase();
 
-  const handleSearch = (query) => {
+    if (keyword !== "") {
+      const results = products.filter((product) => {
+        const productName = product.name.toLowerCase();
+        const categoryMatch = product.category.some((category) =>
+          category.toLowerCase().includes(keyword)
+        );
+
+        return productName.includes(keyword) || categoryMatch;
+      });
+      setCurrentData(results);
+    } else {
+      setCurrentData(products);
+      // If the text field is empty, show all products
+    }
+
+    setSearchKeyword(keyword);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
     const searchResults = products.filter((product) => {
-      return false;
+      const keywordMatch =
+        product.name.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchKeyword.toLowerCase());
+
+      return keywordMatch;
     });
 
     setCurrentData(searchResults);
   };
+  currentData.sort((a, b) => a.id - b.id);
 
   return (
     <Fragment>
@@ -112,10 +141,7 @@ const ProductManagement = ({ products }) => {
       </MetaTags>
       <div className="order-content container">
         <h3>Quản lý sản phẩm </h3>
-        <div className="row">
-       
-          <SearchForm onSearch={handleSearch} />
-        </div>
+        <div className="row product-management-container "></div>
         <div className="table-features row ">
           <Button
             variant="contained"
@@ -132,21 +158,47 @@ const ProductManagement = ({ products }) => {
           >
             Xóa các sản phẩm đã chọn
           </Button>
+          <div className="search-content active">
+            <input
+              type="search"
+              value={searchKeyword}
+              onChange={filter}
+              className="search-active"
+              placeholder="Tìm kiếm "
+            />
+            <button className="button-search">
+              <i className="pe-7s-search" />
+            </button>
+          </div>
         </div>
         {isAddModalOpen && (
-          <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
-            <div className="modal-content">
-              <div className="modal-heading">
-                <h3 className="panel-title">Thêm sản phẩm</h3>
-                <Button
-                  onClick={() => setIsAddModalOpen(false)}
-                  color="inherit"
-                  size="small"
-                  className="close-icon"
-                  startIcon={<CloseIcon />}
-                />
-              </div>
+          // <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+          //   <div className="modal-body">
+          //     <div className="modal-header">
+          //       <h3 className="panel-title">Thêm sản phẩm</h3>
+          //       <Button
+          //         onClick={() => setIsAddModalOpen(false)}
+          //         color="inherit"
+          //         size="small"
+          //         className="close-icon"
+          //         startIcon={<CloseIcon />}
+          //       />
+          //     </div>
 
+          //     <AddFlower />
+          //   </div>
+          // </Modal>
+          <Modal
+            show={isAddModalOpen}
+            onHide={() => setIsAddModalOpen(false)}
+            className="product-quickview-modal-wrapper"
+          >
+            <Modal.Header closeButton onClick={() => setIsAddModalOpen(false)}>
+              {" "}
+              <h3 className="panel-title">Thêm sản phẩm</h3>
+            </Modal.Header>
+
+            <div className="modal-body">
               <AddFlower />
             </div>
           </Modal>
@@ -157,7 +209,6 @@ const ProductManagement = ({ products }) => {
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
-
             <TableCell>Tên hoa</TableCell>
             <TableCell>Loại hoa</TableCell>
             <TableCell>Mô tả</TableCell>
@@ -180,20 +231,20 @@ const ProductManagement = ({ products }) => {
                 <TableCell>
                   {/* Check if the product is being edited */}
                   {editingProduct && editingProduct.id === data.id ? (
-                    // Render the modal
                     <Modal
-                      open={isModalOpen}
-                      onClose={() => setIsModalOpen(false)}
+                      show={isModalOpen}
+                      onHide={() => setIsModalOpen(false)}
+                      className="product-quickview-modal-wrapper"
                     >
-                      <div className="modal-content modal-heading">
-                        <button
-                          onClick={() => setIsModalOpen(false)}
-                          color="inherit"
-                          size="small"
-                          className="close-icon"
-                        >
-                          <CloseIcon />
-                        </button>
+                      <Modal.Header
+                        closeButton
+                        onClick={() => setIsAddModalOpen(false)}
+                      >
+                        {" "}
+                        <h3 className="panel-title">Thêm sản phẩm</h3>
+                      </Modal.Header>
+
+                      <div className="modal-body">
                         <EditProductForm
                           product={editingProduct}
                           onUpdate={handleUpdate}
@@ -201,22 +252,27 @@ const ProductManagement = ({ products }) => {
                       </div>
                     </Modal>
                   ) : (
+                    // Render the modal
+
                     <></>
                   )}
-                  <Button
-                    onClick={() => handleEdit(data)}
-                    className={"edit-btn"}
-                    startIcon={<EditIcon />}
-                  >
-                    Sửa{" "}
-                  </Button>
-                  <Button
-                    onClick={() => handleDelete(data.id)}
-                    startIcon={<DeleteForeverIcon />}
-                    className={"deleteButton"}
-                  >
-                    Xóa
-                  </Button>
+                  <div className="entries-edit-delete text-center row">
+                    <button
+                      onClick={() => {
+                        handleEdit(data);
+                      }}
+                      className=" edit-btn"
+                    >
+                      <EditIcon />  Sửa
+                    </button>
+                    <button
+                      onClick={() => handleDelete(data.id)}
+                      className="deleteButton delete-btn"
+                    >
+                      <DeleteForeverIcon /> Xóa
+                    </button>
+                  </div>
+                  
                 </TableCell>
               </TableRow>
             );

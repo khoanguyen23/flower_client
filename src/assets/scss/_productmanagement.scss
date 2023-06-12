@@ -34,6 +34,37 @@
   padding: 10px 15px;
   
 }
+.delete-btn {
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 0 10px;
+  margin: 0 5px;
+
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  text-transform: uppercase;
+
+  color: #fff;
+  border: medium none;
+  border-radius: 5px;
+}
+.edit-btn{
+  font-size: 14px;
+  font-weight: 500;
+
+  padding: 10px;
+
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+  text-transform: uppercase;
+
+  color: #fff;
+  border: medium none;
+  border-radius: 5px;
+  background-color: #df5c39
+
+}
 
 .close-icon:hover{
   background-color: #a749ff;
@@ -45,4 +76,39 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.search-content{
+  position: relative;
+    width: 250px;
+
+  .button-search {
+    font-size: 20px;
+    line-height: 1;
+    height: -webkit-fill-available;
+  
+    position: absolute;
+    top: 0;
+    right: 0;
+  
+    // height: 100%;
+    padding: 5px 20px 2px;
+  
+    transition: all 0.4s ease 0s;
+    text-transform: uppercase;
+  
+    color: #ffffff;
+    border: none;
+    border-color: #ce9634;
+    background:#a749ff;
+    &:hover {
+      background-color: #000;
+    }
+  }
+}
+.product-management-container{
+  position: absolute;
+  padding-left: 510px;
+}
+.table-features {
+  justify-content: space-between;
 }

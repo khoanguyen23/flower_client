@@ -3,7 +3,8 @@ import React, { Component } from "react";
 // const API_URL = "http://localhost:8080/api";
 import http from "../http-common"
 const getFlower = () => {
-  return http.get("/flowers");
+  // return http.get("/flowers");
+  return http.get("/flowers?_sort=id&_order=asc");
 };
 const setFlower = (
   formData

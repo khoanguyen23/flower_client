@@ -99,7 +99,7 @@ function ProductModal(props) {
 
         <div className="modal-body">
           <div className="row">
-            <div className="col-md-5 col-sm-12 col-xs-12">
+            <div className="col-md-7 col-sm-12 col-xs-12">
               <div className="product-large-image-wrapper">
                 <Swiper {...gallerySwiperParams}>
                   {product.image &&
@@ -137,7 +137,7 @@ function ProductModal(props) {
                 </Swiper>
               </div>
             </div>
-            <div className="col-md-7 col-sm-12 col-xs-12">
+            <div className="col-md-5 col-sm-12 col-xs-12">
               <div className="product-details-content quickview-content">
                 <h2>{product.name}</h2>
                 <div className="product-details-price">
