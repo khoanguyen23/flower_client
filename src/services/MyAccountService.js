@@ -8,6 +8,9 @@ const deleteUserShipping= (shippingId)=>{
   return http.delete(`/user-shipping/${shippingId}`);
 
 }
+const deleteCartItem = (cartItemId) => {
+  return http.delete(`/cart-items/${cartItemId}`)
+}
 
 const getUserShipping = () => {
   return http.get("/user-shipping");
@@ -73,6 +76,7 @@ const MyAccountService = {
   getUserPayment,
   updateDefaultPayment,
   deleteUserShipping,
+  deleteCartItem,
 };
 
 export default MyAccountService;
