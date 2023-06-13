@@ -4,23 +4,23 @@
       "image": "/assets/img/banner/banner-1.jpeg",
       "title": "Hoa hồng",
       "subtitle": "Giá từ",
-      "price": "12.000 VND",
-      "link": "/shop-grid-standard"
+      "price": "200.000 VND",
+      "link": "/product/13"
     },
     {
       "id": 2,
       "image": "/assets/img/banner/banner-2.webp",
       "title": "Hoa sen",
       "subtitle": "Giá từ",
-      "price": "40.000 VND",
-      "link": "/shop-grid-standard"
+      "price": "400.000 VND",
+      "link": "/product/14"
     },
     {
       "id": 3,
       "image": "/assets/img/banner/banner-3.jpeg",
       "title": "Hoa hướng dương",
       "subtitle": "Giá từ",
-      "price": "50.000 VND",
-      "link": "/shop-grid-standard"
+      "price": "500.000 VND",
+      "link": "/product/15"
     }
   ]

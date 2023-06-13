@@ -69,7 +69,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
             <h4>
               Tổng cộng :{" "}
               <span className="shop-total">
-                { + cartTotalPrice.toFixed(2) + "VND"}
+                { + cartTotalPrice + "VND"}
               </span>
             </h4>
           </div>

@@ -40,8 +40,8 @@ function AddFlower(props) {
     "Hoa layon",
     "Hoa sen",
     "Hoa cúc",
-    "Hoa lavender",
-    "Hoa chibi",
+    "Hoa baby",
+    "Hoa cẩm chướng"
   ];
   const handleTagButtonClick = (tagItem, e) => {
     e.preventDefault();

@@ -38,8 +38,8 @@
   font-size: 14px;
   font-weight: 500;
 
-  padding: 0 10px;
-  margin: 0 5px;
+  padding: 5px 10px;
+  margin: 5px;
 
   cursor: pointer;
   transition: all 0.3s ease 0s;
@@ -48,12 +48,14 @@
   color: #fff;
   border: medium none;
   border-radius: 5px;
+  background-color: #df5c39;
 }
 .edit-btn{
   font-size: 14px;
   font-weight: 500;
 
-  padding: 10px;
+  padding: 5px 10px;
+  margin: 5px;
 
   cursor: pointer;
   transition: all 0.3s ease 0s;
@@ -62,7 +64,7 @@
   color: #fff;
   border: medium none;
   border-radius: 5px;
-  background-color: #df5c39
+  background-color:  #555;
 
 }
 
@@ -79,7 +81,7 @@
 }
 .search-content{
   position: relative;
-    width: 250px;
+    width: 450px;
 
   .button-search {
     font-size: 20px;
@@ -111,4 +113,35 @@
 }
 .table-features {
   justify-content: space-between;
+}
+
+.add-button-container {
+  button{
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    // height: 100%;
+
+    display: inline-block;
+
+    padding: 10px 17px;
+
+    text-transform: uppercase;
+
+    color: #fff;
+    background-color: #a749ff;
+    border-radius: 50px;
+    border: none;
+  }
+  
+  
+  
+  
+}
+.add-button-container :hover{
+  background-color: #a749ff;
+  color: #fff;
+  border-radius: 50px;
+ 
+
 }

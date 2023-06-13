@@ -4,20 +4,20 @@
     "title": "Hoa Tình Yêu",
     "subtitle": "Vườn Hoa cho Em",
     "image": "/assets/img/slider/vuon-hoa-cho-em.jpg",
-    "url": "/shop-grid-standard"
+    "url": "/product/14"
   },
   {
     "id": 2,
     "title": "Hoa Tình Yêu",
     "subtitle": "Tình Yêu Ngọt Ngào",
     "image": "/assets/img/slider/tinh-yeu-ngot-ngao.jpg",
-    "url": "/shop-grid-standard"
+    "url": "/product/15"
   },
   {
     "id": 3,
     "title": "Hoa Tốt Nghiệp",
     "subtitle": "Món Quà Cho Sự Nỗ Lực",
     "image": "/assets/img/slider/no-luc.jpg",
-    "url": "/shop-grid-standard"
+    "url": "/product/16"
   }
 ]

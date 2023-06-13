@@ -75,10 +75,10 @@ const Cart = ({
                             );
                             const finalProductPrice = (
                               cartItem.price * currency.currencyRate
-                            ).toFixed(2);
+                            );
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
-                            ).toFixed(2);
+                            );
 
                             discountedPrice != null
                               ? (cartTotalPrice +=

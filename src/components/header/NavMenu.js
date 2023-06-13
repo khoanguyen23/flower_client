@@ -61,7 +61,7 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
             </Link>
           </li>
           <li>
-            <Link to={process.env.PUBLIC_URL + "/blog"}>Bài viết</Link>
+          <Link to={process.env.PUBLIC_URL + "/about"}>Về chúng tôi</Link>
           </li>
           <li>
             <Link to={process.env.PUBLIC_URL + "/contact"}>Liên hệ</Link>

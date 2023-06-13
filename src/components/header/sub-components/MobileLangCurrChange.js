@@ -29,7 +29,7 @@ const MobileLangCurrChange = ({
 
   return (
     <div className="mobile-menu-middle">
-      <div className="lang-curr-style">
+      {/* <div className="lang-curr-style">
         <span className="title mb-2">Chọn ngôn ngữ</span>
         <select
           value={currentLanguageCode}
@@ -56,7 +56,7 @@ const MobileLangCurrChange = ({
           <option value="EUR">EUR</option>
           <option value="GBP">GBP</option>
         </select>
-      </div>
+      </div> */}
     </div>
   );
 };

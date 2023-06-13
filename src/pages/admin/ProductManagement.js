@@ -143,14 +143,24 @@ const ProductManagement = ({ products }) => {
         <h3>Quản lý sản phẩm </h3>
         <div className="row product-management-container "></div>
         <div className="table-features row ">
-          <Button
+          
+            <div className="add-button-container">
+              <div className="cart-clear">
+                <button onClick={() => setIsAddModalOpen(true)}>
+                <AddIcon />   Thêm sản phẩm mới
+                </button>
+              </div>
+            </div>
+            
+         
+          {/* <Button
             variant="contained"
             onClick={() => setIsAddModalOpen(true)}
             startIcon={<AddIcon />}
             sx={{ color: "#D3D3D3" }}
           >
             Thêm sản phẩm mới
-          </Button>
+          </Button> */}
           {/* <Button
             variant="outlined"
             startIcon={<DeleteForeverIcon />}
@@ -172,7 +182,6 @@ const ProductManagement = ({ products }) => {
           </div>
         </div>
         {isAddModalOpen && (
-         
           <Modal
             show={isAddModalOpen}
             onHide={() => setIsAddModalOpen(false)}
@@ -248,16 +257,15 @@ const ProductManagement = ({ products }) => {
                       }}
                       className=" edit-btn"
                     >
-                      <EditIcon />  Sửa
+                      <EditIcon /> Sửa
                     </button>
                     <button
                       onClick={() => handleDelete(data.id)}
-                      className="deleteButton delete-btn"
+                      className="delete-btn"
                     >
                       <DeleteForeverIcon /> Xóa
                     </button>
                   </div>
-                  
                 </TableCell>
               </TableRow>
             );
