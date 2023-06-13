@@ -130,40 +130,7 @@ const Register = ({ location }) => {
                       </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                      {/* <Tab.Pane eventKey="login">
-                        <div className="login-form-container">
-                          <div className="login-register-form">
-                            <form onSubmit={handleLogin} >
-                              <input
-                                type="text"
-                                name="user-name"
-                                value={username}
-                                onChange={onChangeUsername}
-                                placeholder="Tên đăng nhập"
-                              />
-                              <input
-                                type="password"
-                                name="user-password"
-                                value={password}
-                                onChange={onChangePassword}
-                                placeholder="Mật khẩu"
-                              />
-                              <div className="button-box">
-                                <div className="login-toggle-btn">
-                                  <input type="checkbox" />
-                                  <label className="ml-10">Nhớ tài khoản</label>
-                                  <Link to={process.env.PUBLIC_URL + "/"}>
-                                    Quên mật khẩu
-                                  </Link>
-                                </div>
-                                <button type="submit">
-                                  <span>Đăng nhập</span>
-                                </button>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </Tab.Pane> */}
+                     
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">

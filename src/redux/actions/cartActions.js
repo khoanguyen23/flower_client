@@ -110,7 +110,6 @@ export const addToCart = (
       });
   };
 };
-
 //decrease from cart
 export const decreaseQuantity = (item, addToast) => {
   return dispatch => {

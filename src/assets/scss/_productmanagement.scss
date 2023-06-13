@@ -64,7 +64,7 @@
   color: #fff;
   border: medium none;
   border-radius: 5px;
-  background-color:  #555;
+  background-color:  #a749ff;
 
 }
 
@@ -82,6 +82,7 @@
 .search-content{
   position: relative;
     width: 450px;
+    border: 30px;
 
   .button-search {
     font-size: 20px;
@@ -144,4 +145,10 @@
   border-radius: 50px;
  
 
+}
+.table-cell {
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -140,7 +140,7 @@ const ProductManagement = ({ products }) => {
         <meta name="description" content="" />
       </MetaTags>
       <div className="order-content container">
-        <h3>Quản lý sản phẩm </h3>
+       
         <div className="row product-management-container "></div>
         <div className="table-features row ">
           
@@ -153,21 +153,7 @@ const ProductManagement = ({ products }) => {
             </div>
             
          
-          {/* <Button
-            variant="contained"
-            onClick={() => setIsAddModalOpen(true)}
-            startIcon={<AddIcon />}
-            sx={{ color: "#D3D3D3" }}
-          >
-            Thêm sản phẩm mới
-          </Button> */}
-          {/* <Button
-            variant="outlined"
-            startIcon={<DeleteForeverIcon />}
-            //onClick={deleteSelectedProducts}
-          >
-            Xóa các sản phẩm đã chọn
-          </Button> */}
+          
           <div className="search-content active">
             <input
               type="search"
@@ -199,7 +185,7 @@ const ProductManagement = ({ products }) => {
         )}
       </div>
 
-      <Table>
+      <Table >
         <TableHead>
           <TableRow>
             <TableCell>ID</TableCell>
@@ -213,12 +199,13 @@ const ProductManagement = ({ products }) => {
         </TableHead>
         <TableBody>
           {currentData.map((data) => {
+            const loaiHoa = data.category.join(", ");
             return (
               <TableRow key={data.id}>
                 <TableCell>{data.id} </TableCell>
-                <TableCell>{data.name} </TableCell>
-                <TableCell>{data.category} </TableCell>
-                <TableCell>{data.shortDescription} </TableCell>
+                <TableCell className="table-cell">{data.name} </TableCell>
+                <TableCell className="table-cell">{loaiHoa} </TableCell>
+                <TableCell className="table-cell">{data.shortDescription} </TableCell>
 
                 <TableCell>{data.stock} </TableCell>
                 <TableCell>{data.price} </TableCell>
