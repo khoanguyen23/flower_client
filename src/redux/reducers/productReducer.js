@@ -1,9 +1,7 @@
 import { FETCH_PRODUCTS_SUCCESS } from "../actions/productActions";
-
 const initState = {
   products: []
 };
-
 const productReducer = (state = initState, action) => {
   if (action.type === FETCH_PRODUCTS_SUCCESS) {
     
@@ -12,7 +10,6 @@ const productReducer = (state = initState, action) => {
       products: action.payload
     };
   }
-
   return state;
 };
 
