@@ -277,13 +277,13 @@ function AddFlower(props) {
                           <input
                             type="checkbox"
                             value="hoa-tinh-yeu"
-                            checked={category.includes("hoa-tinh-yeu")}
+                            checked={category.includes("Hoa tình yêu")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-tinh-yeu"]
+                                  ? [...prevCategory, "Hoa tình yêu"]
                                   : prevCategory.filter(
-                                      (c) => c !== "hoa-tinh-yeu"
+                                      (c) => c !== "Hoa tình yêu"
                                     )
                               )
                             }
@@ -296,13 +296,13 @@ function AddFlower(props) {
                           <input
                             type="checkbox"
                             value="hoa-valentine"
-                            checked={category.includes("hoa-valentine")}
+                            checked={category.includes("Hoa valentine")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-valentine"]
+                                  ? [...prevCategory, "Hoa valentine"]
                                   : prevCategory.filter(
-                                      (c) => c !== "hoa-valentine"
+                                      (c) => c !== "Hoa valentine"
                                     )
                               )
                             }
@@ -317,12 +317,12 @@ function AddFlower(props) {
                           <input
                             type="checkbox"
                             value="hoa-cuoi"
-                            checked={category.includes("hoa-cuoi")}
+                            checked={category.includes("Hoa cưới")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "hoa-cuoi"]
-                                  : prevCategory.filter((c) => c !== "hoa-cuoi")
+                                  ? [...prevCategory, "Hoa cưới"]
+                                  : prevCategory.filter((c) => c !== "Hoa cưới ")
                               )
                             }
                           />
@@ -334,12 +334,12 @@ function AddFlower(props) {
                           <input
                             type="checkbox"
                             value="qua-tang"
-                            checked={category.includes("qua-tang")}
+                            checked={category.includes("Quà tặng")}
                             onChange={(e) =>
                               setCategory((prevCategory) =>
                                 e.target.checked
-                                  ? [...prevCategory, "qua-tang"]
-                                  : prevCategory.filter((c) => c !== "qua-tang")
+                                  ? [...prevCategory, "Quà tặng"]
+                                  : prevCategory.filter((c) => c !== "Quà tặng")
                               )
                             }
                           />

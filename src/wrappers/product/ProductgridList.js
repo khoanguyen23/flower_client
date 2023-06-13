@@ -20,6 +20,7 @@ const ProductGrid = ({
 }) => {
   return (
     <Fragment>
+      
       {products.map(product => {
         return (
           <ProductGridListSingle

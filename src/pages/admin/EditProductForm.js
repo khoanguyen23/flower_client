@@ -432,7 +432,7 @@ console.log(image)
             </div>
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="category" className="col-sm-3 control-label">
               Loại hoa
             </label>
@@ -496,12 +496,12 @@ console.log(image)
                     <input
                       type="checkbox"
                       value=" Quà tặng"
-                      checked={category.includes(" Quà tặng")}
+                      checked={category.includes("Quà tặng")}
                       onChange={(e) =>
                         setCategory((prevCategory) =>
                           e.target.checked
-                            ? [...prevCategory, " Quà tặng"]
-                            : prevCategory.filter((c) => c !== " Quà tặng")
+                            ? [...prevCategory, "Quà tặng"]
+                            : prevCategory.filter((c) => c !== "Quà tặng")
                         )
                       }
                     />
@@ -510,6 +510,86 @@ console.log(image)
                 </div>
               </div>
             </div>
+          </div> */}
+           <div className="form-group">
+            <label htmlFor="category" className="col-sm-3 control-label">
+              Loại hoa
+            </label>
+            <div className="col-sm-12 checkbox-container">
+              <div className="checkbox-row">
+                <div className="checkbox-element">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="Hoa tình yêu"
+                      checked={category.includes("Hoa tình yêu")}
+                      onChange={(e) =>
+                        setCategory((prevCategory) =>
+                          e.target.checked
+                            ? [...prevCategory, "Hoa tình yêu"]
+                            : prevCategory.filter((c) => c !== "Hoa tình yêu")
+                        )
+                      }
+                    />
+                    Hoa tình yêu
+                  </label>
+                </div>
+                <div className="checkbox-element">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="Hoa Valentine"
+                      checked={category.includes("Hoa valentine")}
+                      onChange={(e) =>
+                        setCategory((prevCategory) =>
+                          e.target.checked
+                            ? [...prevCategory, "Hoa valentine"]
+                            : prevCategory.filter((c) => c !== "Hoa valentine")
+                        )
+                      }
+                    />
+                    Hoa valentine
+                  </label>
+                </div>
+              </div>
+              <div className="checkbox-row">
+                <div className="checkbox-element">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="Hoa cưới"
+                      checked={category.includes("Hoa cưới")}
+                      onChange={(e) =>
+                        setCategory((prevCategory) =>
+                          e.target.checked
+                            ? [...prevCategory, "Hoa cưới"]
+                            : prevCategory.filter((c) => c !== "Hoa cưới")
+                        )
+                      }
+                    />
+                    Hoa cưới
+                  </label>
+                </div>
+                <div className="checkbox-element">
+                  <label>
+                    <input
+                      type="checkbox"
+                      value="Quà tặng"
+                      checked={category.includes("Quà tặng")}
+                      onChange={(e) =>
+                        setCategory((prevCategory) =>
+                          e.target.checked
+                            ? [...prevCategory, "Quà tặng"]
+                            : prevCategory.filter((c) => c !== "Quà tặng")
+                        )
+                      }
+                    />
+                    Quà tặng
+                  </label>
+                </div>
+              </div>
+            </div>
+            
           </div>
 
           <div className="form-group">

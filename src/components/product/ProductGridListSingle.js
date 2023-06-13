@@ -22,10 +22,10 @@ const ProductGridListSingle = ({
   const { addToast } = useToasts();
 
   const discountedPrice = getDiscountPrice(product.price, product.discount);
-  const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
+  const finalProductPrice = +(product.price * currency.currencyRate);
   const finalDiscountedPrice = +(
     discountedPrice * currency.currencyRate
-  ).toFixed(2);
+  );
 
   return (
     <Fragment>
@@ -122,7 +122,7 @@ const ProductGridListSingle = ({
                 )}
               </div>
               <div className="pro-same-action pro-quickview">
-                <button onClick={() => setModalShow(true)} title="Quick View">
+                <button onClick={() => setModalShow(true)} title="Xem nhanh">
                   <i className="pe-7s-look" />
                 </button>
               </div>
@@ -159,7 +159,7 @@ const ProductGridListSingle = ({
           <div className="row">
             <div className="col-xl-4 col-md-5 col-sm-6">
               <div className="product-list-image-wrap">
-                <div className="product-img">
+                <div className="product-img image-two">
                   <Link to={process.env.PUBLIC_URL + "/product/" + product.id}>
                     <img
                       className="default-img img-fluid"
@@ -202,14 +202,14 @@ const ProductGridListSingle = ({
                   {discountedPrice !== null ? (
                     <Fragment>
                       <span>
-                        {currency.currencySymbol + finalDiscountedPrice}
+                        {finalDiscountedPrice+"VND"}
                       </span>{" "}
                       <span className="old">
-                        {currency.currencySymbol + finalProductPrice}
+                        {finalProductPrice+"VND"}
                       </span>
                     </Fragment>
                   ) : (
-                    <span>{currency.currencySymbol + finalProductPrice} </span>
+                    <span>{finalProductPrice+"VND"} </span>
                   )}
                 </div>
                 {product.rating && product.rating > 0 ? (

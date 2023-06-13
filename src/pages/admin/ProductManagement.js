@@ -151,13 +151,13 @@ const ProductManagement = ({ products }) => {
           >
             Thêm sản phẩm mới
           </Button>
-          <Button
+          {/* <Button
             variant="outlined"
             startIcon={<DeleteForeverIcon />}
             //onClick={deleteSelectedProducts}
           >
             Xóa các sản phẩm đã chọn
-          </Button>
+          </Button> */}
           <div className="search-content active">
             <input
               type="search"
@@ -172,22 +172,7 @@ const ProductManagement = ({ products }) => {
           </div>
         </div>
         {isAddModalOpen && (
-          // <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
-          //   <div className="modal-body">
-          //     <div className="modal-header">
-          //       <h3 className="panel-title">Thêm sản phẩm</h3>
-          //       <Button
-          //         onClick={() => setIsAddModalOpen(false)}
-          //         color="inherit"
-          //         size="small"
-          //         className="close-icon"
-          //         startIcon={<CloseIcon />}
-          //       />
-          //     </div>
-
-          //     <AddFlower />
-          //   </div>
-          // </Modal>
+         
           <Modal
             show={isAddModalOpen}
             onHide={() => setIsAddModalOpen(false)}

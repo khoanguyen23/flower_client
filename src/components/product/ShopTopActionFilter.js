@@ -33,6 +33,17 @@ const ShopTopActionFilter = ({
             <i className="fa fa-plus"></i> filter
           </button>
         </div>
+        <div className="sidebar-widget">
+      <h4 className="pro-sidebar-title">Tìm kiếm </h4>
+      <div className="pro-sidebar-search mb-50 mt-25">
+        <form className="pro-sidebar-search-form" action="#">
+          <input type="text" placeholder="Tìm kiếm..." />
+          <button>
+            <i className="pe-7s-search" />
+          </button>
+        </form>
+      </div>
+    </div>
       </div>
 
       {/* shop top filter */}
