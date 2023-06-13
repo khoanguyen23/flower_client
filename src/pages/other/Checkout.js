@@ -28,16 +28,27 @@ const Checkout = ({ location, cartItems, currency }) => {
   const [userShipping, setUserShipping] = useState("");
   const [userPayment, setUserPayment] = useState("");
 
+  // const userShippingCheckout = JSON.parse(localStorage.getItem("userShipping"));
+  // console.log(userShippingCheckout);
+  // const userShippingWithDefault = userShippingCheckout.filter(
+  //   (userShipping) => userShipping.userShippingDefault === true
+  // );
+  // const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
+  // console.log(userPaymentCheckout);
+  // const userPaymentWithDefault = userPaymentCheckout.filter(
+  //   (userPayment) => userPayment.defaultPayment === true
+  // );
   const userShippingCheckout = JSON.parse(localStorage.getItem("userShipping"));
-  console.log(userShippingCheckout);
-  const userShippingWithDefault = userShippingCheckout.filter(
-    (userShipping) => userShipping.userShippingDefault === true
-  );
-  const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
-  console.log(userPaymentCheckout);
-  const userPaymentWithDefault = userPaymentCheckout.filter(
-    (userPayment) => userPayment.defaultPayment === true
-  );
+console.log(userShippingCheckout);
+const userShippingWithDefault = userShippingCheckout?.filter(
+  (userShipping) => userShipping.userShippingDefault === true
+);
+const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
+console.log(userPaymentCheckout);
+const userPaymentWithDefault = userPaymentCheckout?.filter(
+  (userPayment) => userPayment.defaultPayment === true
+);
+
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -81,7 +92,8 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                     <Accordion.Collapse eventKey="0">
                       <Card.Body>
-                        {userShippingCheckout.map((shipping) => (
+                        {
+                        userShippingCheckout.map((shipping) => (
                           <ul>
                             <li key={shipping.id}>
                             <div className="col-lg-9 col-md-9">

@@ -52,12 +52,6 @@ const LoginRegister = ({ location }) => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-
-    // const credentials = {
-    //   username,
-    //   password,
-    // };
-
     AuthService.login(username, password)
       .then(() => {
         // localStorage.setItem("accessToken", response.data.accessToken);

@@ -41,6 +41,8 @@ const IconGroup = ({
 
   const logOut = () => {
     AuthService.logout();
+    localStorage.removeItem("userShipping");
+  localStorage.removeItem("userPayment");
 
     setCurrentUser(undefined);
   };
