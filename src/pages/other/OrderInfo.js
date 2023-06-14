@@ -18,7 +18,7 @@ import OrderService from "../../services/OrderService"
 const OrderInfo = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [userOrderList, setUserOrderList] = useState([]);
-  const [searchKeyword, setSearchKeyword] = useState("");
+ 
 
 
   useEffect(()=>{
