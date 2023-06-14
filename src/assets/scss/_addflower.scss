@@ -4,7 +4,7 @@
   padding: 20px;
 }
 
-.error{
+.error {
   color: #424242;
   font-style: italic;
   font-size: 12px;
@@ -17,7 +17,7 @@
       display: inline-block;
 
       margin: 0 10px 15px 0;
-     
+
       a,
       button {
         line-height: 1;
@@ -33,7 +33,7 @@
         border-radius: 50px;
         background: none;
         background-color: #f6f6f6;
-        
+
         &:hover,
         &.active {
           color: #fff;
@@ -73,8 +73,6 @@
   align-items: center;
   justify-items: flex-start;
 }
-
-
 
 .main-image {
   // width: 300px;
@@ -127,7 +125,6 @@
   color: #ccc;
 }
 .thumbnail-images {
-  
   margin-right: auto;
   display: inline-block;
 
@@ -253,8 +250,6 @@
   }
 }
 
-
-
 .checkbox-container {
   display: flex;
   align-items: center;
@@ -266,9 +261,9 @@
     input[type="checkbox"] {
       font-size: 8px;
       width: 10px; // Chỉnh kích thước nút checkbox
-        height: 10px; // Chỉnh kích thước nút checkbox
+      height: 10px; // Chỉnh kích thước nút checkbox
       margin-right: 10px;
-     
+
       &:checked + span {
         background-color: red;
       }
@@ -312,7 +307,6 @@
   }
 }
 
-
 .tag-button {
   display: inline-block;
   padding: 5px 10px;
@@ -324,28 +318,45 @@
 }
 
 .tag-button.active {
-  background-color:#a749ff;
+  background-color: #a749ff;
   color: #ffffff;
 }
 .addflower-btn {
   position: absolute;
   right: 25px;
   button {
-    background-color: #a749ff;
-    border: medium none;
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-    padding: 16px 35px 17px;
-    margin: 10px;
-    text-transform: uppercase;
+    // background-color: #a749ff;
+    // border: medium none;
+    // color: #fff;
+    // display: inline-block;
+    // font-size: 14px;
+    // font-weight: 500;
+    // line-height: 1;
+    // padding: 16px 35px 17px;
+    // margin: 10px;
+    // text-transform: uppercase;
+    // cursor: pointer;
+    // transition: all 0.3s ease 0s;
+    // position: relative;
+    // right: 0;
+    // margin: 0 auto;width: 150px;
+    border: none;
+    outline: none;
+    margin: 25px 50px;
     cursor: pointer;
-    transition: all 0.3s ease 0s;
-    position: relative;
-    right: 0;
-    margin: 0 auto;
-    
+    color: black;
+    font-size: 20px;
+    background-color: #f1bc68;
+    /* padding: 8px 120px; */
+    border-radius: 30px;
+    text-align: center;
+    font-style: normal;
+    &:hover {
+      opacity: 1;
+  transition-duration: 1s;
+  transform: scale(1.08);
+  background-color: indianred;
+  color: #ffff;
+    }
   }
 }
