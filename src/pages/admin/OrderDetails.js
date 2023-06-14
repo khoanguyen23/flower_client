@@ -7,7 +7,6 @@ import OrderService from "../../services/OrderService";
 import MyAccountService from "../../services/MyAccountService";
 import { format } from "date-fns";
 
-
 import {
   Button,
   Tabs,
@@ -43,8 +42,8 @@ const OrderDetails = () => {
 
   useEffect(() => {
     fetchOrderDetails(orderId);
-    fetchUserShippingDefault();
-    fetchUserPaymentDefault();
+    // fetchUserShippingDefault();
+    // fetchUserPaymentDefault();
   }, []);
 
   const fetchOrderDetails = (orderId) => {
@@ -58,33 +57,33 @@ const OrderDetails = () => {
       });
   };
 
-  const fetchUserShippingDefault = () => {
-    MyAccountService.getUserShipping()
-      .then((response) => {
-        const userShippingList = response.data;
-        const defaultUserShipping = userShippingList.find(
-          (shipping) => shipping.userShippingDefault
-        );
-        setUserShipping(defaultUserShipping);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy thông tin giao hàng:", error);
-      });
-  };
-  const fetchUserPaymentDefault = () => {
-    MyAccountService.getUserPayment()
-      .then((response) => {
-        const userPaymentList = response.data;
-        const defaultUserPayment = userPaymentList.find(
-          (payment) => payment.defaultPayment === true
-        );
-        
-        setUserPayment(defaultUserPayment);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy thông tin giao hàng:", error);
-      });
-  };
+  // const fetchUserShippingDefault = () => {
+  //   MyAccountService.getUserShipping()
+  //     .then((response) => {
+  //       const userShippingList = response.data;
+  //       const defaultUserShipping = userShippingList.find(
+  //         (shipping) => shipping.userShippingDefault
+  //       );
+  //       setUserShipping(defaultUserShipping);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi lấy thông tin giao hàng:", error);
+  //     });
+  // };
+  // const fetchUserPaymentDefault = () => {
+  //   MyAccountService.getUserPayment()
+  //     .then((response) => {
+  //       const userPaymentList = response.data;
+  //       const defaultUserPayment = userPaymentList.find(
+  //         (payment) => payment.defaultPayment === true
+  //       );
+
+  //       setUserPayment(defaultUserPayment);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Lỗi khi lấy thông tin giao hàng:", error);
+  //     });
+  // };
   console.log(userPayment);
 
   return (
@@ -131,7 +130,7 @@ const OrderDetails = () => {
             </div>
             <div class="row mt-3 mb-3">
               <div className="col-lg-12">
-                <Table className="table col-lg-12">
+                {/* <Table className="table col-lg-12">
                   <TableHead>
                     <TableCell>Thông tin thanh toán</TableCell>
                     <TableCell>Thông tin giao hàng</TableCell>
@@ -143,8 +142,12 @@ const OrderDetails = () => {
                     </TableRow>
                     <TableRow>
                       <TableCell>{userPayment.cardNumber}</TableCell>
-<TableCell>{userShipping.userShippingStreet1},{userShipping.userShippingStreet2},{userShipping.userShippingState},{userShipping.userShippingCity}</TableCell>
-
+                      <TableCell>
+                        {userShipping.userShippingStreet1},
+                        {userShipping.userShippingStreet2},
+                        {userShipping.userShippingState},
+                        {userShipping.userShippingCity}
+                      </TableCell>
                     </TableRow>
                     <TableRow>
                       <TableCell>
@@ -169,7 +172,7 @@ const OrderDetails = () => {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                </Table>
+                </Table> */}
               </div>
             </div>
           </div>
@@ -223,7 +226,7 @@ const OrderDetails = () => {
             </TableFooter>
           </Table>
           <div class="mb-5 mt-5 ml-5  mr-5 d-flex justify-content-center">
-          <Button
+            <Button
               variant="contained"
               sx={{ color: "#D3D3D3" }}
               onClick={handleGoBack}
@@ -235,8 +238,6 @@ const OrderDetails = () => {
                 Cập nhật đơn hàng
               </Button>
             </Link>
-
-            
           </div>
         </div>
       </div>
