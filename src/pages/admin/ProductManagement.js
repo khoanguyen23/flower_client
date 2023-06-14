@@ -139,21 +139,21 @@ const ProductManagement = ({ products }) => {
         <title>Flora | QUẢN LÝ SẢN PHẨM </title>
         <meta name="description" content="" />
       </MetaTags>
-      <div className="order-content container">
-        <h3>Quản lý sản phẩm </h3>
-        <div className="row product-management-container "></div>
-        <div className="table-features row ">
-          
-            <div className="add-button-container">
-              <div className="cart-clear">
-                <button onClick={() => setIsAddModalOpen(true)}>
-                <AddIcon />   Thêm sản phẩm mới
-                </button>
+      <div className="order-management pt-50 pb-50">
+        <div className="container">
+          <div className="order-content container">
+            <h3>Quản lý sản phẩm </h3>
+            <div className="row product-management-container "></div>
+            <div className="table-features row ">
+              <div className="add-button-container col-lg-4">
+                <div className="cart-clear">
+                  <button onClick={() => setIsAddModalOpen(true)}>
+                    <AddIcon /> Thêm sản phẩm mới
+                  </button>
+                </div>
               </div>
-            </div>
-            
-         
-          {/* <Button
+
+              {/* <Button
             variant="contained"
             onClick={() => setIsAddModalOpen(true)}
             startIcon={<AddIcon />}
@@ -161,129 +161,134 @@ const ProductManagement = ({ products }) => {
           >
             Thêm sản phẩm mới
           </Button> */}
-          {/* <Button
+              {/* <Button
             variant="outlined"
             startIcon={<DeleteForeverIcon />}
             //onClick={deleteSelectedProducts}
           >
             Xóa các sản phẩm đã chọn
           </Button> */}
-          <div className="search-content active">
-            <input
-              type="search"
-              value={searchKeyword}
-              onChange={filter}
-              className="search-active"
-              placeholder="Tìm kiếm "
+              <div className="search-content active col-lg-8">
+                <input
+                  type="search"
+                  value={searchKeyword}
+                  onChange={filter}
+                  className="search-active"
+                  placeholder="Tìm kiếm "
+                />
+                <button className="button-search">
+                  <i className="pe-7s-search" />
+                </button>
+              </div>
+            </div>
+            {isAddModalOpen && (
+              <Modal
+                show={isAddModalOpen}
+                onHide={() => setIsAddModalOpen(false)}
+                className="product-quickview-modal-wrapper"
+              >
+                <Modal.Header
+                  closeButton
+                  onClick={() => setIsAddModalOpen(false)}
+                >
+                  {" "}
+                  <h3 className="panel-title">Thêm sản phẩm</h3>
+                </Modal.Header>
+
+                <div className="modal-body">
+                  <AddFlower />
+                </div>
+              </Modal>
+            )}
+          </div>
+
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Tên hoa</TableCell>
+                <TableCell>Loại hoa</TableCell>
+                <TableCell>Mô tả</TableCell>
+                <TableCell>Số lượng</TableCell>
+                <TableCell>Giá</TableCell>
+                <TableCell>Chi tiết</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentData.map((data) => {
+                return (
+                  <TableRow key={data.id}>
+                    <TableCell>{data.id} </TableCell>
+                    <TableCell>{data.name} </TableCell>
+                    <TableCell>{data.category} </TableCell>
+                    <TableCell>{data.shortDescription} </TableCell>
+
+                    <TableCell>{data.stock} </TableCell>
+                    <TableCell>{data.price} </TableCell>
+                    <TableCell>
+                      {/* Check if the product is being edited */}
+                      {editingProduct && editingProduct.id === data.id ? (
+                        <Modal
+                          show={isModalOpen}
+                          onHide={() => setIsModalOpen(false)}
+                          className="product-quickview-modal-wrapper"
+                        >
+                          <Modal.Header
+                            closeButton
+                            onClick={() => setIsAddModalOpen(false)}
+                          >
+                            {" "}
+                            <h3 className="panel-title">Thêm sản phẩm</h3>
+                          </Modal.Header>
+
+                          <div className="modal-body">
+                            <EditProductForm
+                              product={editingProduct}
+                              onUpdate={handleUpdate}
+                            />
+                          </div>
+                        </Modal>
+                      ) : (
+                        // Render the modal
+
+                        <></>
+                      )}
+                      <div className="entries-edit-delete text-center row">
+                        <button
+                          onClick={() => {
+                            handleEdit(data);
+                          }}
+                          className=" edit-btn"
+                        >
+                          <EditIcon /> Sửa
+                        </button>
+                        <button
+                          onClick={() => handleDelete(data.id)}
+                          className="delete-btn"
+                        >
+                          <DeleteForeverIcon /> Xóa
+                        </button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          <div className="pro-pagination-style d-flex justify-content-center text-center mt-30 ">
+            <Paginator
+              totalRecords={products.length}
+              pageLimit={pageLimit}
+              pageNeighbours={2}
+              setOffset={setOffset}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageContainerClass="mb-0 mt-0"
+              pagePrevText="«"
+              pageNextText="»"
             />
-            <button className="button-search">
-              <i className="pe-7s-search" />
-            </button>
           </div>
         </div>
-        {isAddModalOpen && (
-          <Modal
-            show={isAddModalOpen}
-            onHide={() => setIsAddModalOpen(false)}
-            className="product-quickview-modal-wrapper"
-          >
-            <Modal.Header closeButton onClick={() => setIsAddModalOpen(false)}>
-              {" "}
-              <h3 className="panel-title">Thêm sản phẩm</h3>
-            </Modal.Header>
-
-            <div className="modal-body">
-              <AddFlower />
-            </div>
-          </Modal>
-        )}
-      </div>
-
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>ID</TableCell>
-            <TableCell>Tên hoa</TableCell>
-            <TableCell>Loại hoa</TableCell>
-            <TableCell>Mô tả</TableCell>
-            <TableCell>Số lượng</TableCell>
-            <TableCell>Giá</TableCell>
-            <TableCell>Chi tiết</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {currentData.map((data) => {
-            return (
-              <TableRow key={data.id}>
-                <TableCell>{data.id} </TableCell>
-                <TableCell>{data.name} </TableCell>
-                <TableCell>{data.category} </TableCell>
-                <TableCell>{data.shortDescription} </TableCell>
-
-                <TableCell>{data.stock} </TableCell>
-                <TableCell>{data.price} </TableCell>
-                <TableCell>
-                  {/* Check if the product is being edited */}
-                  {editingProduct && editingProduct.id === data.id ? (
-                    <Modal
-                      show={isModalOpen}
-                      onHide={() => setIsModalOpen(false)}
-                      className="product-quickview-modal-wrapper"
-                    >
-                      <Modal.Header
-                        closeButton
-                        onClick={() => setIsAddModalOpen(false)}
-                      >
-                        {" "}
-                        <h3 className="panel-title">Thêm sản phẩm</h3>
-                      </Modal.Header>
-
-                      <div className="modal-body">
-                        <EditProductForm
-                          product={editingProduct}
-                          onUpdate={handleUpdate}
-                        />
-                      </div>
-                    </Modal>
-                  ) : (
-                    // Render the modal
-
-                    <></>
-                  )}
-                  <div className="entries-edit-delete text-center row">
-                    <button
-                      onClick={() => {
-                        handleEdit(data);
-                      }}
-                      className=" edit-btn"
-                    >
-                      <EditIcon /> Sửa
-                    </button>
-                    <button
-                      onClick={() => handleDelete(data.id)}
-                      className="delete-btn"
-                    >
-                      <DeleteForeverIcon /> Xóa
-                    </button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-      <div className="pro-pagination-style d-flex justify-content-center text-center mt-30 ">
-        <Paginator
-          totalRecords={products.length}
-          pageLimit={pageLimit}
-          pageNeighbours={2}
-          setOffset={setOffset}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          pageContainerClass="mb-0 mt-0"
-          pagePrevText="«"
-          pageNextText="»"
-        />
       </div>
     </Fragment>
   );
