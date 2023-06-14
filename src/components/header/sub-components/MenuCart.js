@@ -10,7 +10,7 @@ import { useEffect } from "react";
 const MenuCart = ({ cartData, currency, deleteFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
-  const [cartItemList, setCartItemList] = useState('')
+  const [cartItemList, setCartItemList] = useState([])
   console.log(cartData)
 
   const fetchCartItem = () => {

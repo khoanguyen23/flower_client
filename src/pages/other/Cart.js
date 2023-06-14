@@ -34,7 +34,7 @@ const Cart = ({
   const { addToast } = useToasts();
   const { pathname } = location;
   let cartTotalPrice = 0;
-  const [cartItemList, setCartItemList] = useState('')
+  const [cartItemList, setCartItemList] = useState([])
   console.log(cartItemList)
 
  

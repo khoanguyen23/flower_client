@@ -19,6 +19,7 @@ import {
   TableCell,
 } from "@material-ui/core";
 import { Checkbox } from "@mui/material";
+import OrderService from "../../services/OrderService";
 
 const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
@@ -58,6 +59,37 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
   // );
 
   // console.log(defaultShipping)
+  const [cartItemList, setCartItemList] = useState([])
+  console.log(cartItemList)
+
+ 
+
+
+  const fetchCartItem = () => {
+    MyAccountService.getCartItem()
+    .then((response)=> {
+      console.log(response.data)
+      setCartItemList(response.data)
+      
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy thông tin cartItem :", error);
+    })
+  }
+  useEffect(() => {
+    
+    fetchCartItem();
+   
+  }, []);
+  const userOrder = (shoppingCartId) => {
+    OrderService.setUserOrder()
+    .then((response)=> {
+      console.log(response.data)
+    })
+    .catch((error)=> {
+      console.error("Lỗi khi lấy tạo order :", error);
+    })
+  }
 
   return (
     <Fragment>
@@ -92,8 +124,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
 
                     <Accordion.Collapse eventKey="0">
                       <Card.Body>
-                        {
-                        userShippingCheckout.map((shipping) => (
+                        {userShippingCheckout.map((shipping) => (
                           <ul>
                             <li key={shipping.id}>
                             <div className="col-lg-9 col-md-9">
@@ -114,7 +145,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                           </ul>
                         ))}
                         <h4>hello</h4>
-                        {cartItems && cartItems.length >= 1 ? (
+                        {cartItemList && cartItemList.length >= 1 ? (
                           userShippingWithDefault.map((userShipping) => (
                             <div className="billing-info-wrap">
                               <div className="row">
@@ -272,7 +303,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                   </Card>
 
                   {/* PHƯƠNG THỨC THANH TOÁN */}
-                  {userPaymentWithDefault.map((userPayment) => (
+                  
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
@@ -283,6 +314,28 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                       </Card.Header>
                       <Accordion.Collapse eventKey="1">
                         <Card.Body>
+                        {userPaymentCheckout.map((payment) => (
+                          <ul>
+                            <li key={payment.id}>
+                            <div className="col-lg-9 col-md-9">
+                              <div className="col-lg-4 col-md-4" >
+                                <h4>{payment.cardName}</h4>
+                              </div>
+                              <div className="shipping-default col-lg-4 col-md-4">
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    // checked={defaultShippingId === shipping.id}
+                                  />
+                                  ...
+                                </label>
+                              </div>
+                              </div>
+                            </li>
+                          </ul>
+                        ))}
+                        
+                        {userPaymentWithDefault.map((userPayment) => (
                           <div className="billing-info-wrap">
                             <div className="row">
                               <div className="col-lg-6 col-md-6">
@@ -332,10 +385,12 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                               </div>
                             </div>
                           </div>
+
+))}
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
-                  ))}
+               
                   {/* XEM LẠI ĐƠN HÀNG */}
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
@@ -364,13 +419,13 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                       </div>
                       <div className="your-order-middle">
                         <ul>
-                          {cartItems.map((cartItem, key) => {
+                        {cartItemList.map((cartItem, key) => {
                             const discountedPrice = getDiscountPrice(
-                              cartItem.price,
-                              cartItem.discount
+                              cartItem.flower.price,
+                              cartItem.flower.discount,
                             );
                             const finalProductPrice =
-                              cartItem.price * currency.currencyRate;
+                              cartItem.flower.price * currency.currencyRate;
                             const finalDiscountedPrice =
                               discountedPrice * currency.currencyRate;
 
@@ -382,7 +437,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                             return (
                               <li key={key}>
                                 <span className="order-middle-left">
-                                  {cartItem.name} X {cartItem.quantity}
+                                  {cartItem.flower.name} X {cartItem.quantity}
                                 </span>{" "}
                                 <span className="order-price">
                                   {discountedPrice !== null
@@ -412,7 +467,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                     <div className="payment-method"></div>
                   </div>
                   <div className="place-order mt-25">
-                    <button className="btn-hover">Đặt hàng</button>
+                    <button onClick={userOrder} className="btn-hover">Đặt hàng</button>
                   </div>
                 </div>
               </div>
@@ -432,7 +487,9 @@ Checkout.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    // cartItems: cartItemList,
     cartItems: state.cartData,
+    
     currency: state.currencyData,
   };
 };
