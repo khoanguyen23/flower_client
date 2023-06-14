@@ -76,8 +76,9 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                     </span>
                     
                   </div>
+                  
                   <div className="shopping-cart-delete">
-                    <button onClick={() => deleteFromCart(single.flower, addToast)}>
+                    <button onClick={() => deleteFromCart(single, addToast)}>
                       <i className="fa fa-times-circle" />
                     </button>
                   </div>
