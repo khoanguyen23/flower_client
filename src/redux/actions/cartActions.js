@@ -1,6 +1,5 @@
 import axios from 'axios';
 import http from "../../http-common"
-import MyAccountService from '../../services/MyAccountService';
 export const ADD_TO_CART = "ADD_TO_CART";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
@@ -143,14 +142,14 @@ export const decreaseQuantity = (item, addToast) => {
 //   };
 // };
 //delete from cart
-// export const deleteFromCart = (item, addToast) => {
-//   return dispatch => {
-//     if (addToast) {
-//       addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
-//     }
-//     dispatch({ type: DELETE_FROM_CART, payload: item });
-//   };
-// };
+export const deleteFromCart = (item, addToast) => {
+  return dispatch => {
+    if (addToast) {
+      addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
+    }
+    dispatch({ type: DELETE_FROM_CART, payload: item });
+  };
+};
 // export const deleteFromCart = (item, addToast) => {
 //   return (dispatch, getState) => {
 //     if (addToast) {
@@ -183,29 +182,6 @@ export const decreaseQuantity = (item, addToast) => {
 //     }
 //   };
 // };
-
-
-export const deleteFromCart = (cartItemId, addToast) => {
-  return dispatch => {
-    if (addToast) {
-      addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
-    }
-
-    // Gửi yêu cầu DELETE để xóa cartItem từ backend
-    MyAccountService.deleteCartItem(cartItemId)
-    // http.delete(`/cart-items/${cartItemId}`)
-      .then(response => {
-        // Xử lý kết quả yêu cầu thành công (nếu cần)
-        // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
-
-        // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
-        dispatch({ type: DELETE_FROM_CART, payload: cartItemId });
-      })
-      .catch(error => {
-        console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
-      });
-  };
-};
 
 
 
