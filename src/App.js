@@ -10,7 +10,6 @@ import CreditCardForm1 from "./pages/other/CreditCardForm1";
 import BoardAdmin from "./components/BoardAdmin";
 import Register from "./pages/other/Register";
 
-
 // home pages
 
 const HomeFurniture = lazy(() => import("./pages/home/HomeFurniture"));
@@ -36,11 +35,7 @@ const OrderDetails = lazy(() => import("./pages/admin/OrderDetails"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
-
-
 const App = (props) => {
-  
-
   return (
     <ToastProvider placement="bottom-left">
       <BreadcrumbsProvider>
@@ -131,8 +126,9 @@ const App = (props) => {
                   path={process.env.PUBLIC_URL + "/not-found"}
                   component={NotFound}
                 />
-                <Route path={process.env.PUBLIC_URL + "/admin"} 
-                component={BoardAdmin} 
+                <Route
+                  path={process.env.PUBLIC_URL + "/admin"}
+                  component={BoardAdmin}
                 />
 
                 <Route
@@ -140,10 +136,7 @@ const App = (props) => {
                   component={OrderManagement}
                 />
 
-                <Route
-                  path={process.env.PUBLIC_URL + "/order-detail"}
-                  component={OrderDetails}
-                />
+                <Route path="/order-detail/:orderId" component={OrderDetails} />
 
                 <Route exact component={NotFound} />
               </Switch>

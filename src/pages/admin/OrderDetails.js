@@ -2,7 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import LayoutOne from "../../layouts/LayoutOne";
 import OrderManagement from "./OrderManagement";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import OrderService from "../../services/OrderService";
+import MyAccountService from "../../services/MyAccountService";
+import { format } from "date-fns";
+
 
 import {
   Button,
@@ -18,6 +22,7 @@ import {
   Grid,
   Icon,
 } from "@material-ui/core";
+import { useParams } from "react-router-dom";
 
 const TABS = [
   { label: "Quản lí sản phẩm", value: "product" },
@@ -25,6 +30,63 @@ const TABS = [
 ];
 
 const OrderDetails = () => {
+  const { orderId } = useParams();
+  console.log(orderId);
+  const history = useHistory();
+  const handleGoBack = () => {
+    history.goBack();
+  };
+
+  const [order, setOrder] = useState({});
+  const [userShipping, setUserShipping] = useState({});
+  const [userPayment, setUserPayment] = useState({});
+
+  useEffect(() => {
+    fetchOrderDetails(orderId);
+    fetchUserShippingDefault();
+    fetchUserPaymentDefault();
+  }, []);
+
+  const fetchOrderDetails = (orderId) => {
+    OrderService.getOrderDetails(orderId)
+      .then((response) => {
+        console.log(response.data);
+        setOrder(response.data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin chi tiết đơn hàng:", error);
+      });
+  };
+
+  const fetchUserShippingDefault = () => {
+    MyAccountService.getUserShipping()
+      .then((response) => {
+        const userShippingList = response.data;
+        const defaultUserShipping = userShippingList.find(
+          (shipping) => shipping.userShippingDefault
+        );
+        setUserShipping(defaultUserShipping);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin giao hàng:", error);
+      });
+  };
+  const fetchUserPaymentDefault = () => {
+    MyAccountService.getUserPayment()
+      .then((response) => {
+        const userPaymentList = response.data;
+        const defaultUserPayment = userPaymentList.find(
+          (payment) => payment.defaultPayment === true
+        );
+        
+        setUserPayment(defaultUserPayment);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin giao hàng:", error);
+      });
+  };
+  console.log(userPayment);
+
   return (
     <Fragment>
       <MetaTags>
@@ -37,24 +99,22 @@ const OrderDetails = () => {
           <div className="row">
             <div className="col-lg-12">
               <h3>Thông tin đơn hàng</h3>
+              <h2>Thông tin chi tiết của order {orderId}</h2>
               <Table className="table table-striped">
                 <TableBody>
                   <TableRow>
                     <TableCell>Ngày đặt hàng:</TableCell>
-                    <TableCell>21/05/2023</TableCell>
+                    <TableCell>{order.orderDate}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Ngày thanh toán:</TableCell>
-                    <TableCell>22/05/2023</TableCell>
+                    <TableCell>{order.shippingDate}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Phương thức thanh toán:</TableCell>
                     <TableCell>Thanh toán khi nhận hàng</TableCell>
                   </TableRow>
-                  <TableRow>
-                    <TableCell>IP khách hàng:</TableCell>
-                    <TableCell>192.168.1.1</TableCell>
-                  </TableRow>
+
                   <TableRow>
                     <TableCell>Trạng thái:</TableCell>
                     <TableCell>
@@ -73,17 +133,18 @@ const OrderDetails = () => {
               <div className="col-lg-12">
                 <Table className="table col-lg-12">
                   <TableHead>
-                    <TableCell>Địa chỉ thanh toán</TableCell>
-                    <TableCell>Địa chỉ giao hàng</TableCell>
+                    <TableCell>Thông tin thanh toán</TableCell>
+                    <TableCell>Thông tin giao hàng</TableCell>
                   </TableHead>
                   <TableBody>
                     <TableRow>
-                      <TableCell>Long Lực Sĩ</TableCell>
-                      <TableCell>Luân Thư Sinh</TableCell>
+                      <TableCell>{userPayment.cardName}</TableCell>
+                      <TableCell>{userShipping.userShippingName}</TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell>123 Đường ABC, Quận 1, TP. HCM</TableCell>
-                      <TableCell>456 Đường XYZ, Quận 2, TP. HCM</TableCell>
+                      <TableCell>{userPayment.cardNumber}</TableCell>
+<TableCell>{userShipping.userShippingStreet1},{userShipping.userShippingStreet2},{userShipping.userShippingState},{userShipping.userShippingCity}</TableCell>
+
                     </TableRow>
                     <TableRow>
                       <TableCell>
@@ -161,15 +222,21 @@ const OrderDetails = () => {
               </TableRow>
             </TableFooter>
           </Table>
-          <div class="mb-5 mt-5 d-flex justify-content-center">
+          <div class="mb-5 mt-5 ml-5  mr-5 d-flex justify-content-center">
+          <Button
+              variant="contained"
+              sx={{ color: "#D3D3D3" }}
+              onClick={handleGoBack}
+            >
+              Quay lại
+            </Button>
             <Link to="/order-management">
-              <Button
-                variant="contained"
-                sx={{ color: "#D3D3D3" }}
-              >
+              <Button variant="contained" sx={{ color: "#D3D3D3" }}>
                 Cập nhật đơn hàng
               </Button>
             </Link>
+
+            
           </div>
         </div>
       </div>

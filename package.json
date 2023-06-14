@@ -21,6 +21,7 @@
     "cloudinary": "^1.37.0",
     "cloudinary-core": "^2.13.0",
     "cloudinary-react": "^1.8.1",
+    "date-fns": "^2.30.0",
     "firebase": "^9.22.2",
     "google-maps-react": "^2.0.2",
     "http-proxy-middleware": "^2.0.6",

@@ -3,6 +3,8 @@ import MetaTags from "react-meta-tags";
 import { Link } from "react-router-dom";
 import LayoutOne from "../../layouts/LayoutOne";
 import SearchForm from "./SearchForm";
+import OrderDetails from "./OrderDetails";
+import { format } from "date-fns";
 import {
   Button,
   Table,
@@ -12,16 +14,52 @@ import {
   TableCell,
   Chip,
 } from "@material-ui/core";
-
+import OrderService from "../../services/OrderService"
 //Icon
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const OrderManagement = () => {
   const [searchResults, setSearchResults] = useState([]);
+  const [userOrderList, setUserOrderList] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState("");
 
-  const handleSearch = (query) => {
-    // Thực hiện tìm kiếm và cập nhật kết quả vào state searchResults
-    setSearchResults([]);
+
+
+  // const filter = (e) => {
+  //   const keyword = e.target.value.toLowerCase();
+
+  //   if (keyword !== "") {
+  //     const results = userOrderList.filter((product) => {
+  //       const productName = userOrderList.name.toLowerCase();
+  //       const categoryMatch = userOrderList.category.some((category) =>
+  //         category.toLowerCase().includes(keyword)
+  //       );
+
+  //       return productName.includes(keyword) || categoryMatch;
+  //     });
+  //     setUserOrderList(results);
+  //   } else {
+  //     setCurrentData(userOrderList);
+  //     // If the text field is empty, show all products
+  //   }
+
+  //   setSearchKeyword(keyword);
+  // };
+
+
+  useEffect(()=>{
+    fetchUserOrderList();
+  },[])
+  const fetchUserOrderList = () => {
+    OrderService.getUserOrder()
+      .then((response) => {
+        setUserOrderList(response.data);
+        console.log(response.data);
+        return response.data; // Return the order list
+      })
+      .catch((error) => {
+        console.error("Error fetching user orders:", error);
+      });
   };
 
   return (
@@ -36,7 +74,18 @@ const OrderManagement = () => {
           <div className="order-content container">
             <h3>Quản lý đơn hàng</h3>
             <div className="row">
-              <SearchForm onSearch={handleSearch} />
+              <div className="search-content active">
+            {/* <input
+              type="search"
+              value={searchKeyword}
+              onChange={filter}
+              className="search-active"
+              placeholder="Tìm kiếm "
+            /> */}
+            <button className="button-search">
+              <i className="pe-7s-search" />
+            </button>
+          </div>
             </div>
             <div className="table-features row">
               <Button variant="outlined" startIcon={<DeleteForeverIcon />}>
@@ -48,103 +97,46 @@ const OrderManagement = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell></TableCell>
+               
                 <TableCell>Đơn hàng</TableCell>
-                <TableCell>Ngày đặt hàng</TableCell>
                 <TableCell>Trạng thái</TableCell>
+                
+                
                 <TableCell>Khách hàng</TableCell>
                 <TableCell>Sản phẩm</TableCell>
                 <TableCell>Số lượng</TableCell>
                 <TableCell>Mã giảm giá</TableCell>
+                <TableCell>Ngày đặt hàng</TableCell>
+                <TableCell>Ngày giao hàng </TableCell>
                 <TableCell>Tổng tiền</TableCell>
                 <TableCell>Chi tiết</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-                <TableCell>1000</TableCell>
-                <TableCell>May 21, 2023</TableCell>
-                <TableCell>
-                  <Chip
-                    label="Đang xử lý"
-                    style={{ backgroundColor: "#D3D3D3", color: "#fff" }}
-                  />
-                </TableCell>
-                <TableCell>Long Lực Sĩ</TableCell>
-                <TableCell>Bầu trời</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell></TableCell>
-                <TableCell>325000 VND</TableCell>
-                <TableCell>
-                  <Link to="/order-detail">Xem</Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-                <TableCell>1001</TableCell>
-                <TableCell>May 22, 2023</TableCell>
-                <TableCell>
-                  <Chip
-                    label="Thành công"
-                    style={{ backgroundColor: "#4caf50", color: "#fff" }}
-                  />
-                </TableCell>
-                <TableCell>Thắng Mít Ướt</TableCell>
-                <TableCell>Cánh tiên</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell></TableCell>
-                <TableCell>300000 VND</TableCell>
-                <TableCell>
-                  <Link to="#">Xem</Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-                <TableCell>1002</TableCell>
-                <TableCell>May 23, 2023</TableCell>
-                <TableCell>
-                  <Chip
-                    label="Đang giao hàng"
-                    style={{ backgroundColor: "#FFD700", color: "#fff" }}
-                  />
-                </TableCell>
-                <TableCell>Phan Khoa Học</TableCell>
-                <TableCell>Cảm ơn</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell></TableCell>
-                <TableCell>200000 VND</TableCell>
-                <TableCell>
-                  <Link to="#">Xem</Link>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>
-                  <input type="checkbox" />
-                </TableCell>
-                <TableCell>1003</TableCell>
-                <TableCell>May 1, 2023</TableCell>
-                <TableCell>
-                  <Chip
-                    label="Hủy đơn hàng"
-                    style={{ backgroundColor: "#FF0000", color: "#fff" }}
-                  />
-                </TableCell>
-                <TableCell>Thắm Boom Hàng</TableCell>
-                <TableCell>Cảm kích</TableCell>
-                <TableCell>3</TableCell>
-                <TableCell></TableCell>
-                <TableCell>1350000 VND</TableCell>
-                <TableCell>
-                  <Link to="#">Xem</Link>
-                </TableCell>
-              </TableRow>
+            {userOrderList.map((order) => (
+                <TableRow key={order.id}>
+                  
+                  <TableCell>{order.id}</TableCell>
+                 
+                  <TableCell>
+                    <Chip
+                      label={order.orderStatus
+                      }
+                      style={{ backgroundColor: order.statusColor, color: "#fff" }}
+                    />
+                  </TableCell>
+                  <TableCell>{order.orderNumber}</TableCell>
+                  <TableCell>{order.orderNumber}</TableCell>
+                  <TableCell></TableCell>
+                  <TableCell></TableCell>
+                  <TableCell>{format(new Date(order.orderDate), "dd/MM/yyyy")}</TableCell>
+                  <TableCell> {format(new Date(order.shippingDate), "dd/MM/yyyy")}</TableCell>
+                  <TableCell>{order.orderTotal} VND</TableCell>
+                  <TableCell>
+                  <Link to={`/order-detail/${order.id}`}>Xem</Link>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
