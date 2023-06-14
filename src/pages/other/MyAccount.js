@@ -9,6 +9,8 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { Alert } from "@mui/material";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Link } from "react-router-dom";
+
 
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
@@ -16,10 +18,19 @@ import { useState } from "react";
 import CreditCardForm from "./CreditCardForm1";
 import MyAccountService from "../../services/MyAccountService";
 import AuthService from "../../services/auth.service";
-import CreditCardForm1 from "./CreditCardForm1";
 import warning from "warning";
 import axios from "axios";
 import OrderService from "../../services/OrderService";
+import { format } from "date-fns";
+import {
+ 
+  Table,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+  Chip,
+} from "@material-ui/core";
 
 const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
@@ -33,19 +44,8 @@ const MyAccount = ({ location }) => {
   const [userPaymentList, setUserPaymentList] = useState([]);
   const [defaultPaymentId, setDefaultPaymentId] = useState(null);
 
-  // useEffect(() => {
-  //   MyAccountService.getUserShipping()
-  //     .then((response) => {
-  //       setUserShipping(response.data);
-  //       console.log(response.data)
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi lấy thông tin user-shipping:", error);
-  //     });
-  // }, []);
-
+  
   //shipping address
- 
 
   useEffect(() => {
     fetchUserShippingList();
@@ -347,7 +347,7 @@ const MyAccount = ({ location }) => {
         return response.data; // Return the order list
       })
       .catch((error) => {
-        console.error("Error fetching user orders:", error); 
+        console.error("Error fetching user orders:", error);
       });
   };
 
@@ -730,7 +730,6 @@ const MyAccount = ({ location }) => {
 
                             {toggle && (
                               <div className="myaccount-info-wrapper">
-                                
                                 <form onSubmit={handleEditUserShipping}>
                                   <div className="row">
                                     <div className="col-lg-6 col-md-12">
@@ -998,65 +997,70 @@ const MyAccount = ({ location }) => {
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="4">
                           <h3 className="panel-title">
-                            <span>2 .</span> Đơn hàng của bạn
+                            <span>5 .</span> Đơn hàng của bạn
                           </h3>
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
                         <Card.Body>
-                          <div className="myaccount-info-wrapper">
-                            <div className="account-info-wrapper">
-                              <h4>Đổi mật khẩu</h4>
-                            </div>
-                            <div className="row">
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Mật khẩu cũ </label>
-                                  <input
-                                    type="password"
-                                    value={currentPassword}
-                                    onChange={(e) =>
-                                      setCurrentPassword(e.target.value)
-                                    }
-                                  />
-                                </div>
-                              </div>
+                         
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                
+                                <TableCell>Trạng thái</TableCell>
 
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Mật khẩu mới </label>
-                                  <input
-                                    type="password"
-                                    value={newPassword}
-                                    onChange={(e) =>
-                                      setNewPassword(e.target.value)
-                                    }
-                                  />
-                                </div>
-                              </div>
+                               
+                                <TableCell>Sản phẩm</TableCell>
+                                <TableCell>Số lượng</TableCell>
+                                <TableCell>Mã giảm giá</TableCell>
+                                <TableCell>Ngày đặt hàng</TableCell>
+                                <TableCell>Ngày giao hàng </TableCell>
+                                <TableCell>Tổng tiền</TableCell>
+                                <TableCell>Chi tiết</TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {userOrderList.map((order) => (
+                                <TableRow key={order.id}>
+                                  
 
-                              <div className="col-lg-12 col-md-12">
-                                <div className="billing-info">
-                                  <label>Xác nhận mật khẩu </label>
-                                  <input
-                                    type="password"
-                                    value={confirmPassword}
-                                    onChange={(e) =>
-                                      setConfirmPassword(e.target.value)
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <div className="billing-back-btn">
-                              <div className="billing-btn">
-                                <button onClick={handleChangePassword}>
-                                  Lưu
-                                </button>
-                              </div>
-                            </div>
-                            {error && <Alert severity="warning">{error}</Alert>}
-                          </div>
+                                  <TableCell>
+                                    <Chip
+                                      label={order.orderStatus}
+                                      style={{
+                                        backgroundColor: order.statusColor,
+                                        color: "#fff",
+                                      }}
+                                    />
+                                  </TableCell>
+                                  <TableCell>{order.orderNumber}</TableCell>
+                                  <TableCell>{order.orderNumber}</TableCell>
+                                 
+                                  <TableCell></TableCell>
+                                  <TableCell>
+                                    {format(
+                                      new Date(order.orderDate),
+                                      "dd/MM/yyyy"
+                                    )}
+                                  </TableCell>
+                                  <TableCell>
+                                    {" "}
+                                    {format(
+                                      new Date(order.shippingDate),
+                                      "dd/MM/yyyy"
+                                    )}
+                                  </TableCell>
+                                  <TableCell>{order.orderTotal} VND</TableCell>
+                                  <TableCell>
+                                    <Link to={`/order-detail/${order.id}`}>
+                                      Xem
+                                    </Link>
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
