@@ -161,7 +161,7 @@ const IconGroup = ({
         </button>
         {/* menu cart */}
         <MenuCart
-          cartData={cartData}
+          cartData={cartData}  
           currency={currency}
           deleteFromCart={deleteFromCart}
         />
