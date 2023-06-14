@@ -32,6 +32,7 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 const OrderManagement = lazy(() => import("./pages/admin/OrderManagement"));
 const OrderDetails = lazy(() => import("./pages/admin/OrderDetails"));
+const OrderInfo = lazy(() => import("./pages/other/OrderInfo"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 
@@ -134,6 +135,10 @@ const App = (props) => {
                 <Route
                   path={process.env.PUBLIC_URL + "/order-management"}
                   component={OrderManagement}
+                />
+                <Route
+                  path={process.env.PUBLIC_URL + "/order-info"}
+                  component={OrderInfo}
                 />
 
                 <Route path="/order-detail/:orderId" component={OrderDetails} />

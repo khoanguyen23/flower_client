@@ -24,6 +24,7 @@ import OrderService from "../../services/OrderService";
 const Checkout = ({ location, cartItems, currency }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
+  console.log(cartItems);
 
   const [checked, setChecked] = useState(true);
   const [userShipping, setUserShipping] = useState([]);
@@ -40,16 +41,15 @@ const Checkout = ({ location, cartItems, currency }) => {
   //   (userPayment) => userPayment.defaultPayment === true
   // );
   const userShippingCheckout = JSON.parse(localStorage.getItem("userShipping"));
-console.log(userShippingCheckout);
-const userShippingWithDefault = userShippingCheckout?.filter(
-  (userShipping) => userShipping.userShippingDefault === true
-);
-const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
-console.log(userPaymentCheckout);
-const userPaymentWithDefault = userPaymentCheckout?.filter(
-  (userPayment) => userPayment.defaultPayment === true
-);
-
+  console.log(userShippingCheckout);
+  const userShippingWithDefault = userShippingCheckout?.filter(
+    (userShipping) => userShipping.userShippingDefault === true
+  );
+  const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
+  console.log(userPaymentCheckout);
+  const userPaymentWithDefault = userPaymentCheckout?.filter(
+    (userPayment) => userPayment.defaultPayment === true
+  );
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -59,37 +59,32 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
   // );
 
   // console.log(defaultShipping)
-  const [cartItemList, setCartItemList] = useState([])
-  console.log(cartItemList)
-
- 
-
+  const [cartItemList, setCartItemList] = useState([]);
+  console.log(cartItemList);
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()
-    .then((response)=> {
-      console.log(response.data)
-      setCartItemList(response.data)
-      
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy thông tin cartItem :", error);
-    })
-  }
+      .then((response) => {
+        console.log(response.data);
+        setCartItemList(response.data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin cartItem :", error);
+      });
+  };
   useEffect(() => {
-    
     fetchCartItem();
-   
   }, []);
   const userOrder = () => {
     OrderService.setUserOrder()
-    .then((response)=> {
-      console.log(response.data)
-    })
-    .catch((error)=> {
-      console.error("Lỗi khi lấy tạo order :", error);
-    })
-  }
+      .then((response) => {
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy tạo order :", error);
+      });
+  };
 
   return (
     <Fragment>
@@ -127,19 +122,19 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                         {userShippingCheckout.map((shipping) => (
                           <ul>
                             <li key={shipping.id}>
-                            <div className="col-lg-9 col-md-9">
-                              <div className="col-lg-4 col-md-4" >
-                                <h4>{shipping.userShippingCity}</h4>
-                              </div>
-                              <div className="shipping-default col-lg-4 col-md-4">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    // checked={defaultShippingId === shipping.id}
-                                  />
-                                  ...
-                                </label>
-                              </div>
+                              <div className="col-lg-9 col-md-9">
+                                <div className="col-lg-4 col-md-4">
+                                  <h4>{shipping.userShippingCity}</h4>
+                                </div>
+                                <div className="shipping-default col-lg-4 col-md-4">
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      // checked={defaultShippingId === shipping.id}
+                                    />
+                                    ...
+                                  </label>
+                                </div>
                               </div>
                             </li>
                           </ul>
@@ -303,38 +298,38 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                   </Card>
 
                   {/* PHƯƠNG THỨC THANH TOÁN */}
-                  
-                    <Card className="single-my-account mb-20">
-                      <Card.Header className="panel-heading">
-                        <Accordion.Toggle variant="link" eventKey="1">
-                          <h3 className="panel-title">
-                            <span>2 .</span> Phương thức thanh toán
-                          </h3>
-                        </Accordion.Toggle>
-                      </Card.Header>
-                      <Accordion.Collapse eventKey="1">
-                        <Card.Body>
+
+                  <Card className="single-my-account mb-20">
+                    <Card.Header className="panel-heading">
+                      <Accordion.Toggle variant="link" eventKey="1">
+                        <h3 className="panel-title">
+                          <span>2 .</span> Phương thức thanh toán
+                        </h3>
+                      </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="1">
+                      <Card.Body>
                         {userPaymentCheckout.map((payment) => (
                           <ul>
                             <li key={payment.id}>
-                            <div className="col-lg-9 col-md-9">
-                              <div className="col-lg-4 col-md-4" >
-                                <h4>{payment.cardName}</h4>
-                              </div>
-                              <div className="shipping-default col-lg-4 col-md-4">
-                                <label>
-                                  <input
-                                    type="checkbox"
-                                    // checked={defaultShippingId === shipping.id}
-                                  />
-                                  ...
-                                </label>
-                              </div>
+                              <div className="col-lg-9 col-md-9">
+                                <div className="col-lg-4 col-md-4">
+                                  <h4>{payment.cardName}</h4>
+                                </div>
+                                <div className="shipping-default col-lg-4 col-md-4">
+                                  <label>
+                                    <input
+                                      type="checkbox"
+                                      // checked={defaultShippingId === shipping.id}
+                                    />
+                                    ...
+                                  </label>
+                                </div>
                               </div>
                             </li>
                           </ul>
                         ))}
-                        
+
                         {userPaymentWithDefault.map((userPayment) => (
                           <div className="billing-info-wrap">
                             <div className="row">
@@ -385,12 +380,11 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                               </div>
                             </div>
                           </div>
+                        ))}
+                      </Card.Body>
+                    </Accordion.Collapse>
+                  </Card>
 
-))}
-                        </Card.Body>
-                      </Accordion.Collapse>
-                    </Card>
-               
                   {/* XEM LẠI ĐƠN HÀNG */}
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
@@ -419,10 +413,10 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                       </div>
                       <div className="your-order-middle">
                         <ul>
-                        {cartItemList.map((cartItem, key) => {
+                          {cartItemList.map((cartItem, key) => {
                             const discountedPrice = getDiscountPrice(
                               cartItem.flower.price,
-                              cartItem.flower.discount,
+                              cartItem.flower.discount
                             );
                             const finalProductPrice =
                               cartItem.flower.price * currency.currencyRate;
@@ -467,7 +461,12 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
                     <div className="payment-method"></div>
                   </div>
                   <div className="place-order mt-25">
-                    <button onClick={userOrder} className="btn-hover">Đặt hàng</button>
+                   
+                      <button onClick={userOrder} className="btn-hover">
+                         <Link to={process.env.PUBLIC_URL + "/order-info"}>
+                        Đặt hàng </Link>
+                      </button>
+                   
                   </div>
                 </div>
               </div>
@@ -489,7 +488,7 @@ const mapStateToProps = (state) => {
   return {
     // cartItems: cartItemList,
     cartItems: state.cartData,
-    
+
     currency: state.currencyData,
   };
 };
