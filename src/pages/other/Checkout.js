@@ -107,7 +107,7 @@ const Checkout = ({ location, cartItems, currency }) => {
               <div className="col-lg-7">
                 <Accordion defaultActiveKey="0">
                   {/* ĐỊA CHỈ GIAO HÀNG */}
-
+                  {userShippingCheckout && userShippingCheckout.length > 0 ? (
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
                       <Accordion.Toggle variant="link" eventKey="0">
@@ -296,9 +296,12 @@ const Checkout = ({ location, cartItems, currency }) => {
                       </Card.Body>
                     </Accordion.Collapse>
                   </Card>
+                   ) : (
+                    <p>Không có thông tin vận chuyển.</p>
+                  )}
 
                   {/* PHƯƠNG THỨC THANH TOÁN */}
-
+                  {userPaymentCheckout && userPaymentCheckout.length > 0 ? (
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
                       <Accordion.Toggle variant="link" eventKey="1">
@@ -384,6 +387,10 @@ const Checkout = ({ location, cartItems, currency }) => {
                       </Card.Body>
                     </Accordion.Collapse>
                   </Card>
+                  ) : (
+                    <p>Không có thông tin thanh toán.</p>
+                  )
+                }
 
                   {/* XEM LẠI ĐƠN HÀNG */}
                   <Card className="single-my-account mb-20">
