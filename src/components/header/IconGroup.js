@@ -23,7 +23,7 @@ const IconGroup = ({
 }) => {
   const [currentUser, setCurrentUser] = useState(undefined);
   const [cartItemList, setCartItemList] = useState('')
-  console.log(cartData)
+
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()

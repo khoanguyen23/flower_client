@@ -13,12 +13,13 @@ import {
   deleteFromCart,
   cartItemStock,
   deleteAllFromCart,
-  updateCartItem
+  updateCartItem,
+  updateCartItemDecrease
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import MyAccountService from "../../services/MyAccountService";
-import { useEffect  } from "react";
+import { useEffect } from "react";
 
 const Cart = ({
   location,
@@ -27,48 +28,39 @@ const Cart = ({
   decreaseQuantity,
   addToCart,
   deleteFromCart,
-  deleteAllFromCart
+  deleteAllFromCart,
 }) => {
- 
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const { pathname } = location;
   let cartTotalPrice = 0;
-  const [cartItemList, setCartItemList] = useState([])
-  console.log(cartItemList)
-
- 
-
+  const [cartItemList, setCartItemList] = useState([]);
+  console.log(cartItemList);
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()
-    .then((response)=> {
-      console.log(response.data)
-      setCartItemList(response.data)
-      
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy thông tin cartItem :", error);
-    })
-  }
+      .then((response) => {
+        console.log(response.data);
+        setCartItemList(response.data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy thông tin cartItem :", error);
+      });
+  };
   useEffect(() => {
-    
     fetchCartItem();
-   
   }, []);
- 
 
   return (
     <Fragment>
       <MetaTags>
         <title>Flora | Giỏ hàng</title>
-        <meta
-          name="description"
-          content=""
-        />
+        <meta name="description" content="" />
       </MetaTags>
 
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>
+        Trang chủ
+      </BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Giỏ hàng
       </BreadcrumbsItem>
@@ -81,11 +73,10 @@ const Cart = ({
             {cartItemList && cartItemList.length >= 1 ? (
               <Fragment>
                 <h3 className="cart-page-title">Giỏ hàng</h3>
-                
+
                 <div className="row">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
-                 
                       <table>
                         <thead>
                           <tr>
@@ -97,12 +88,9 @@ const Cart = ({
                             <th></th>
                           </tr>
                         </thead>
-                       
+
                         <tbody>
-                       
                           {cartItemList.map((cartItem, key) => {
-                             
-                            
                             const discountedPrice = getDiscountPrice(
                               // cartItem.price,
                               // cartItem.discount
@@ -111,14 +99,12 @@ const Cart = ({
                               cartItem.flower.discount
                               // cartItem.subtotal,
                             );
-                            
-                            const finalProductPrice = (
+
+                            const finalProductPrice =
                               // cartItem.price * currency.currencyRate
-                              cartItem.flower.price * currency.currencyRate
-                            );
-                            const finalDiscountedPrice = (
-                              cartItem.flower.discount * currency.currencyRate
-                            );
+                              cartItem.flower.price * currency.currencyRate;
+                            const finalDiscountedPrice =
+                            cartItem.flower.price - (cartItem.flower.price * cartItem.flower.discount / 100)
 
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -126,7 +112,7 @@ const Cart = ({
                               : (cartTotalPrice +=
                                   finalProductPrice * cartItem.quantity);
                             return (
-                              <tr key = {key} >
+                              <tr key={key}>
                                 <td className="product-thumbnail">
                                   <Link
                                     to={
@@ -156,25 +142,21 @@ const Cart = ({
                                   >
                                     {cartItem.flower.name}
                                   </Link>
-                                  
                                 </td>
 
                                 <td className="product-price-cart">
                                   {discountedPrice !== null ? (
                                     <Fragment>
                                       <span className="amount old">
-                                        {
-                                          finalProductPrice + "VND"}
+                                        {finalProductPrice + "VND"}
                                       </span>
                                       <span className="amount">
-                                        {
-                                          finalDiscountedPrice+ "VND"}
+                                        {finalDiscountedPrice + "VND"}
                                       </span>
                                     </Fragment>
                                   ) : (
                                     <span className="amount">
-                                      {
-                                        finalProductPrice+ "VND"}
+                                      {finalProductPrice + "VND"}
                                     </span>
                                   )}
                                 </td>
@@ -183,9 +165,7 @@ const Cart = ({
                                   <div className="cart-plus-minus">
                                     <button
                                       className="dec qtybutton"
-                                      // onClick={() =>
-                                      //   decreaseQuantity(cartItem.flower, addToast)
-                                      // }
+                                      onClick={updateCartItemDecrease(cartItem)}
                                     >
                                       -
                                     </button>
@@ -198,17 +178,15 @@ const Cart = ({
                                     />
                                     <button
                                       className="inc qtybutton"
-                                      onClick={ updateCartItem(cartItem)
-                                      
-                                      }
-                                     
+                                      onClick={updateCartItem(cartItem)}
+
                                       // disabled={
                                       //   cartItem !== undefined &&
                                       //   cartItem.quantity &&
                                       //   cartItem.quantity >=
                                       //     cartItemStock(
                                       //       cartItem,
-                        
+
                                       //     )
                                       // }
                                     >
@@ -218,14 +196,10 @@ const Cart = ({
                                 </td>
                                 <td className="product-subtotal">
                                   {discountedPrice !== null
-                                    ? 
-                                      (
-                                        finalDiscountedPrice * cartItem.quantity
-                                      )  +"VND"
-                                    : 
-                                      (
-                                        finalProductPrice * cartItem.quantity
-                                      ) +"VND"}
+                                    ? finalDiscountedPrice * cartItem.quantity +
+                                      "VND"
+                                    : finalProductPrice * cartItem.quantity +
+                                      "VND"}
                                 </td>
 
                                 <td className="product-remove">
@@ -241,20 +215,16 @@ const Cart = ({
                             );
                           })}
                         </tbody>
-                         
                       </table>
-                  
                     </div>
                   </div>
                 </div>
-                 
+
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
-                        <Link
-                          to={process.env.PUBLIC_URL + "/sho"}
-                        >
+                        <Link to={process.env.PUBLIC_URL + "/sho"}>
                           Tiếp tục mua sắm
                         </Link>
                       </div>
@@ -276,9 +246,7 @@ const Cart = ({
                         </h4>
                       </div>
                       <div className="tax-wrapper">
-                        <p>
-                          Nhập mã giảm giá phí vận chuyển
-                        </p>
+                        <p>Nhập mã giảm giá phí vận chuyển</p>
                         <div className="tax-select-wrapper">
                           <div className="tax-select">
                             <label>* Tỉnh thành</label>
@@ -329,17 +297,11 @@ const Cart = ({
                         </h4>
                       </div>
                       <h5>
-                        Tổng số tiền{" "}
-                        <span>
-                          { cartTotalPrice +"VND"}
-                        </span>
+                        Tổng số tiền <span>{cartTotalPrice + "VND"}</span>
                       </h5>
 
                       <h4 className="grand-totall-title">
-                        Tổng thanh toán{" "}
-                        <span>
-                          { cartTotalPrice  +"VND"}
-                        </span>
+                        Tổng thanh toán <span>{cartTotalPrice + "VND"}</span>
                       </h4>
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
                         Thanh toán
@@ -369,9 +331,7 @@ const Cart = ({
         </div>
       </LayoutOne>
     </Fragment>
-    
   );
-
 };
 
 Cart.propTypes = {
@@ -381,17 +341,17 @@ Cart.propTypes = {
   decreaseQuantity: PropTypes.func,
   location: PropTypes.object,
   deleteAllFromCart: PropTypes.func,
-  deleteFromCart: PropTypes.func
+  deleteFromCart: PropTypes.func,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cartItems: state.cartData,
-    currency: state.currencyData
+    currency: state.currencyData,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
@@ -402,11 +362,10 @@ const mapDispatchToProps = dispatch => {
     deleteFromCart: (item, addToast) => {
       dispatch(deleteFromCart(item, addToast));
     },
-    deleteAllFromCart: addToast => {
+    deleteAllFromCart: (addToast) => {
       dispatch(deleteAllFromCart(addToast));
-    }
+    },
   };
-  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

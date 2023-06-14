@@ -196,29 +196,6 @@ export const decreaseQuantity = (item, addToast) => {
 // };
 
 
-export const deleteFromCart = (cartItem, addToast) => {
-  return dispatch => {
-    if (addToast) {
-      addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
-    }
-    console.log(cartItem)
-
-    // Gửi yêu cầu DELETE để xóa cartItem từ backend
-    // MyAccountService.deleteCartItem(cartItem)
-    http.delete(`/cart-items/${cartItem.id}`)
-      .then(response => {
-        window.location.reload();
-        // Xử lý kết quả yêu cầu thành công (nếu cần)
-        // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
-
-        // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
-        dispatch({ type: DELETE_FROM_CART, payload: cartItem.id });
-      })
-      .catch(error => {
-        console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
-      });
-  };
-};
 
 
 
@@ -289,4 +266,63 @@ export const updateCartItem = (cartItem) => {
   };
   // return cartItem.quantity+1;
 };
+export const updateCartItemDecrease = (cartItem) => {
+  return dispatch => {
 
+    const cartItemData = {
+      quantity: cartItem.quantity-1
+    };
+    console.log(cartItemData);
+
+    if(cartItemData.quantity == 0) { 
+      http.delete(`/cart-items/${cartItem.id}`)
+      .then(response => {
+        window.location.reload();
+        // Xử lý kết quả yêu cầu thành công (nếu cần)
+        // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
+
+        // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
+        dispatch({ type: DELETE_FROM_CART, payload: cartItem.id });
+      })
+      .catch(error => {
+        console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
+      });
+    }
+    
+    http.put(`/cart-items/${cartItem.id}`, cartItemData)
+      .then(response => {
+        window.location.reload();
+        dispatch({
+          type: UPDATE_CART_ITEM,
+          payload: response.data
+        });
+      })
+      .catch(error => {
+        console.error("Error updating cart item:", error);
+      });
+  };
+  // return cartItem.quantity+1;
+};
+export const deleteFromCart = (cartItem, addToast) => {
+  return dispatch => {
+    if (addToast) {
+      addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
+    }
+    console.log(cartItem)
+
+    // Gửi yêu cầu DELETE để xóa cartItem từ backend
+    // MyAccountService.deleteCartItem(cartItem)
+    http.delete(`/cart-items/${cartItem.id}`)
+      .then(response => {
+        window.location.reload();
+        // Xử lý kết quả yêu cầu thành công (nếu cần)
+        // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
+
+        // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
+        dispatch({ type: DELETE_FROM_CART, payload: cartItem.id });
+      })
+      .catch(error => {
+        console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
+      });
+  };
+};
