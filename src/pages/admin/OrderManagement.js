@@ -58,7 +58,7 @@ const OrderManagement = () => {
         return response.data; // Return the order list
       })
       .catch((error) => {
-        console.error("Error fetching user orders:", error);
+        console.error("Error fetching user orders:", error); 
       });
   };
 

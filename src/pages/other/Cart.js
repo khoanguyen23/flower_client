@@ -166,6 +166,7 @@ const Cart = ({
                                     <button
                                       className="dec qtybutton"
                                       onClick={updateCartItemDecrease(cartItem)}
+                                     
                                     >
                                       -
                                     </button>

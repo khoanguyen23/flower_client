@@ -26,8 +26,8 @@ const Checkout = ({ location, cartItems, currency }) => {
   let cartTotalPrice = 0;
 
   const [checked, setChecked] = useState(true);
-  const [userShipping, setUserShipping] = useState("");
-  const [userPayment, setUserPayment] = useState("");
+  const [userShipping, setUserShipping] = useState([]);
+  const [userPayment, setUserPayment] = useState([]);
 
   // const userShippingCheckout = JSON.parse(localStorage.getItem("userShipping"));
   // console.log(userShippingCheckout);
@@ -81,7 +81,7 @@ const userPaymentWithDefault = userPaymentCheckout?.filter(
     fetchCartItem();
    
   }, []);
-  const userOrder = (shoppingCartId) => {
+  const userOrder = () => {
     OrderService.setUserOrder()
     .then((response)=> {
       console.log(response.data)
