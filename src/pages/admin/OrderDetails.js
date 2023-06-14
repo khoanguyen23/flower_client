@@ -39,7 +39,8 @@ const OrderDetails = () => {
   const [order, setOrder] = useState({});
   const [userShipping, setUserShipping] = useState({});
   const [userPayment, setUserPayment] = useState({});
-  const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("aaa");
+  const [selectedMethod, setSelectedMethod] = useState("");
 
   useEffect(() => {
     fetchOrderDetails(orderId);
@@ -58,28 +59,7 @@ const OrderDetails = () => {
       });
   };
 
-  // const handleStatusChange = (e) => {
-  //   e.preventDefault();
-  //   const value = e.target.value;
-  //   setSelectedStatus((prevStatus) => {
-  //     console.log(value); // Log the updated selectedStatus value
-  //     return value;
-  //   });
-  //   handleUpdateStatus();
-  // };
-
-  // const handleUpdateStatus = () => {
-  //   if (selectedStatus) {
-  //     OrderService.updateOrderDetails(orderId, selectedStatus)
-  //       .then(() => {
-  //         console.log("Đã cập nhật trạng thái đơn hàng thành công.");
-  //         // You can perform any additional actions after updating the order status
-  //       })
-  //       .catch((error) => {
-  //         console.error("Lỗi khi cập nhật trạng thái đơn hàng:", error);
-  //       });
-  //   }
-  // };
+  
   const handleStatusChange = (e) => {
     const value = e.target.value;
     setSelectedStatus(value); // Store the selected value
@@ -90,13 +70,33 @@ const OrderDetails = () => {
   
   const handleUpdateStatus = (status) => {
     if (status) {
-      OrderService.updateOrderDetails(orderId, status)
+      OrderService.updateOrderDetails(orderId, status,)
         .then(() => {
           console.log("Đã cập nhật trạng thái đơn hàng thành công.");
           // You can perform any additional actions after updating the order status
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật trạng thái đơn hàng:", error);
+        });
+    }
+  };
+  const handleMethodChange = (e) => {
+    const value = e.target.value;
+    setSelectedMethod(value); // Store the selected value
+  
+    // Call the update Method function after updating the state
+    handleUpdateMethod(value);
+  };
+  
+  const handleUpdateMethod = (method) => {
+    if (method) {
+      OrderService.updateOrderMethod(orderId, method)
+        .then(() => {
+          console.log("Đã cập nhật phương thức thành công.");
+          // You can perform any additional actions after updating the order status
+        })
+        .catch((error) => {
+          console.error("Lỗi khi phương thức đơn hàng:", error);
         });
     }
   };
@@ -125,11 +125,21 @@ const OrderDetails = () => {
                     <TableCell>Ngày giao hàng dự kiến :</TableCell>
                     <TableCell>{order.shippingDate}</TableCell>
                   </TableRow>
+                  
                   <TableRow>
                     <TableCell>Phương thức thanh toán:</TableCell>
-                    <TableCell>Thanh toán khi nhận hàng</TableCell>
+                    <TableCell>
+                      <select
+                        name="phuongthuc"
+                        value={selectedMethod}
+                        onChange={handleMethodChange}
+                      >
+                        <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
+                        <option value="Thanh toán thẻ ngân hàng">Thanh toán thẻ ngân hàng</option>
+                        
+                      </select>
+                    </TableCell>
                   </TableRow>
-
                   <TableRow>
                     <TableCell>Trạng thái:</TableCell>
                     <TableCell>

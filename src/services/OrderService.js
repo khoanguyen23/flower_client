@@ -19,12 +19,20 @@ const updateOrderDetails = (orderId, selectedStatus) => {
     }
   });
 };
+const updateOrderMethod = (orderId, selectedMethod) => {
+  return http.put(`/user-orders/${orderId}`, {shippingMethod: selectedMethod }, {
+    headers: {
+      "Content-Type": "application/json" // Adjust the content type as needed
+    }
+  });
+};
 
 const OrderService = {
   setUserOrder,
   getUserOrder,
   getOrderDetails,
-  updateOrderDetails
+  updateOrderDetails,
+  updateOrderMethod
 };
 
 export default OrderService;
