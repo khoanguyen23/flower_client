@@ -6,19 +6,17 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { getDiscountPrice } from "../../helpers/product";
-
 import {
   addToCart,
   decreaseQuantity,
   deleteFromCart,
   cartItemStock,
-  deleteAllFromCart,
-  updateCartItem
+  deleteAllFromCart
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import MyAccountService from "../../services/MyAccountService";
-import { useEffect  } from "react";
+import { useEffect } from "react";
 
 const Cart = ({
   location,
@@ -29,7 +27,7 @@ const Cart = ({
   deleteFromCart,
   deleteAllFromCart
 }) => {
- 
+  
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const { pathname } = location;
@@ -37,24 +35,19 @@ const Cart = ({
   const [cartItemList, setCartItemList] = useState('')
   console.log(cartItemList)
 
- 
-
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()
     .then((response)=> {
       console.log(response.data)
       setCartItemList(response.data)
-      
     })
     .catch((error) => {
       console.error("Lỗi khi lấy thông tin cartItem :", error);
     })
   }
   useEffect(() => {
-    
     fetchCartItem();
-   
   }, []);
  
 
@@ -78,14 +71,12 @@ const Cart = ({
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
-            {cartItemList && cartItemList.length >= 1 ? (
+            {cartItems && cartItems.length >= 1 ? (
               <Fragment>
                 <h3 className="cart-page-title">Giỏ hàng</h3>
-                
                 <div className="row">
                   <div className="col-12">
                     <div className="table-content table-responsive cart-table-content">
-                 
                       <table>
                         <thead>
                           <tr>
@@ -97,18 +88,16 @@ const Cart = ({
                             <th></th>
                           </tr>
                         </thead>
-                       
                         <tbody>
-                       
+                          {/* {cartItems.map((cartItem, key) => { */}
                           {cartItemList.map((cartItem, key) => {
-                             
-                            
                             const discountedPrice = getDiscountPrice(
                               // cartItem.price,
                               // cartItem.discount
 
                               cartItem.flower.price,
                               cartItem.flower.discount
+
                               // cartItem.subtotal,
                             );
                             
@@ -117,6 +106,7 @@ const Cart = ({
                               cartItem.flower.price * currency.currencyRate
                             );
                             const finalDiscountedPrice = (
+                              // discountedPrice * currency.currencyRate
                               cartItem.flower.discount * currency.currencyRate
                             );
 
@@ -126,20 +116,20 @@ const Cart = ({
                               : (cartTotalPrice +=
                                   finalProductPrice * cartItem.quantity);
                             return (
-                              <tr key = {key} >
+                              <tr key={key}>
                                 <td className="product-thumbnail">
                                   <Link
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
-                                      cartItem.flower.id
+                                      cartItem.id
                                     }
                                   >
                                     <img
                                       className="img-fluid"
                                       src={
                                         process.env.PUBLIC_URL +
-                                        cartItem.flower.image[0]
+                                        cartItem.image[0]
                                       }
                                       alt=""
                                     />
@@ -151,10 +141,10 @@ const Cart = ({
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
-                                      cartItem.flower.id
+                                      cartItem.id
                                     }
                                   >
-                                    {cartItem.flower.name}
+                                    {cartItem.name}
                                   </Link>
                                   
                                 </td>
@@ -183,34 +173,37 @@ const Cart = ({
                                   <div className="cart-plus-minus">
                                     <button
                                       className="dec qtybutton"
-                                      // onClick={() =>
-                                      //   decreaseQuantity(cartItem.flower, addToast)
-                                      // }
+                                      onClick={() =>
+                                        decreaseQuantity(cartItem, addToast)
+                                      }
                                     >
                                       -
                                     </button>
                                     <input
                                       className="cart-plus-minus-box"
                                       type="text"
-                                      // value={updateInput}
                                       value={cartItem.quantity}
                                       readOnly
                                     />
                                     <button
                                       className="inc qtybutton"
-                                      onClick={ updateCartItem(cartItem)
-                                      
+                                      onClick={() =>
+                                        addToCart(
+                                          cartItem,
+                                          addToast,
+                                          quantityCount
+                                        )
                                       }
-                                     
-                                      // disabled={
-                                      //   cartItem !== undefined &&
-                                      //   cartItem.quantity &&
-                                      //   cartItem.quantity >=
-                                      //     cartItemStock(
-                                      //       cartItem,
-                        
-                                      //     )
-                                      // }
+                                      disabled={
+                                        cartItem !== undefined &&
+                                        cartItem.quantity &&
+                                        cartItem.quantity >=
+                                          cartItemStock(
+                                            cartItem,
+                                            cartItem.selectedProductColor,
+                                            cartItem.selectedProductSize
+                                          )
+                                      }
                                     >
                                       +
                                     </button>
@@ -241,13 +234,10 @@ const Cart = ({
                             );
                           })}
                         </tbody>
-                         
                       </table>
-                  
                     </div>
                   </div>
                 </div>
-                 
                 <div className="row">
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
@@ -369,9 +359,7 @@ const Cart = ({
         </div>
       </LayoutOne>
     </Fragment>
-    
   );
-
 };
 
 Cart.propTypes = {
@@ -406,7 +394,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(deleteAllFromCart(addToast));
     }
   };
-  
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart);

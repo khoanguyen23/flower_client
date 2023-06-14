@@ -12,6 +12,12 @@ const deleteCartItem = (cartItemId) => {
   return http.delete(`/cart-items/${cartItemId}`)
 }
 
+const getCartItem = () => {
+  return http.get("/cart-items/shopping-cart");
+}
+
+
+
 const getUserShipping = () => {
   return http.get("/user-shipping");
 };
@@ -77,6 +83,7 @@ const MyAccountService = {
   updateDefaultPayment,
   deleteUserShipping,
   deleteCartItem,
+  getCartItem,
 };
 
 export default MyAccountService;

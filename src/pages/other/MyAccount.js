@@ -44,6 +44,7 @@ const MyAccount = ({ location }) => {
   // }, []);
 
   //shipping address
+ 
 
   useEffect(() => {
     fetchUserShippingList();

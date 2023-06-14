@@ -10,35 +10,19 @@ import { useEffect } from "react";
 const MenuCart = ({ cartData, currency, deleteFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
-  const [cartItemList, setCartItemList] = useState('')
-  console.log(cartData)
-
-  const fetchCartItem = () => {
-    MyAccountService.getCartItem()
-    .then((response)=> {
-      console.log(response.data)
-      setCartItemList(response.data)
-      
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy thông tin cartItem :", error);
-    })
-  }
-  useEffect(() => {
-    fetchCartItem();
-  }, []);
+ 
   return (
     <div className="shopping-cart-content">
-      {cartItemList && cartItemList.length > 0 ? (
+      {cartData && cartData.length > 0 ? (
         <Fragment>
           <ul>
-            {cartItemList.map((single, key) => {
+            {cartData.map((single, key) => {
               const discountedPrice = getDiscountPrice(
-                single.flower.price,
-                single.flower.discount
+                single.price,
+                single.discount
               );
               const finalProductPrice = (
-                single.flower.price * currency.currencyRate
+                single.price * currency.currencyRate
               ).toFixed(2);
               const finalDiscountedPrice = (
                 discountedPrice * currency.currencyRate
@@ -51,10 +35,10 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
               return (
                 <li className="single-shopping-cart" key={key}>
                   <div className="shopping-cart-img">
-                    <Link to={process.env.PUBLIC_URL + "/product/" + single.flower.id}>
+                    <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
                       <img
                         alt=""
-                        src={process.env.PUBLIC_URL + single.flower.image[0]}
+                        src={process.env.PUBLIC_URL + single.image[0]}
                         className="img-fluid"
                       />
                     </Link>
@@ -62,10 +46,10 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                   <div className="shopping-cart-title">
                     <h4>
                       <Link
-                        to={process.env.PUBLIC_URL + "/product/" + single.flower.id}
+                        to={process.env.PUBLIC_URL + "/product/" + single.id}
                       >
                         {" "}
-                        {single.flower.name}{" "}
+                        {single.name}{" "}
                       </Link>
                     </h4>
                     <h6>Số lượng : {single.quantity}</h6>
@@ -77,7 +61,7 @@ const MenuCart = ({ cartData, currency, deleteFromCart }) => {
                     
                   </div>
                   <div className="shopping-cart-delete">
-                    <button onClick={() => deleteFromCart(single.flower, addToast)}>
+                    <button onClick={() => deleteFromCart(single, addToast)}>
                       <i className="fa fa-times-circle" />
                     </button>
                   </div>

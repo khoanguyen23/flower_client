@@ -10816,6 +10816,11 @@ react-event-listener@^0.6.2:
     prop-types "^15.6.0"
     warning "^4.0.1"
 
+react-fireworks@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-fireworks/-/react-fireworks-1.0.4.tgz#7666658fd3273301a398a88d15b9857972c44c6c"
+  integrity sha512-jj1a+HTicB4pR6g2lqhVyAox0GTE0TOrZK2XaJFRYOwltgQWeYErZxnvU9+zH/blY+Hpmu9IKyb39OD3KcCMJw==
+
 react-fullpage@^0.1.19:
   version "0.1.19"
   resolved "https://registry.yarnpkg.com/react-fullpage/-/react-fullpage-0.1.19.tgz#0d407af787a6e683b9e7a59ef971370c28b70478"

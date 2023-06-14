@@ -9,21 +9,11 @@ import {
 const initState = [];
 
 const cartReducer = (state = initState, action) => {
-    switch (action.type) {
-      case ADD_TO_CART:
-        return addToCart(state, action.payload);
-      case DECREASE_QUANTITY:
-        return decreaseQuantity(state, action.payload);
-      case DELETE_FROM_CART:
-        return deleteFromCart(state, action.payload);
-      case DELETE_ALL_FROM_CART:
-        return deleteAllFromCart();
-      default:
-        return state;
-    }
-  };
+  const cartItems = state,
+    product = action.payload;
 
-  const addToCart = (cartItems, product) => {
+  if (action.type === ADD_TO_CART) {
+    // for non variant products
     if (product.variation === undefined) {
       const cartItem = cartItems.filter(item => item.id === product.id)[0];
       if (cartItem === undefined) {
@@ -47,6 +37,7 @@ const cartReducer = (state = initState, action) => {
             : item
         );
       }
+      // for variant products
     } else {
       const cartItem = cartItems.filter(
         item =>
@@ -57,7 +48,7 @@ const cartReducer = (state = initState, action) => {
           product.selectedProductSize === item.selectedProductSize &&
           (product.cartItemId ? product.cartItemId === item.cartItemId : true)
       )[0];
-  
+
       if (cartItem === undefined) {
         return [
           ...cartItems,
@@ -95,23 +86,14 @@ const cartReducer = (state = initState, action) => {
         );
       }
     }
-  };
-  
-  
-  const decreaseQuantity = (cartItems, product) => {
+  }
+
+  if (action.type === DECREASE_QUANTITY) {
     if (product.quantity === 1) {
-      return cartItems.filter(cartItem => cartItem.cartItemId !== product.cartItemId);
-    } else {
-      return cartItems.map(item =>
-        item.cartItemId === product.cartItemId
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      );
-    }
-  };
-  
-  const deleteFromCart = (cartItems, product) => {
-    if (product.quantity === 1) {
+      const remainingItems = (cartItems, product) =>
+        cartItems.filter(
+          cartItem => cartItem.cartItemId !== product.cartItemId
+        );
       return remainingItems(cartItems, product);
     } else {
       return cartItems.map(item =>
@@ -120,13 +102,22 @@ const cartReducer = (state = initState, action) => {
           : item
       );
     }
-  };
-  
-  const remainingItems = (cartItems, product) =>
-    cartItems.filter(item => item.cartItemId !== product.cartItemId);
-  
-  const deleteAllFromCart = () => {
-    return [];
-  };
-  
-  export default cartReducer;
+  }
+
+  if (action.type === DELETE_FROM_CART) {
+    const remainingItems = (cartItems, product) =>
+      cartItems.filter(cartItem => cartItem.cartItemId !== product.cartItemId);
+    return remainingItems(cartItems, product);
+  }
+
+  if (action.type === DELETE_ALL_FROM_CART) {
+    return cartItems.filter(item => {
+      return false;
+    });
+  }
+  console.log("cart item",cartItems)
+
+  return state;
+};
+
+export default cartReducer;

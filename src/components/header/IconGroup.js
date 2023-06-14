@@ -11,6 +11,7 @@ import AuthService from "../../services/auth.service";
 
 
 import EventBus from "../../common/EventBus";
+import MyAccountService from "../../services/MyAccountService";
 
 const IconGroup = ({
   currency,
@@ -21,6 +22,23 @@ const IconGroup = ({
   iconWhiteClass,
 }) => {
   const [currentUser, setCurrentUser] = useState(undefined);
+  const [cartItemList, setCartItemList] = useState('')
+  console.log(cartData)
+
+  const fetchCartItem = () => {
+    MyAccountService.getCartItem()
+    .then((response)=> {
+      console.log(response.data)
+      setCartItemList(response.data)
+      
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy thông tin cartItem :", error);
+    })
+  }
+  // useEffect(() => {
+  //   fetchCartItem();
+  // }, []);
 
   
   useEffect(() => {
@@ -28,6 +46,7 @@ const IconGroup = ({
 
     if (user) {
       setCurrentUser(user);
+      fetchCartItem();
     }
 
     EventBus.on("logout", () => {
@@ -137,7 +156,7 @@ const IconGroup = ({
         <button className="icon-cart" onClick={(e) => handleClick(e)}>
           <i className="pe-7s-shopbag" />
           <span className="count-style">
-            {cartData && cartData.length ? cartData.length : 0}
+            {cartItemList && cartItemList.length ? cartItemList.length : 0}
           </span>
         </button>
         {/* menu cart */}
