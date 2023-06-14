@@ -11,7 +11,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Link } from "react-router-dom";
 
-
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -23,7 +22,6 @@ import axios from "axios";
 import OrderService from "../../services/OrderService";
 import { format } from "date-fns";
 import {
- 
   Table,
   TableRow,
   TableHead,
@@ -34,6 +32,7 @@ import {
 
 const MyAccount = ({ location }) => {
   const currentUser = AuthService.getCurrentUser();
+  // console.log(currentUser)
   const { pathname } = location;
   const history = useHistory();
 
@@ -44,7 +43,6 @@ const MyAccount = ({ location }) => {
   const [userPaymentList, setUserPaymentList] = useState([]);
   const [defaultPaymentId, setDefaultPaymentId] = useState(null);
 
-  
   //shipping address
 
   useEffect(() => {
@@ -247,6 +245,42 @@ const MyAccount = ({ location }) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isPasswordChanged, setPasswordChanged] = useState(false);
+  const [isUserUpdated, setUserUpdated] = useState(false);
+
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const updateUser = () => {
+    const currentUser = AuthService.getCurrentUser();
+    if (currentUser) {
+      AuthService.updateUser(
+        currentUser.id,
+        userName,
+        email,
+        telephone,
+        firstName,
+        lastName
+      )
+      .then((response)=>{
+        console.log(response);
+        setError("");
+        setUserUpdated(true);
+       
+       
+        
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          setError(error.response.data.message);
+        } else {
+          setError("Có lỗi xảy ra. Vui lòng thử lại sau.");
+        }
+      });
+    }
+  };
 
   const handleChangePassword = () => {
     const currentUser = AuthService.getCurrentUser();
@@ -390,19 +424,30 @@ const MyAccount = ({ location }) => {
                                   <input
                                     type="text"
                                     value={currentUser.username}
+                                    onChange={(e) =>
+                                      setUserName(e.target.value)
+                                    }
                                   />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Họ </label>
-                                  <input type="text" />
+                                  <input type="text" 
+                                  value={firstName}
+                                  onChange={(e) =>
+                                    setFirstName(e.target.value)
+                                  }/>
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Tên</label>
-                                  <input type="text" />
+                                  <input type="text"
+                                  value={lastName}
+                                  onChange={(e) =>
+                                    setLastName(e.target.value)
+                                  } />
                                 </div>
                               </div>
 
@@ -412,13 +457,20 @@ const MyAccount = ({ location }) => {
                                   <input
                                     type="email"
                                     value={currentUser.email}
+                                    onChange={(e) =>
+                                      setEmail(e.target.value)
+                                    }
                                   />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Số điện thoại </label>
-                                  <input type="text" />
+                                  <input type="text"
+                                  value={telephone}
+                                  onChange={(e) =>
+                                    setTelephone(e.target.value)
+                                  } />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
@@ -430,7 +482,7 @@ const MyAccount = ({ location }) => {
                             </div>
                             <div className="billing-back-btn">
                               <div className="billing-btn">
-                                <button type="submit">Lưu </button>
+                                <button onClick={updateUser} type="submit">Lưu </button>
                               </div>
                             </div>
                           </div>
@@ -1003,14 +1055,11 @@ const MyAccount = ({ location }) => {
                       </Card.Header>
                       <Accordion.Collapse eventKey="4">
                         <Card.Body>
-                         
                           <Table>
                             <TableHead>
                               <TableRow>
-                                
                                 <TableCell>Trạng thái</TableCell>
 
-                               
                                 <TableCell>Sản phẩm</TableCell>
                                 <TableCell>Số lượng</TableCell>
                                 <TableCell>Mã giảm giá</TableCell>
@@ -1021,45 +1070,45 @@ const MyAccount = ({ location }) => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                            {userOrderList && userOrderList.length > 0 ? (
-                              userOrderList.map((order) => (
-                                <TableRow key={order.id}>
-                                  
+                              {userOrderList && userOrderList.length > 0 ? (
+                                userOrderList.map((order) => (
+                                  <TableRow key={order.id}>
+                                    <TableCell>
+                                      <Chip
+                                        label={order.orderStatus}
+                                        style={{
+                                          backgroundColor: order.statusColor,
+                                          color: "#fff",
+                                        }}
+                                      />
+                                    </TableCell>
+                                    <TableCell>{order.orderNumber}</TableCell>
+                                    <TableCell>{order.orderNumber}</TableCell>
 
-                                  <TableCell>
-                                    <Chip
-                                      label={order.orderStatus}
-                                      style={{
-                                        backgroundColor: order.statusColor,
-                                        color: "#fff",
-                                      }}
-                                    />
-                                  </TableCell>
-                                  <TableCell>{order.orderNumber}</TableCell>
-                                  <TableCell>{order.orderNumber}</TableCell>
-                                 
-                                  <TableCell></TableCell>
-                                  <TableCell>
-                                    {format(
-                                      new Date(order.orderDate),
-                                      "dd/MM/yyyy"
-                                    )}
-                                  </TableCell>
-                                  <TableCell>
-                                    {" "}
-                                    {format(
-                                      new Date(order.shippingDate),
-                                      "dd/MM/yyyy"
-                                    )}
-                                  </TableCell>
-                                  <TableCell>{order.orderTotal} VND</TableCell>
-                                  <TableCell>
-                                    <Link to={`/order-detail/${order.id}`}>
-                                      Xem
-                                    </Link>
-                                  </TableCell>
-                                </TableRow>
-                              ))
+                                    <TableCell></TableCell>
+                                    <TableCell>
+                                      {format(
+                                        new Date(order.orderDate),
+                                        "dd/MM/yyyy"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {" "}
+                                      {format(
+                                        new Date(order.shippingDate),
+                                        "dd/MM/yyyy"
+                                      )}
+                                    </TableCell>
+                                    <TableCell>
+                                      {order.orderTotal} VND
+                                    </TableCell>
+                                    <TableCell>
+                                      <Link to={`/order-detail/${order.id}`}>
+                                        Xem
+                                      </Link>
+                                    </TableCell>
+                                  </TableRow>
+                                ))
                               ) : (
                                 <p>chưa có đơn hàng nào.</p>
                               )}
@@ -1088,6 +1137,20 @@ const MyAccount = ({ location }) => {
             </Button>
           </Modal.Footer>
         </Modal>
+        <Modal
+          show={isUserUpdated}
+          onHide={() => setUserUpdated(false)}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Thông báo</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Thông tin đã được cập nhật.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="primary" onClick={() => setUserUpdated(false)}>
+              Đóng
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </LayoutOne>
     </Fragment>
   );
@@ -1098,3 +1161,7 @@ MyAccount.propTypes = {
 };
 
 export default MyAccount;
+
+
+
+

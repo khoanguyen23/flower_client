@@ -83,7 +83,6 @@ const MyAccountService = {
   getUserPayment,
   updateDefaultPayment,
   deleteUserShipping,
-  // deleteCartItem,
   getCartItem,
   deleteUserPayment
   

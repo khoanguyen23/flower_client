@@ -43,12 +43,23 @@ const changePassword = (userId, currentPassword, newPassword, confirmPassword) =
   });
 }
 
+const updateUser = (userId, userName, email, telephone, firstName, lastName) => {
+  return axios.put(API_URL + `users/${userId}`, {
+    userName,
+    email,
+    telephone,
+    firstName,
+    lastName
+  })
+}
+
 const AuthService = {
   register,
   login,
   logout,
   getCurrentUser,
   changePassword,
+  updateUser,
 };
 
 export default AuthService;
