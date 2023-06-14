@@ -1021,7 +1021,8 @@ const MyAccount = ({ location }) => {
                               </TableRow>
                             </TableHead>
                             <TableBody>
-                              {userOrderList.map((order) => (
+                            {userOrderList && userOrderList.length > 0 ? (
+                              userOrderList.map((order) => (
                                 <TableRow key={order.id}>
                                   
 
@@ -1058,7 +1059,10 @@ const MyAccount = ({ location }) => {
                                     </Link>
                                   </TableCell>
                                 </TableRow>
-                              ))}
+                              ))
+                              ) : (
+                                <p>chưa có đơn hàng nào.</p>
+                              )}
                             </TableBody>
                           </Table>
                         </Card.Body>
