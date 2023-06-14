@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import MetaTags from "react-meta-tags";
 import { Link } from "react-router-dom";
-import LayoutOne from "../../layouts/LayoutOne";
-import SearchForm from "./SearchForm";
+import { getSortedProducts } from "../../helpers/product";
+import Paginator from "react-hooks-paginator";
+
 import {
   Button,
   Table,
@@ -17,11 +18,43 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 const OrderManagement = () => {
-  const [searchResults, setSearchResults] = useState([]);
+  const [orders, setOrders] = useState([]); // replace with your orders data
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [currentData, setCurrentData] = useState([]);
+  const [offset, setOffset] = useState(0);
 
-  const handleSearch = (query) => {
-    // Thực hiện tìm kiếm và cập nhật kết quả vào state searchResults
-    setSearchResults([]);
+  const pageLimit = 10;
+
+  // handle search input change event
+  const handleSearchInputChange = (event) => {
+    const keyword = event.target.value;
+    setSearchKeyword(keyword);
+  };
+
+  // filter orders by search keyword
+  const filterOrders = (keyword) => {
+    const results = orders.filter((order) => {
+      const orderName = order.name.toLowerCase();
+      const orderId = order.id.toLowerCase();
+      return orderName.includes(keyword) || orderId.includes(keyword);
+    });
+    setCurrentData(results.slice(0, pageLimit));
+    setCurrentPage(1);
+  };
+
+  // handle search form submit event
+  const handleSearchFormSubmit = (event) => {
+    event.preventDefault();
+    filterOrders(searchKeyword.toLowerCase());
+  };
+
+  // handle pagination
+  const handlePageChange = (pageNumber) => {
+    setCurrentData(
+      orders.slice((pageNumber - 1) * pageLimit, pageNumber * pageLimit)
+    );
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -36,7 +69,18 @@ const OrderManagement = () => {
           <div className="order-content container">
             <h3>Quản lý đơn hàng</h3>
             <div className="row">
-              <SearchForm onSearch={handleSearch} />
+              <div className="col-lg-4"></div>
+              <div className="search-content active col-lg-8">
+                <input
+                  type="search"
+                  value={searchKeyword}
+                  className="search-active"
+                  placeholder="Tìm kiếm "
+                />
+                <button className="button-search">
+                  <i className="pe-7s-search" />
+                </button>
+              </div>
             </div>
             <div className="table-features row">
               <Button variant="outlined" startIcon={<DeleteForeverIcon />}>
@@ -147,6 +191,19 @@ const OrderManagement = () => {
               </TableRow>
             </TableBody>
           </Table>
+          <div className="pro-pagination-style d-flex justify-content-center text-center mt-30 ">
+            <Paginator
+              totalRecords={orders.length}
+              pageLimit={pageLimit}
+              pageNeighbours={2}
+              setOffset={setOffset}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pageContainerClass="mb-0 mt-0"
+              pagePrevText="«"
+              pageNextText="»"
+            />
+          </div>
         </div>
       </div>
     </Fragment>

@@ -154,6 +154,44 @@ export const decreaseQuantity = (item, addToast) => {
 //       addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
 //     }
 //     dispatch({ type: DELETE_FROM_CART, payload: item });
+// export const deleteFromCart = (item, addToast) => {
+//   return dispatch => {
+//     if (addToast) {
+//       addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
+//     }
+//     dispatch({ type: DELETE_FROM_CART, payload: item });
+//   };
+// };
+// export const deleteFromCart = (item, addToast) => {
+//   return (dispatch, getState) => {
+//     if (addToast) {
+//       addToast("Xóa khỏi giỏ hàng", { appearance: "error", autoDismiss: true });
+//     }
+
+//     const flowerId = item.id; // Lấy id của flower từ item
+//     const cartItems = getState().cart.items; // Lấy danh sách cartItem từ trạng thái ứng dụng hoặc Redux store
+
+//     // Tìm cartItem tương ứng trong giỏ hàng
+//     const cartItem = cartItems.find(item => item.flower.id === flowerId);
+
+//     if (cartItem) {
+//       const cartItemId = cartItem.id; // Lấy cartItemId từ cartItem
+
+//       // Gửi yêu cầu DELETE để xóa cartItem từ backend
+//       http.delete(`/cart-items/${cartItemId}`)
+//         .then(response => {
+//           // Xử lý kết quả yêu cầu thành công (nếu cần)
+//           // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
+
+//           // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
+//           dispatch({ type: DELETE_FROM_CART, payload: item });
+//         })
+//         .catch(error => {
+//           console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
+//         });
+//     } else {
+//       console.error("CartItem không tồn tại trong giỏ hàng");
+//     }
 //   };
 // };
 

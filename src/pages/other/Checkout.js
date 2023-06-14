@@ -39,15 +39,16 @@ const Checkout = ({ location, cartItems, currency }) => {
   //   (userPayment) => userPayment.defaultPayment === true
   // );
   const userShippingCheckout = JSON.parse(localStorage.getItem("userShipping"));
-  console.log(userShippingCheckout);
-  const userShippingWithDefault = userShippingCheckout?.filter(
-    (userShipping) => userShipping.userShippingDefault === true
-  );
-  const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
-  console.log(userPaymentCheckout);
-  const userPaymentWithDefault = userPaymentCheckout?.filter(
-    (userPayment) => userPayment.defaultPayment === true
-  );
+console.log(userShippingCheckout);
+const userShippingWithDefault = userShippingCheckout?.filter(
+  (userShipping) => userShipping.userShippingDefault === true
+);
+const userPaymentCheckout = JSON.parse(localStorage.getItem("userPayment"));
+console.log(userPaymentCheckout);
+const userPaymentWithDefault = userPaymentCheckout?.filter(
+  (userPayment) => userPayment.defaultPayment === true
+);
+
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
@@ -79,7 +80,7 @@ const Checkout = ({ location, cartItems, currency }) => {
               <div className="col-lg-7">
                 <Accordion defaultActiveKey="0">
                   {/* ĐỊA CHỈ GIAO HÀNG */}
-                  {userShippingCheckout && userShippingCheckout.length > 0 ? (
+
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
                       <Accordion.Toggle variant="link" eventKey="0">
@@ -91,22 +92,23 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                     <Accordion.Collapse eventKey="0">
                       <Card.Body>
-                        {userShippingCheckout.map((shipping) => (
+                        {
+                        userShippingCheckout.map((shipping) => (
                           <ul>
                             <li key={shipping.id}>
-                              <div className="col-lg-9 col-md-9">
-                                <div className="col-lg-4 col-md-4">
-                                  <h4>{shipping.userShippingCity}</h4>
-                                </div>
-                                <div className="shipping-default col-lg-4 col-md-4">
-                                  <label>
-                                    <input
-                                      type="checkbox"
-                                      // checked={defaultShippingId === shipping.id}
-                                    />
-                                    ...
-                                  </label>
-                                </div>
+                            <div className="col-lg-9 col-md-9">
+                              <div className="col-lg-4 col-md-4" >
+                                <h4>{shipping.userShippingCity}</h4>
+                              </div>
+                              <div className="shipping-default col-lg-4 col-md-4">
+                                <label>
+                                  <input
+                                    type="checkbox"
+                                    // checked={defaultShippingId === shipping.id}
+                                  />
+                                  ...
+                                </label>
+                              </div>
                               </div>
                             </li>
                           </ul>
@@ -268,13 +270,9 @@ const Checkout = ({ location, cartItems, currency }) => {
                       </Card.Body>
                     </Accordion.Collapse>
                   </Card>
-                  ) : (
-                          <p>Không có thông tin vận chuyển.</p>
-                        )}
 
                   {/* PHƯƠNG THỨC THANH TOÁN */}
-                  {userPaymentCheckout && userPaymentCheckout.length > 0 ? (
-                  userPaymentWithDefault.map((userPayment) => (
+                  {userPaymentWithDefault.map((userPayment) => (
                     <Card className="single-my-account mb-20">
                       <Card.Header className="panel-heading">
                         <Accordion.Toggle variant="link" eventKey="1">
@@ -337,11 +335,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
-                  ))
-                  ) : (
-                    <p>Không có thông tin thanh toán.</p>
-                  )
-                }
+                  ))}
                   {/* XEM LẠI ĐƠN HÀNG */}
                   <Card className="single-my-account mb-20">
                     <Card.Header className="panel-heading">
