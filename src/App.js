@@ -137,7 +137,7 @@ const App = (props) => {
                   component={OrderManagement}
                 />
                 <Route
-                  path={process.env.PUBLIC_URL + "/order-info"}
+                  path="/order-info/:orderId"
                   component={OrderInfo}
                 />
 

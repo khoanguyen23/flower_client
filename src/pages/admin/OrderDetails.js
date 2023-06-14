@@ -30,7 +30,7 @@ const TABS = [
 
 const OrderDetails = () => {
   const { orderId } = useParams();
-  console.log(orderId);
+
   const history = useHistory();
   const handleGoBack = () => {
     history.goBack();
@@ -39,6 +39,7 @@ const OrderDetails = () => {
   const [order, setOrder] = useState({});
   const [userShipping, setUserShipping] = useState({});
   const [userPayment, setUserPayment] = useState({});
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   useEffect(() => {
     fetchOrderDetails(orderId);
@@ -57,34 +58,49 @@ const OrderDetails = () => {
       });
   };
 
-  // const fetchUserShippingDefault = () => {
-  //   MyAccountService.getUserShipping()
-  //     .then((response) => {
-  //       const userShippingList = response.data;
-  //       const defaultUserShipping = userShippingList.find(
-  //         (shipping) => shipping.userShippingDefault
-  //       );
-  //       setUserShipping(defaultUserShipping);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi lấy thông tin giao hàng:", error);
-  //     });
+  // const handleStatusChange = (e) => {
+  //   e.preventDefault();
+  //   const value = e.target.value;
+  //   setSelectedStatus((prevStatus) => {
+  //     console.log(value); // Log the updated selectedStatus value
+  //     return value;
+  //   });
+  //   handleUpdateStatus();
   // };
-  // const fetchUserPaymentDefault = () => {
-  //   MyAccountService.getUserPayment()
-  //     .then((response) => {
-  //       const userPaymentList = response.data;
-  //       const defaultUserPayment = userPaymentList.find(
-  //         (payment) => payment.defaultPayment === true
-  //       );
 
-  //       setUserPayment(defaultUserPayment);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Lỗi khi lấy thông tin giao hàng:", error);
-  //     });
+  // const handleUpdateStatus = () => {
+  //   if (selectedStatus) {
+  //     OrderService.updateOrderDetails(orderId, selectedStatus)
+  //       .then(() => {
+  //         console.log("Đã cập nhật trạng thái đơn hàng thành công.");
+  //         // You can perform any additional actions after updating the order status
+  //       })
+  //       .catch((error) => {
+  //         console.error("Lỗi khi cập nhật trạng thái đơn hàng:", error);
+  //       });
+  //   }
   // };
-  console.log(userPayment);
+  const handleStatusChange = (e) => {
+    const value = e.target.value;
+    setSelectedStatus(value); // Store the selected value
+  
+    // Call the update status function after updating the state
+    handleUpdateStatus(value);
+  };
+  
+  const handleUpdateStatus = (status) => {
+    if (status) {
+      OrderService.updateOrderDetails(orderId, status)
+        .then(() => {
+          console.log("Đã cập nhật trạng thái đơn hàng thành công.");
+          // You can perform any additional actions after updating the order status
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật trạng thái đơn hàng:", error);
+        });
+    }
+  };
+  
 
   return (
     <Fragment>
@@ -106,7 +122,7 @@ const OrderDetails = () => {
                     <TableCell>{order.orderDate}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell>Ngày thanh toán:</TableCell>
+                    <TableCell>Ngày giao hàng dự kiến :</TableCell>
                     <TableCell>{order.shippingDate}</TableCell>
                   </TableRow>
                   <TableRow>
@@ -117,11 +133,15 @@ const OrderDetails = () => {
                   <TableRow>
                     <TableCell>Trạng thái:</TableCell>
                     <TableCell>
-                      <select name="trangthai">
-                        <option value="dang-xu-ly">Đang xử lý</option>
-                        <option value="dang-giao">Đang giao hàng</option>
-                        <option value="thanh-cong">Thành công</option>
-                        <option value="huy-don">Hủy đơn hàng</option>
+                      <select
+                        name="trangthai"
+                        value={selectedStatus}
+                        onChange={handleStatusChange}
+                      >
+                        <option value="Đang xử lý">Đang xử lý</option>
+                        <option value="Đang giao hàng">Đang giao hàng</option>
+                        <option value="Thành công">Thành công</option>
+                        <option value="Hủy đơn hàng">Hủy đơn hàng</option>
                       </select>
                     </TableCell>
                   </TableRow>
@@ -130,7 +150,7 @@ const OrderDetails = () => {
             </div>
             <div class="row mt-3 mb-3">
               <div className="col-lg-12">
-                {/* <Table className="table col-lg-12">
+                <Table className="table col-lg-12">
                   <TableHead>
                     <TableCell>Thông tin thanh toán</TableCell>
                     <TableCell>Thông tin giao hàng</TableCell>
@@ -172,7 +192,7 @@ const OrderDetails = () => {
                       </TableCell>
                     </TableRow>
                   </TableBody>
-                </Table> */}
+                </Table>
               </div>
             </div>
           </div>

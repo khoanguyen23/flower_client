@@ -168,17 +168,7 @@ const MyAccount = ({ location }) => {
   const [message, setMessage] = useState("");
   const [shippingId, setShippingId] = useState("");
   const [editShipping, setEditShipping] = useState(null);
-  // const handleEditButtonClick = (shippingId) => {
-  //   handleEditUserShipping(shippingId);
-  // };
-
-  // const handleEditShipping = (shippingId) => {
-  //   const shippingToEdit = userShippingList.find(
-  //     (shipping) => shipping.id === shippingId
-  //   );
-  //   setEditShipping(shippingToEdit);
-  //   setToggle(true);
-  // };
+  
   const handleEditShipping = (shippingId) => {
     const shippingToEdit = userShippingList.find(
       (shipping) => shipping.id === shippingId
@@ -197,20 +187,7 @@ const MyAccount = ({ location }) => {
     setToggle(true);
   };
 
-  // const [selectedShipping, setSelectedShipping] = useState(null);
 
-  // const handleEditShipping = (shipping) => {
-  //   setSelectedShipping(shipping);
-  //   // Cập nhật các giá trị state của địa chỉ được chọn
-  //   setUserShippingCity(shipping.userShippingCity);
-  //   setUserShippingCountry(shipping.userShippingCountry);
-  //   setUserShippingDefault(shipping.userShippingDefault);
-  //   setUserShippingName(shipping.userShippingName);
-  //   setUserShippingState(shipping.userShippingState);
-  //   setUserShippingStreet1(shipping.userShippingStreet1);
-  //   setUserShippingStreet2(shipping.userShippingStreet2);
-  //   setUserShippingZipcode(shipping.userShippingZipcode);
-  // };
 
   const handleSetUserShipping = (e) => {
     e.preventDefault();
@@ -326,6 +303,19 @@ const MyAccount = ({ location }) => {
 
   const handleDeleteShipping = (shippingId) => {
     MyAccountService.deleteUserShipping(shippingId)
+      .then((response) => {
+        // Xử lý thành công sau khi xóa
+        window.location.reload();
+        console.log("Xóa thành công");
+        // Thực hiện cập nhật danh sách địa chỉ vận chuyển hoặc các hoạt động khác sau khi xóa thành công
+      })
+      .catch((error) => {
+        // Xử lý lỗi nếu xảy ra
+        console.error("Lỗi khi xóa địa chỉ vận chuyển:", error);
+      });
+  };
+  const handleDeletePayment = (paymentId) => {
+    MyAccountService.deleteUserPayment(paymentId)
       .then((response) => {
         // Xử lý thành công sau khi xóa
         window.location.reload();
@@ -532,12 +522,12 @@ const MyAccount = ({ location }) => {
                             <div className="entries-wrapper">
                               <div className="entries-wrapper">
                                 <div className="row">
-                                  <div className="entries-info text-center">
+                                  <div className="entries-info text-center col-lg-12 col-md-12">
                                     <ul>
                                       {userPaymentList.map((payment) => (
                                         <li key={payment.id}>
                                           <div className="col-lg-9 col-md-9 usershipping-container entries-wrapper ">
-                                            <div className="col-lg-4 col-md-4">
+                                            <div className="col-lg-6 col-md-6">
                                               <h4>
                                                 {payment.cardName.toUpperCase()}
                                               </h4>
@@ -549,7 +539,7 @@ const MyAccount = ({ location }) => {
                                               </p>
                                             </div>
 
-                                            <div className="shipping-default col-lg-4 col-md-4">
+                                            <div className="shipping-default col-lg-3 col-md-3">
                                               <label>
                                                 <input
                                                   type="checkbox"
@@ -568,13 +558,23 @@ const MyAccount = ({ location }) => {
                                             </div>
                                           </div>
                                           <div className="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
-                                            <div className="entries-edit-delete text-center">
+                                            <div className="entries-edit-delete text-center row">
                                               <button
                                                 onClick={() => setToggle(true)}
                                                 className="edit"
                                               >
                                                 Chỉnh sửa
                                               </button>
+                                              <button
+                                              onClick={() =>
+                                                handleDeletePayment(
+                                                  payment.id
+                                                )
+                                              }
+                                              className="delete"
+                                            >
+                                              Xóa
+                                            </button>
                                             </div>
                                           </div>
                                         </li>
@@ -582,7 +582,7 @@ const MyAccount = ({ location }) => {
                                     </ul>
                                   </div>
                                   <div className="billing-back-btn">
-                                    <div className="billing-btn row">
+                                    <div className="billing-btn block">
                                       <button
                                         onClick={(event) => onAddCreditCard()}
                                       >
@@ -643,12 +643,12 @@ const MyAccount = ({ location }) => {
                             </div>
                             <div className="entries-wrapper">
                               <div className="row">
-                                <div className="entries-info text-center">
+                                <div className="entries-info text-center col-lg-12 col-md-12">
                                   <ul>
                                     {userShippingList.map((shipping) => (
                                       <li key={shipping.id}>
                                         <div className="col-lg-9 col-md-9 usershipping-container entries-wrapper ">
-                                          <div className="col-lg-4 col-md-4">
+                                          <div className="col-lg-6 col-md-6">
                                             <h4>{shipping.userShippingCity}</h4>
                                             <p>
                                               {shipping.userShippingStreet2},{" "}
@@ -657,7 +657,7 @@ const MyAccount = ({ location }) => {
                                               {shipping.userShippingCountry}
                                             </p>
                                           </div>
-                                          <div className="shipping-default col-lg-4 col-md-4">
+                                          <div className="shipping-default col-lg-3 col-md-3">
                                             <label>
                                               <input
                                                 type="checkbox"
@@ -671,7 +671,7 @@ const MyAccount = ({ location }) => {
                                                   )
                                                 }
                                               />
-                                              Địa chỉ mặc định
+                                              Mặc định
                                             </label>
                                           </div>
                                         </div>

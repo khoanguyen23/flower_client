@@ -12,10 +12,19 @@ const setUserOrder = () => {
 const getOrderDetails = (orderId) => {
   return http.get(`/user-orders/${orderId}`);
 };
+const updateOrderDetails = (orderId, selectedStatus) => {
+  return http.put(`/user-orders/${orderId}`, { orderStatus: selectedStatus }, {
+    headers: {
+      "Content-Type": "application/json" // Adjust the content type as needed
+    }
+  });
+};
+
 const OrderService = {
   setUserOrder,
   getUserOrder,
   getOrderDetails,
+  updateOrderDetails
 };
 
 export default OrderService;

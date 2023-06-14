@@ -54,11 +54,7 @@ const Checkout = ({ location, cartItems, currency }) => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
   };
-  // const defaultShipping = userShippingCheckout.filter(
-  //   (shipping) => shipping.userShippingDefault === true
-  // );
-
-  // console.log(defaultShipping)
+ 
   const [cartItemList, setCartItemList] = useState([]);
   console.log(cartItemList);
 
@@ -468,10 +464,9 @@ const Checkout = ({ location, cartItems, currency }) => {
                     <div className="payment-method"></div>
                   </div>
                   <div className="place-order mt-25">
-                   
+                  
                       <button onClick={userOrder} className="btn-hover">
-                         <Link to={process.env.PUBLIC_URL + "/order-info"}>
-                        Đặt hàng </Link>
+                      {/* <Link to={`/order-info/${orderId}`}>Đặt hàng</Link> */}
                       </button>
                    
                   </div>

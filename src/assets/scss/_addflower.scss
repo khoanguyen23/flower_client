@@ -72,6 +72,11 @@
   flex-direction: column;
   align-items: center;
   justify-items: flex-start;
+  display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    flex-direction: row-reverse
 }
 
 .main-image {
@@ -325,38 +330,22 @@
   position: absolute;
   right: 25px;
   button {
-    // background-color: #a749ff;
-    // border: medium none;
-    // color: #fff;
-    // display: inline-block;
-    // font-size: 14px;
-    // font-weight: 500;
-    // line-height: 1;
-    // padding: 16px 35px 17px;
-    // margin: 10px;
-    // text-transform: uppercase;
-    // cursor: pointer;
-    // transition: all 0.3s ease 0s;
-    // position: relative;
-    // right: 0;
-    // margin: 0 auto;width: 150px;
-    border: none;
-    outline: none;
-    margin: 25px 50px;
+    background-color: #a749ff;
+    border: medium none;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    padding: 16px 35px 17px;
+    margin: 10px;
+    text-transform: uppercase;
     cursor: pointer;
-    color: black;
-    font-size: 20px;
-    background-color: #f1bc68;
-    /* padding: 8px 120px; */
-    border-radius: 30px;
-    text-align: center;
-    font-style: normal;
-    &:hover {
-      opacity: 1;
-  transition-duration: 1s;
-  transform: scale(1.08);
-  background-color: indianred;
-  color: #ffff;
-    }
+    transition: all 0.3s ease 0s;
+    position: relative;
+    right: 0;
+    margin: 0 auto;width: 150px;
+    
+    
   }
 }

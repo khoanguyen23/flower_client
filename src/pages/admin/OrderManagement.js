@@ -81,17 +81,14 @@ const OrderManagement = () => {
               onChange={filter}
               className="search-active"
               placeholder="Tìm kiếm "
-            /> */}
+            />
             <button className="button-search">
               <i className="pe-7s-search" />
-            </button>
+            </button> */}
           </div>
             </div>
             <div className="table-features row">
-              <Button variant="outlined" startIcon={<DeleteForeverIcon />}>
-                {" "}
-                Xóa các đơn hàng đã chọn
-              </Button>
+             
             </div>
           </div>
           <Table>
@@ -103,9 +100,9 @@ const OrderManagement = () => {
                 
                 
                 <TableCell>Khách hàng</TableCell>
-                <TableCell>Sản phẩm</TableCell>
-                <TableCell>Số lượng</TableCell>
-                <TableCell>Mã giảm giá</TableCell>
+               
+                
+               
                 <TableCell>Ngày đặt hàng</TableCell>
                 <TableCell>Ngày giao hàng </TableCell>
                 <TableCell>Tổng tiền</TableCell>
@@ -126,9 +123,9 @@ const OrderManagement = () => {
                     />
                   </TableCell>
                   <TableCell>{order.orderNumber}</TableCell>
-                  <TableCell>{order.orderNumber}</TableCell>
-                  <TableCell></TableCell>
-                  <TableCell></TableCell>
+                  
+                  
+                  
                   <TableCell>{format(new Date(order.orderDate), "dd/MM/yyyy")}</TableCell>
                   <TableCell> {format(new Date(order.shippingDate), "dd/MM/yyyy")}</TableCell>
                   <TableCell>{order.orderTotal} VND</TableCell>

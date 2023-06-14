@@ -52,7 +52,7 @@ const BoardAdmin = () => {
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Quản lý sản phẩm" value="1" />
             <Tab label="Quản lý đơn hàng" value="2" />
-            <Tab label="Quản lý bài viết" value="3" />
+            
           </TabList>
         </Box>
         <TabPanel value="1">
@@ -62,9 +62,7 @@ const BoardAdmin = () => {
         <TabPanel value="2">
           <OrderManagement />
         </TabPanel>
-        <TabPanel value="3">
-          <BlogManagement />
-        </TabPanel>
+        
       </TabContext>
     </Box>
     
