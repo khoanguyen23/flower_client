@@ -41,36 +41,48 @@ const OrderDetails = () => {
   const [userPayment, setUserPayment] = useState({});
   const [selectedStatus, setSelectedStatus] = useState("aaa");
   const [selectedMethod, setSelectedMethod] = useState("");
+  const [flowers, setFlowers] = useState([]);
 
   useEffect(() => {
     fetchOrderDetails(orderId);
-    // fetchUserShippingDefault();
-    // fetchUserPaymentDefault();
+    fetchFlowerOrder(orderId);
   }, []);
 
   const fetchOrderDetails = (orderId) => {
     OrderService.getOrderDetails(orderId)
       .then((response) => {
-        console.log(response.data);
+        console.log(response.data.userPayment);
         setOrder(response.data);
+        setUserPayment(response.data.userPayment);
+        setUserShipping(response.data.userShippingAddress);
       })
       .catch((error) => {
         console.error("Lỗi khi lấy thông tin chi tiết đơn hàng:", error);
       });
   };
 
-  
+  const fetchFlowerOrder = (orderId) => {
+    OrderService.getFlowerOrder(orderId)
+      .then((response) => {
+        console.log(response.data);
+        setFlowers(response.data);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi lấy sản phẩm:", error);
+      });
+  };
+
   const handleStatusChange = (e) => {
     const value = e.target.value;
     setSelectedStatus(value); // Store the selected value
-  
+
     // Call the update status function after updating the state
     handleUpdateStatus(value);
   };
-  
+
   const handleUpdateStatus = (status) => {
     if (status) {
-      OrderService.updateOrderDetails(orderId, status,)
+      OrderService.updateOrderDetails(orderId, status)
         .then(() => {
           console.log("Đã cập nhật trạng thái đơn hàng thành công.");
           // You can perform any additional actions after updating the order status
@@ -83,11 +95,11 @@ const OrderDetails = () => {
   const handleMethodChange = (e) => {
     const value = e.target.value;
     setSelectedMethod(value); // Store the selected value
-  
+
     // Call the update Method function after updating the state
     handleUpdateMethod(value);
   };
-  
+
   const handleUpdateMethod = (method) => {
     if (method) {
       OrderService.updateOrderMethod(orderId, method)
@@ -100,7 +112,12 @@ const OrderDetails = () => {
         });
     }
   };
-  
+
+  console.log(order);
+  console.log(userPayment);
+  console.log(userShipping);
+
+
 
   return (
     <Fragment>
@@ -113,7 +130,7 @@ const OrderDetails = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <h3>Thông tin đơn hàng</h3>
+              <h3>Thông tin đơn hàng </h3>
               <h2>Thông tin chi tiết của order {orderId}</h2>
               <Table className="table table-striped">
                 <TableBody>
@@ -125,7 +142,7 @@ const OrderDetails = () => {
                     <TableCell>Ngày giao hàng dự kiến :</TableCell>
                     <TableCell>{order.shippingDate}</TableCell>
                   </TableRow>
-                  
+
                   <TableRow>
                     <TableCell>Phương thức thanh toán:</TableCell>
                     <TableCell>
@@ -134,9 +151,12 @@ const OrderDetails = () => {
                         value={selectedMethod}
                         onChange={handleMethodChange}
                       >
-                        <option value="Thanh toán khi nhận hàng">Thanh toán khi nhận hàng</option>
-                        <option value="Thanh toán thẻ ngân hàng">Thanh toán thẻ ngân hàng</option>
-                        
+                        <option value="Thanh toán khi nhận hàng">
+                          Thanh toán khi nhận hàng
+                        </option>
+                        <option value="Thanh toán thẻ ngân hàng">
+                          Thanh toán thẻ ngân hàng
+                        </option>
                       </select>
                     </TableCell>
                   </TableRow>
@@ -217,25 +237,32 @@ const OrderDetails = () => {
                 <TableCell>Tổng</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <img
-                    src="https://i.pinimg.com/564x/8a/8c/00/8a8c00bc11c84ab988288f11c125aa38.jpg"
-                    width="150"
-                    height="200"
-                  />
-                </TableCell>
-                <TableCell>Bầu trời</TableCell>
-                <TableCell>1</TableCell>
-                <TableCell>300.000 đồng</TableCell>
-                <TableCell>300.000 đồng</TableCell>
-              </TableRow>
+              {flowers.map((flower) => {
+                console.log(flower)
+                return (
+                  <TableRow key={flower.id}>
+                    <TableCell>
+                      <img
+                        src={flower.flower.image}
+                        width="150"
+                        height="200"
+                      />
+                    </TableCell>
+                    <TableCell>{flower.flower.name}</TableCell>
+                    <TableCell>{flower.quantity}</TableCell>
+                    <TableCell>{flower.flower.price}</TableCell>
+                    <TableCell>{flower.subtotal}</TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
+
             <TableFooter>
               <TableRow>
                 <TableCell colspan="3">Tổng tiền hàng:</TableCell>
-                <TableCell colspan="2">300.000 đồng</TableCell>
+                <TableCell colspan="2">{order.orderTotal}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell colspan="3">Phí vận chuyển:</TableCell>
@@ -250,7 +277,7 @@ const OrderDetails = () => {
                   <strong>Tổng thanh toán:</strong>
                 </TableCell>
                 <TableCell colspan="2">
-                  <strong>325.000 đồng</strong>
+                  <strong>{order.orderTotal}</strong>
                 </TableCell>
               </TableRow>
             </TableFooter>

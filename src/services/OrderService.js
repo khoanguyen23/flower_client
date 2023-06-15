@@ -12,6 +12,11 @@ const setUserOrder = () => {
 const getOrderDetails = (orderId) => {
   return http.get(`/user-orders/${orderId}`);
 };
+
+const getFlowerOrder = (orderId) => {
+  return http.get(`/cart-items/user-orders/${orderId}`)
+}
+
 const updateOrderDetails = (orderId, selectedStatus) => {
   return http.put(`/user-orders/${orderId}`, { orderStatus: selectedStatus }, {
     headers: {
@@ -32,7 +37,8 @@ const OrderService = {
   getUserOrder,
   getOrderDetails,
   updateOrderDetails,
-  updateOrderMethod
+  updateOrderMethod,
+  getFlowerOrder
 };
 
 export default OrderService;

@@ -43,11 +43,13 @@ const IconGroup = ({
   
   useEffect(() => {
     const user = AuthService.getCurrentUser();
+    // console.log(user.roles)
 
     if (user) {
       setCurrentUser(user);
       fetchCartItem();
     }
+    
 
     EventBus.on("logout", () => {
       logOut();
