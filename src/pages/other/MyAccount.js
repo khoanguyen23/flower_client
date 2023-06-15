@@ -1060,8 +1060,7 @@ const MyAccount = ({ location }) => {
                               <TableRow>
                                 <TableCell>Trạng thái</TableCell>
 
-                                <TableCell>Sản phẩm</TableCell>
-                                <TableCell>Số lượng</TableCell>
+                               
                                 <TableCell>Mã giảm giá</TableCell>
                                 <TableCell>Ngày đặt hàng</TableCell>
                                 <TableCell>Ngày giao hàng </TableCell>
@@ -1082,9 +1081,7 @@ const MyAccount = ({ location }) => {
                                         }}
                                       />
                                     </TableCell>
-                                    <TableCell>{order.orderNumber}</TableCell>
-                                    <TableCell>{order.orderNumber}</TableCell>
-
+                                    
                                     <TableCell></TableCell>
                                     <TableCell>
                                       {format(

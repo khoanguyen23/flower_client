@@ -467,6 +467,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                   
                       <button onClick={userOrder} className="btn-hover">
                       {/* <Link to={`/order-info/${orderId}`}>Đặt hàng</Link> */}
+                      Đặt hàng
                       </button>
                    
                   </div>

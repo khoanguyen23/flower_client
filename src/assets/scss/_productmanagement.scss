@@ -152,3 +152,19 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.processing-option {
+  color: blue; /* Màu cho tùy chọn 'Đang xử lý' */
+}
+
+.delivery-option {
+  color: green; /* Màu cho tùy chọn 'Đang giao hàng' */
+}
+
+.success-option {
+  color: purple; /* Màu cho tùy chọn 'Thành công' */
+}
+
+.cancel-option {
+  color: red; /* Màu cho tùy chọn 'Hủy đơn hàng' */
+}
+

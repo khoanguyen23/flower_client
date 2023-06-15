@@ -27,22 +27,36 @@ const OrderManagement = () => {
   //   const keyword = e.target.value.toLowerCase();
 
   //   if (keyword !== "") {
-  //     const results = userOrderList.filter((product) => {
-  //       const productName = userOrderList.name.toLowerCase();
-  //       const categoryMatch = userOrderList.category.some((category) =>
-  //         category.toLowerCase().includes(keyword)
+  //     const results = userOrderList.filter((order) => {
+  //       const status = userOrderList.orderStatus.toLowerCase();
+  //       const categoryMatch = userOrderList.orderStatus.some((status) =>
+  //       status.toLowerCase().includes(keyword)
   //       );
 
-  //       return productName.includes(keyword) || categoryMatch;
+  //       return status.includes(keyword) || categoryMatch;
   //     });
   //     setUserOrderList(results);
   //   } else {
-  //     setCurrentData(userOrderList);
+  //     setUserOrderList(userOrderList);
   //     // If the text field is empty, show all products
   //   }
 
   //   setSearchKeyword(keyword);
   // };
+  const filter = (e) => {
+    const keyword = e.target.value.toLowerCase();
+    setSearchKeyword(keyword);
+
+    if (keyword !== "") {
+      const results = userOrderList.filter((order) => {
+        const status = order.orderStatus.toLowerCase();
+        return status.includes(keyword);
+      });
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  };
 
   useEffect(() => {
     fetchUserOrderList();
@@ -72,16 +86,16 @@ const OrderManagement = () => {
             <h3>Quản lý đơn hàng</h3>
             <div className="row">
               <div className="search-content active">
-                {/* <input
-              type="search"
-              value={searchKeyword}
-              onChange={filter}
-              className="search-active"
-              placeholder="Tìm kiếm "
-            />
-            <button className="button-search">
-              <i className="pe-7s-search" />
-            </button> */}
+                <input
+                  type="search"
+                  value={searchKeyword}
+                  onChange={filter}
+                  className="search-active"
+                  placeholder="Tìm kiếm "
+                />
+                <button className="button-search">
+                  <i className="pe-7s-search" />
+                </button>
               </div>
             </div>
             <div className="table-features row"></div>
@@ -101,17 +115,11 @@ const OrderManagement = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userOrderList.map((order) => (
+              {/* {userOrderList.map((order) => (
                 <TableRow key={order.id}>
                   <TableCell>{order.id}</TableCell>
 
-                  {/* <TableCell>
-                    <Chip
-                      label={order.orderStatus
-                      }
-                      style={{ backgroundColor: order.statusColor, color: "#fff" }}
-                    />
-                  </TableCell> */}
+                  
                   <TableCell>
                     <Chip
                       label={order.orderStatus}
@@ -131,7 +139,7 @@ const OrderManagement = () => {
                     />
                   </TableCell>
 
-                  {/* <TableCell>{order.orderNumber}</TableCell> */}
+                 
 
                   <TableCell>
                     {format(new Date(order.orderDate), "dd/MM/yyyy")}
@@ -145,7 +153,80 @@ const OrderManagement = () => {
                     <Link to={`/order-detail/${order.id}`}>Xem</Link>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))} */}
+              {searchResults.length > 0
+                ? searchResults.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell>{order.id}</TableCell>
+
+                      <TableCell>
+                        <Chip
+                          label={order.orderStatus}
+                          style={{
+                            backgroundColor:
+                              order.orderStatus === "Đang xử lý"
+                                ? "#ccc"
+                                : order.orderStatus === "Đang giao hàng"
+                                ? "#a749ff"
+                                : order.orderStatus === "Thành công"
+                                ? "#008000"
+                                : order.orderStatus === "Hủy đơn hàng"
+                                ? "#df5c39"
+                                : "",
+                            color: "#fff",
+                          }}
+                        />
+                      </TableCell>
+
+                      <TableCell>
+                        {format(new Date(order.orderDate), "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        {format(new Date(order.shippingDate), "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell>{order.orderTotal} VND</TableCell>
+                      <TableCell>
+                        <Link to={`/order-detail/${order.id}`}>Xem</Link>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : userOrderList.map((order) => (
+                    <TableRow key={order.id}>
+                      <TableCell>{order.id}</TableCell>
+
+                      <TableCell>
+                        <Chip
+                          label={order.orderStatus}
+                          style={{
+                            backgroundColor:
+                              order.orderStatus === "Đang xử lý"
+                                ? "#ccc"
+                                : order.orderStatus === "Đang giao hàng"
+                                ? "#a749ff"
+                                : order.orderStatus === "Thành công"
+                                ? "#008000"
+                                : order.orderStatus === "Hủy đơn hàng"
+                                ? "#df5c39"
+                                : "",
+                            color: "#fff",
+                          }}
+                        />
+                      </TableCell>
+
+                      <TableCell>
+                        {format(new Date(order.orderDate), "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell>
+                        {" "}
+                        {format(new Date(order.shippingDate), "dd/MM/yyyy")}
+                      </TableCell>
+                      <TableCell>{order.orderTotal} VND</TableCell>
+                      <TableCell>
+                        <Link to={`/order-detail/${order.id}`}>Xem</Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </div>

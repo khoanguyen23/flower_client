@@ -143,7 +143,7 @@ const OrderDetails = () => {
                     <TableCell>{order.shippingDate}</TableCell>
                   </TableRow>
 
-                  {/* <TableRow>
+                  <TableRow>
                     <TableCell>Phương thức thanh toán:</TableCell>
                     <TableCell>
                       <select
@@ -159,7 +159,7 @@ const OrderDetails = () => {
                         </option>
                       </select>
                     </TableCell>
-                  </TableRow> */}
+                  </TableRow>
                   <TableRow>
                     <TableCell>Trạng thái:</TableCell>
                     <TableCell>
