@@ -18,14 +18,14 @@ const getFlowerOrder = (orderId) => {
 }
 
 const updateOrderDetails = (orderId, selectedStatus) => {
-  return http.put(`/user-orders/${orderId}`, { orderStatus: selectedStatus }, {
+  return http.put(`/user-orders/order-status/${orderId}`, { orderStatus: selectedStatus }, {
     headers: {
       "Content-Type": "application/json" // Adjust the content type as needed
     }
   });
 };
 const updateOrderMethod = (orderId, selectedMethod) => {
-  return http.put(`/user-orders/${orderId}`, {shippingMethod: selectedMethod }, {
+  return http.put(`/user-orders/shipping-method/${orderId}`, {shippingMethod: selectedMethod }, {
     headers: {
       "Content-Type": "application/json" // Adjust the content type as needed
     }

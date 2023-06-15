@@ -14,7 +14,7 @@ import {
   TableCell,
   Chip,
 } from "@material-ui/core";
-import OrderService from "../../services/OrderService"
+import OrderService from "../../services/OrderService";
 //Icon
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
@@ -22,8 +22,6 @@ const OrderManagement = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [userOrderList, setUserOrderList] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState("");
-
-
 
   // const filter = (e) => {
   //   const keyword = e.target.value.toLowerCase();
@@ -46,10 +44,9 @@ const OrderManagement = () => {
   //   setSearchKeyword(keyword);
   // };
 
-
-  useEffect(()=>{
+  useEffect(() => {
     fetchUserOrderList();
-  },[])
+  }, []);
   const fetchUserOrderList = () => {
     OrderService.getUserOrder()
       .then((response) => {
@@ -58,7 +55,7 @@ const OrderManagement = () => {
         return response.data; // Return the order list
       })
       .catch((error) => {
-        console.error("Error fetching user orders:", error); 
+        console.error("Error fetching user orders:", error);
       });
   };
 
@@ -75,7 +72,7 @@ const OrderManagement = () => {
             <h3>Quản lý đơn hàng</h3>
             <div className="row">
               <div className="search-content active">
-            {/* <input
+                {/* <input
               type="search"
               value={searchKeyword}
               onChange={filter}
@@ -85,24 +82,18 @@ const OrderManagement = () => {
             <button className="button-search">
               <i className="pe-7s-search" />
             </button> */}
-          </div>
+              </div>
             </div>
-            <div className="table-features row">
-             
-            </div>
+            <div className="table-features row"></div>
           </div>
           <Table>
             <TableHead>
               <TableRow>
-               
                 <TableCell>Đơn hàng</TableCell>
                 <TableCell>Trạng thái</TableCell>
-                
-                
-                <TableCell>Khách hàng</TableCell>
-               
-                
-               
+
+                {/* <TableCell>Khách hàng</TableCell> */}
+
                 <TableCell>Ngày đặt hàng</TableCell>
                 <TableCell>Ngày giao hàng </TableCell>
                 <TableCell>Tổng tiền</TableCell>
@@ -110,27 +101,48 @@ const OrderManagement = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-            {userOrderList.map((order) => (
+              {userOrderList.map((order) => (
                 <TableRow key={order.id}>
-                  
                   <TableCell>{order.id}</TableCell>
-                 
-                  <TableCell>
+
+                  {/* <TableCell>
                     <Chip
                       label={order.orderStatus
                       }
                       style={{ backgroundColor: order.statusColor, color: "#fff" }}
                     />
+                  </TableCell> */}
+                  <TableCell>
+                    <Chip
+                      label={order.orderStatus}
+                      style={{
+                        backgroundColor:
+                        order.orderStatus === "Đang xử lý"
+                            ? "#ccc"
+                            : order.orderStatus === "Đang giao hàng"
+                            ? "#a749ff"
+                            : order.orderStatus === "Thành công"
+                            ? "#008000"
+                            : order.orderStatus === "Hủy đơn hàng"
+                            ? "#df5c39"
+                            : "",
+                        color: "#fff",
+                      }}
+                    />
                   </TableCell>
-                  <TableCell>{order.orderNumber}</TableCell>
-                  
-                  
-                  
-                  <TableCell>{format(new Date(order.orderDate), "dd/MM/yyyy")}</TableCell>
-                  <TableCell> {format(new Date(order.shippingDate), "dd/MM/yyyy")}</TableCell>
+
+                  {/* <TableCell>{order.orderNumber}</TableCell> */}
+
+                  <TableCell>
+                    {format(new Date(order.orderDate), "dd/MM/yyyy")}
+                  </TableCell>
+                  <TableCell>
+                    {" "}
+                    {format(new Date(order.shippingDate), "dd/MM/yyyy")}
+                  </TableCell>
                   <TableCell>{order.orderTotal} VND</TableCell>
                   <TableCell>
-                  <Link to={`/order-detail/${order.id}`}>Xem</Link>
+                    <Link to={`/order-detail/${order.id}`}>Xem</Link>
                   </TableCell>
                 </TableRow>
               ))}
