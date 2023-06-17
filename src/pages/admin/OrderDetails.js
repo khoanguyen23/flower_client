@@ -168,6 +168,7 @@ const OrderDetails = () => {
                         value={selectedStatus}
                         onChange={handleStatusChange}
                       >
+                        <option value="Chờ xác nhận">Chờ xác nhận</option>
                         <option value="Đang xử lý">Đang xử lý</option>
                         <option value="Đang giao hàng">Đang giao hàng</option>
                         <option value="Thành công">Thành công</option>
@@ -245,7 +246,7 @@ const OrderDetails = () => {
                   <TableRow key={flower.id}>
                     <TableCell>
                       <img
-                        src={flower.flower.image}
+                        src={flower.flower.image[0]}
                         width="150"
                         height="200"
                       />
@@ -290,11 +291,18 @@ const OrderDetails = () => {
             >
               Quay lại
             </Button>
-            <Link to="/order-management">
+            <Button
+              variant="contained"
+              sx={{ color: "#D3D3D3" }}
+              onClick={handleGoBack}
+            >
+              Cập nhật đơn hàng
+            </Button>
+            {/* <Link to="/order-management">
               <Button variant="contained" sx={{ color: "#D3D3D3" }}>
                 Cập nhật đơn hàng
               </Button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

@@ -638,7 +638,7 @@ const MyAccount = ({ location }) => {
                                       <button
                                         onClick={(event) => onAddCreditCard()}
                                       >
-                                        Thêm địa chỉ{" "}
+                                        Thêm tài khoản{" "}
                                       </button>
                                     </div>
                                   </div>
@@ -1091,10 +1091,9 @@ const MyAccount = ({ location }) => {
                                     </TableCell>
                                     <TableCell>
                                       {" "}
-                                      {format(
-                                        new Date(order.shippingDate),
-                                        "dd/MM/yyyy"
-                                      )}
+                                      {console.log("Value of order.shippingDate:", order.shippingDate)}
+                                      {order.shippingDate ? format(new Date(order.shippingDate), "dd/MM/yyyy") : 'chua co ngay giao hang'}
+
                                     </TableCell>
                                     <TableCell>
                                       {order.orderTotal} VND

@@ -105,9 +105,13 @@ const cartReducer = (state = initState, action) => {
   }
 
   if (action.type === DELETE_FROM_CART) {
-    const remainingItems = (cartItems, product) =>
-      cartItems.filter(cartItem => cartItem.cartItemId !== product.cartItemId);
-    return remainingItems(cartItems, product);
+    // const remainingItems = (cartItems, product) =>
+    //   cartItems.filter(cartItem => cartItem.cartItemId !== product.cartItemId);
+    // return remainingItems(cartItems, product);
+    const remainingItems = cartItems.filter(cartItem => cartItem.cartItemId !== action.payload.cartItemId);
+    console.log("Updated cart items:", remainingItems);
+  return remainingItems;
+
   }
 
   if (action.type === DELETE_ALL_FROM_CART) {

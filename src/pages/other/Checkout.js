@@ -115,7 +115,7 @@ const Checkout = ({ location, cartItems, currency }) => {
 
                     <Accordion.Collapse eventKey="0">
                       <Card.Body>
-                        {userShippingCheckout.map((shipping) => (
+                        {/* {userShippingCheckout.map((shipping) => (
                           <ul>
                             <li key={shipping.id}>
                               <div className="col-lg-9 col-md-9">
@@ -134,8 +134,8 @@ const Checkout = ({ location, cartItems, currency }) => {
                               </div>
                             </li>
                           </ul>
-                        ))}
-                        <h4>hello</h4>
+                        ))} */}
+                        {/* <h4>hello</h4> */}
                         {cartItemList && cartItemList.length >= 1 ? (
                           userShippingWithDefault.map((userShipping) => (
                             <div className="billing-info-wrap">
@@ -147,7 +147,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                                         <TableHead>
                                           <TableRow>
                                             <TableCell>
-                                              Địa chỉ giao hàng đã lưu
+                                              {/* <ul>
                                               <li key={userShipping.id}>
                                                 <h4>
                                                   {
@@ -155,12 +155,13 @@ const Checkout = ({ location, cartItems, currency }) => {
                                                   }
                                                 </h4>
                                               </li>
+                                              </ul> */}
                                             </TableCell>
                                             <TableCell></TableCell>
                                           </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                          <TableRow>
+                                          {/* <TableRow>
                                             <TableCell>Địa chỉ, Tên</TableCell>
                                             <TableCell>
                                               <Checkbox
@@ -170,7 +171,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                                                 }}
                                               />
                                             </TableCell>
-                                          </TableRow>
+                                          </TableRow> */}
                                         </TableBody>
                                       </Table>
                                     </div>
@@ -308,7 +309,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                     </Card.Header>
                     <Accordion.Collapse eventKey="1">
                       <Card.Body>
-                        {userPaymentCheckout.map((payment) => (
+                        {/* {userPaymentCheckout.map((payment) => (
                           <ul>
                             <li key={payment.id}>
                               <div className="col-lg-9 col-md-9">
@@ -327,7 +328,7 @@ const Checkout = ({ location, cartItems, currency }) => {
                               </div>
                             </li>
                           </ul>
-                        ))}
+                        ))} */}
 
                         {userPaymentWithDefault.map((userPayment) => (
                           <div className="billing-info-wrap">

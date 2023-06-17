@@ -77,8 +77,7 @@ export const addToCart = (
 ) => {
   return dispatch => {
     if (addToast) {
-      console.log(item);
-      console.log(quantityCount);
+      
       addToast("Đã thêm vào giỏ hàng ", { appearance: "success", autoDismiss: true });
     }
 
@@ -91,6 +90,7 @@ export const addToCart = (
 
     http.post("/cart-items", cartItemData)
       .then(response => {
+     
         window.location.reload()
         // <FireworksComponent />
         dispatch({
@@ -304,25 +304,17 @@ export const updateCartItemDecrease = (cartItem) => {
   // return cartItem.quantity+1;
 };
 export const deleteFromCart = (cartItem, addToast) => {
-  return dispatch => {
-    if (addToast) {
-      addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
+  return async dispatch => {
+    try {
+      await  http.delete(`/cart-items/${cartItem.id}`);
+      // window.location.reload();
+      if (addToast) {
+        addToast("Xóa khỏi giỏ hàng ", { appearance: "error", autoDismiss: true });
+      }
+      dispatch({ type: DELETE_FROM_CART, payload: cartItem.id });;
+      
+    } catch (error) {
+      console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
     }
-    console.log(cartItem)
-
-    // Gửi yêu cầu DELETE để xóa cartItem từ backend
-    // MyAccountService.deleteCartItem(cartItem)
-    http.delete(`/cart-items/${cartItem.id}`)
-      .then(response => {
-        window.location.reload();
-        // Xử lý kết quả yêu cầu thành công (nếu cần)
-        // Ví dụ: hiển thị thông báo xóa thành công, cập nhật trạng thái ứng dụng, v.v.
-
-        // Dispatch action để xóa cartItem từ trạng thái ứng dụng hoặc Redux store
-        dispatch({ type: DELETE_FROM_CART, payload: cartItem.id });
-      })
-      .catch(error => {
-        console.error("Lỗi xóa sản phẩm từ giỏ hàng:", error);
-      });
   };
 };

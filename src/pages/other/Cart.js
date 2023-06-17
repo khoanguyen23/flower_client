@@ -35,7 +35,16 @@ const Cart = ({
   const { pathname } = location;
   let cartTotalPrice = 0;
   const [cartItemList, setCartItemList] = useState([]);
-  console.log(cartItemList);
+ 
+  console.log(cartItemList)
+  cartItemList.forEach((item) => {
+    const id = item.id;
+    console.log(item)
+   
+    console.log(id); // In ra giá trị id của mỗi phần tử trong cartItemList
+  });
+
+  
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()
@@ -91,6 +100,9 @@ const Cart = ({
 
                         <tbody>
                           {cartItemList.map((cartItem, key) => {
+                            console.log(cartItem)
+                            const id = cartItem.id
+                            console.log(id)
                             const discountedPrice = getDiscountPrice(
                               // cartItem.price,
                               // cartItem.discount

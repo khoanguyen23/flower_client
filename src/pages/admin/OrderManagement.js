@@ -154,7 +154,8 @@ const OrderManagement = () => {
                   </TableCell>
                 </TableRow>
               ))} */}
-              {searchResults.length > 0
+              {userOrderList && userOrderList.length > 0 ? (
+              searchResults.length > 0
                 ? searchResults.map((order) => (
                     <TableRow key={order.id}>
                       <TableCell>{order.id}</TableCell>
@@ -183,7 +184,7 @@ const OrderManagement = () => {
                       </TableCell>
                       <TableCell>
                         {" "}
-                        {format(new Date(order.shippingDate), "dd/MM/yyyy")}
+                        {order.shippingDate ? format(new Date(order.shippingDate), "dd/MM/yyyy") : 'chua co ngay giao hang'}
                       </TableCell>
                       <TableCell>{order.orderTotal} VND</TableCell>
                       <TableCell>
@@ -226,7 +227,10 @@ const OrderManagement = () => {
                         <Link to={`/order-detail/${order.id}`}>Xem</Link>
                       </TableCell>
                     </TableRow>
-                  ))}
+                  ))
+                  ) : (
+                    <p>Chưa có đơn hàng nào</p>
+                  )}
             </TableBody>
           </Table>
         </div>
