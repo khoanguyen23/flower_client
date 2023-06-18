@@ -9,16 +9,27 @@ import EventBus from "../common/EventBus";
 import OrderManagement from "../pages/admin/OrderManagement";
 import BlogManagement from "../pages/admin/BlogManagement";
 import ProductManagement from "../pages/admin/ProductManagement";
+import { useLocation } from 'react-router-dom';
 const BoardAdmin = () => {
   const [content, setContent] = useState("");
 
   const [value, setValue] = React.useState('1');
 
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState("1");
+
+
   const handleChange = (event, newValue) => {
-    setValue(newValue); 
+    // setValue(newValue); 
+    setActiveTab(newValue);
   };
 
   useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tabParam = params.get("tab");
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
     UserService.getAdminBoard().then(
       (response) => {
         setContent(response.data);
@@ -38,7 +49,7 @@ const BoardAdmin = () => {
         }
       }
     );
-  }, []);
+  }, [location]);
 
   return (
     <div className="container">
@@ -47,7 +58,8 @@ const BoardAdmin = () => {
         <a href="/home-flowers">Trang chủ</a>
       </header>
       <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value}>
+      <TabContext value={activeTab}>
+      {/* <TabContext value={value}> */}
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example">
             <Tab label="Quản lý sản phẩm" value="1" />

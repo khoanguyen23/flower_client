@@ -33,7 +33,8 @@ const OrderDetails = () => {
 
   const history = useHistory();
   const handleGoBack = () => {
-    history.goBack();
+    // history.goBack();
+    history.push('/admin?tab=2');
   };
 
   const [order, setOrder] = useState({});
@@ -46,6 +47,7 @@ const OrderDetails = () => {
   useEffect(() => {
     fetchOrderDetails(orderId);
     fetchFlowerOrder(orderId);
+    // handleGoBack();
   }, []);
 
   const fetchOrderDetails = (orderId) => {
@@ -187,7 +189,10 @@ const OrderDetails = () => {
                     <TableCell>Thông tin giao hàng</TableCell>
                   </TableHead>
                   <TableBody>
+                  {userPayment && userShipping ? (
+    <>
                     <TableRow>
+                      
                       <TableCell>{userPayment.cardName}</TableCell>
                       <TableCell>{userShipping.userShippingName}</TableCell>
                     </TableRow>
@@ -222,6 +227,10 @@ const OrderDetails = () => {
                         </p>
                       </TableCell>
                     </TableRow>
+                    </>
+  ) : (
+    <TableCell colSpan={2}>Không có thông tin thanh toán người dùng</TableCell>
+  )}
                   </TableBody>
                 </Table>
               </div>

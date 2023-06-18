@@ -10,16 +10,13 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { Modal, Button } from "react-bootstrap";
 
 import AuthService from "../../services/auth.service";
-import { useLocation } from 'react-router-dom';
-import { useState,useContext,  useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useRef } from "react";
 
-
 const Register = ({ location }) => {
   const { pathname } = location;
-  
-
 
   const history = useHistory();
 
@@ -33,6 +30,57 @@ const Register = ({ location }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [passwordErrors, setPasswordErrors] = useState([]);
+
+  const validatePassword = () => {
+    const conditions = [
+      {
+        regex: /[a-z]/,
+        message: "Mật khẩu phải chứa ít nhất một ký tự thường.",
+      },
+      {
+        regex: /[A-Z]/,
+        message: "Mật khẩu phải chứa ít nhất một ký tự hoa.",
+      },
+      {
+        regex: /\d/,
+        message: "Mật khẩu phải chứa ít nhất một chữ số.",
+      },
+      {
+        regex: /[!@#$%^&*()\-_=+[{\]};:<>|./?]/,
+        message: "Mật khẩu phải chứa ít nhất một ký tự đặc biệt.",
+      },
+      {
+        regex: /^.{8,}$/,
+        message: "Mật khẩu phải có ít nhất 8 ký tự.",
+      },
+      {
+        validate: () => !password.includes(username),
+        message: "Mật khẩu không được chứa tên đăng nhập.",
+      },
+      {
+        validate: () => !password.includes(email),
+        message: "Mật khẩu không được chứa email.",
+      },
+    ];
+
+    const errors = [];
+
+    conditions.forEach((condition) => {
+      if (condition.regex) {
+        if (!condition.regex.test(password)) {
+          errors.push(condition.message);
+        }
+      } else if (condition.validate) {
+        if (!condition.validate()) {
+          errors.push(condition.message);
+        }
+      }
+    });
+
+    return errors;
+  };
 
   const onChangeUsername = (e) => {
     const username = e.target.value;
@@ -49,50 +97,33 @@ const Register = ({ location }) => {
     setPassword(password);
   };
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-
-    // const credentials = {
-    //   username,
-    //   password,
-    // };
-
-    AuthService.login(username, password)
-      .then(() => {
-        // localStorage.setItem("accessToken", response.data.accessToken);
-        // localStorage.setItem("username", response.data.username);
-        // localStorage.setItem("email", response.data.email);
-        history.push("/admin");
-        window.location.reload();
-      })
-      .catch((error) => {
-        console.error("Đăng nhập thất bại:", error);
-        setLoginSuccess(false);
-      });
-  };
-
   const handleRegister = (e) => {
     e.preventDefault();
 
-    AuthService.register(username, email, password).then(
-      (response) => {
-        setMessage(response.data.message);
-          setSuccessful(true);
-        window.location.reload();
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
+    setIsSubmitted(true);
+    const passwordErrors = validatePassword();
 
-        setMessage(resMessage);
-        setSuccessful(false);
-      }
-    );
+    setPasswordErrors(passwordErrors);
+    if (passwordErrors.length === 0) {
+      AuthService.register(username, email, password).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+          window.location.reload();
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setMessage(resMessage);
+          setSuccessful(false);
+        }
+      );
+    }
   };
 
   return (
@@ -104,7 +135,9 @@ const Register = ({ location }) => {
           content="Compare page of flone react minimalist eCommerce template."
         />
       </MetaTags>
-      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Trang chủ</BreadcrumbsItem>
+      <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>
+        Trang chủ
+      </BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Đăng nhập/Đăng ký
       </BreadcrumbsItem>
@@ -116,7 +149,7 @@ const Register = ({ location }) => {
             <div className="row">
               <div className="col-lg-7 col-md-12 ml-auto mr-auto">
                 <div className="login-register-wrapper">
-                  <Tab.Container defaultActiveKey="register">             
+                  <Tab.Container defaultActiveKey="register">
                     <Nav variant="pills" className="login-register-tab-list">
                       {/* <Nav.Item>
                         <Nav.Link eventKey="login">
@@ -130,7 +163,6 @@ const Register = ({ location }) => {
                       </Nav.Item>
                     </Nav>
                     <Tab.Content>
-                     
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
@@ -149,6 +181,12 @@ const Register = ({ location }) => {
                                 onChange={onChangePassword}
                                 placeholder="Mật khẩu"
                               />
+                              {isSubmitted &&
+                                passwordErrors.map((error, index) => (
+                                  <p key={index} className="error-message">
+                                    {error}
+                                  </p>
+                                ))}
                               <input
                                 name="user-email"
                                 placeholder="Email"
@@ -157,17 +195,14 @@ const Register = ({ location }) => {
                                 onChange={onChangeEmail}
                               />
                               <div className="button-box">
-                              <div className="login-toggle-btn">
-                                  
+                                <div className="login-toggle-btn">
                                   <Link to={process.env.PUBLIC_URL + "/login"}>
                                     Đã có tài khoản . Đăng nhập ngay
                                   </Link>
-                                  
                                 </div>
                                 <button type="submit">
                                   <span>Đăng ký</span>
                                 </button>
-                                
                               </div>
                             </form>
                           </div>
