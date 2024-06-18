@@ -80,6 +80,7 @@ const App = (props) => {
                   path={process.env.PUBLIC_URL + "/blog"}
                   component={Blog}
                 />
+              
                 {/* Other pages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/about"}

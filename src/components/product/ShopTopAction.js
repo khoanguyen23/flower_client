@@ -21,7 +21,8 @@ const ShopTopAction = ({
           </select>
         </div>
         <p>
-          Tìm thấy {sortedProductCount} của {productCount} kết quả
+          {/* Tìm thấy {sortedProductCount} của {productCount} kết quả */}
+          Tìm thấy {productCount} của {sortedProductCount} kết quả
         </p>
       </div>
 

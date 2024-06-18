@@ -21,7 +21,9 @@ const ProductGrid = ({
 }) => {
   return (
     <Fragment>
-      {products.map(product => {
+
+     { products.map(product => {
+        
         return (
           <ProductGridSingle
             sliderClassName={sliderClassName}
@@ -34,6 +36,7 @@ const ProductGrid = ({
             cartItem={
               cartItems.filter(cartItem => cartItem.id === product.id)[0]
             }
+           
             wishlistItem={
               wishlistItems.filter(
                 wishlistItem => wishlistItem.id === product.id
@@ -47,7 +50,8 @@ const ProductGrid = ({
             key={product.id}
           />
         );
-      })}
+      })
+    }
     </Fragment>
   );
 };

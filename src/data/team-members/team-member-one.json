@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "image": "/assets/img/team/team-1.jpg",
+    "image": "https://res.cloudinary.com/dc5xcbmvp/image/upload/v1687488463/team-1_zzlueh.jpg",
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
@@ -10,7 +10,7 @@
   },
   {
     "id": "2",
-    "image": "/assets/img/team/team-3.jpg",
+    "image": "https://scontent.fhan14-4.fna.fbcdn.net/v/t39.30808-6/281376410_543962027217638_7385006561299341789_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=YrrdZhD2wXIAX87ltcD&_nc_ht=scontent.fhan14-4.fna&oh=00_AfDHVqUpTlCqv59CWPLolBV5ACN9TPPDmkCBJx6jYf5Ryw&oe=649C4C27",
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
@@ -19,7 +19,7 @@
   },
   {
     "id": "3",
-    "image": "/assets/img/team/team-2.jpg",
+    "image": "https://scontent.fsgn2-6.fna.fbcdn.net/v/t39.30808-6/311624209_1594222814343464_391979000837730856_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=EoScGPrNW3gAX9i5-A3&_nc_ht=scontent.fsgn2-6.fna&oh=00_AfCHljXHITGBXC94XSVyie3yRGfSnPJVuyvmYXgSXq0RIw&oe=649964C6",
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",
@@ -28,7 +28,7 @@
   },
   {
     "id": "4",
-    "image": "/assets/img/team/team-4.jpg",
+    "image": "https://scontent.fhan14-3.fna.fbcdn.net/v/t1.6435-9/123116374_1107049693044758_1475593397107575475_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=SskJOjXcyYgAX9Ggj5n&_nc_ht=scontent.fhan14-3.fna&oh=00_AfAD-yJE7dP1Fs8dKUKCoDkjhLBkkKgQaejryutFvBffjw&oe=64BE130A",
     "fbLink": "//www.facebook.com",
     "twitterLink": "//www.twitter.com",
     "instagramLink": "//www.instagram.com",

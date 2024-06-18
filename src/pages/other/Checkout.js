@@ -20,8 +20,9 @@ import {
 } from "@material-ui/core";
 import { Checkbox } from "@mui/material";
 import OrderService from "../../services/OrderService";
+import { DELETE_ALL_FROM_CART } from "../../redux/actions/cartActions";
 
-const Checkout = ({ location, cartItems, currency }) => {
+const Checkout = ({ location, cartItems, currency}) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
   console.log(cartItems);
@@ -74,6 +75,7 @@ const Checkout = ({ location, cartItems, currency }) => {
   const userOrder = () => {
     OrderService.setUserOrder()
       .then((response) => {
+        
         window.location.reload();
         console.log(response.data);
       })

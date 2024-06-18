@@ -14,7 +14,7 @@ import {
   cartItemStock,
   deleteAllFromCart,
   updateCartItem,
-  updateCartItemDecrease
+  updateCartItemDecrease,
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
@@ -35,16 +35,14 @@ const Cart = ({
   const { pathname } = location;
   let cartTotalPrice = 0;
   const [cartItemList, setCartItemList] = useState([]);
- 
-  console.log(cartItemList)
+
+  console.log(cartItemList);
   cartItemList.forEach((item) => {
     const id = item.id;
-    console.log(item)
-   
+    console.log(item);
+
     console.log(id); // In ra giá trị id của mỗi phần tử trong cartItemList
   });
-
-  
 
   const fetchCartItem = () => {
     MyAccountService.getCartItem()
@@ -100,9 +98,10 @@ const Cart = ({
 
                         <tbody>
                           {cartItemList.map((cartItem, key) => {
-                            console.log(cartItem)
-                            const id = cartItem.id
-                            console.log(id)
+                            console.log(cartItem);
+                            const id = cartItem.id;
+                            console.log(id);
+                            
                             const discountedPrice = getDiscountPrice(
                               // cartItem.price,
                               // cartItem.discount
@@ -111,12 +110,13 @@ const Cart = ({
                               cartItem.flower.discount
                               // cartItem.subtotal,
                             );
-
                             const finalProductPrice =
-                              // cartItem.price * currency.currencyRate
                               cartItem.flower.price * currency.currencyRate;
                             const finalDiscountedPrice =
-                            cartItem.flower.price - (cartItem.flower.price * cartItem.flower.discount / 100)
+                              cartItem.flower.price -
+                              (cartItem.flower.price *
+                                cartItem.flower.discount) /
+                                100;
 
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -178,7 +178,6 @@ const Cart = ({
                                     <button
                                       className="dec qtybutton"
                                       onClick={updateCartItemDecrease(cartItem)}
-                                     
                                     >
                                       -
                                     </button>
@@ -223,6 +222,7 @@ const Cart = ({
                                   >
                                     <i className="fa fa-times"></i>
                                   </button>
+                               
                                 </td>
                               </tr>
                             );

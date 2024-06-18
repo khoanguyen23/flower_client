@@ -1073,13 +1073,22 @@ const MyAccount = ({ location }) => {
                                 userOrderList.map((order) => (
                                   <TableRow key={order.id}>
                                     <TableCell>
-                                      <Chip
-                                        label={order.orderStatus}
-                                        style={{
-                                          backgroundColor: order.statusColor,
-                                          color: "#fff",
-                                        }}
-                                      />
+                                    <Chip
+                          label={order.orderStatus}
+                          style={{
+                            backgroundColor:
+                              order.orderStatus === "Đang xử lý"
+                                ? "#ccc"
+                                : order.orderStatus === "Đang giao hàng"
+                                ? "#a749ff"
+                                : order.orderStatus === "Thành công"
+                                ? "#008000"
+                                : order.orderStatus === "Hủy đơn hàng"
+                                ? "#df5c39"
+                                : "",
+                            color: "#fff",
+                          }}
+                        />
                                     </TableCell>
                                     
                                     <TableCell></TableCell>

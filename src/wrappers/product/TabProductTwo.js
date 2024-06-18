@@ -62,17 +62,17 @@ const TabProductTwo = ({ spaceBottomClass, category }) => {
             <Tab.Pane eventKey="newArrival">
               <div className="row three-column">
                 <ProductGridTwo
-                  category="Hoa tình yêu"
+                  category="Quà tặng"
                   type="new"
                   limit={6}
                   spaceBottomClass="mb-25"
-                />
+                />  
               </div>
             </Tab.Pane>
             <Tab.Pane eventKey="bestSeller">
               <div className="row three-column">
                 <ProductGridTwo
-                  category="Hoa valentine"
+                  category="Hoa tốt nghiệp"
                   type="bestSeller"
                   limit={6}
                   spaceBottomClass="mb-25"

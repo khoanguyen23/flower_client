@@ -10,6 +10,8 @@ import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
 import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
+import ShopSearch from '../../components/product/ShopSearch';
+
 
 const ShopGridStandard = ({location, products}) => {
     const [layout, setLayout] = useState('grid three-column');
@@ -22,8 +24,24 @@ const ShopGridStandard = ({location, products}) => {
     const [currentData, setCurrentData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
 
-    const pageLimit = 6;
+    const pageLimit = 15;
     const {pathname} = location;
+
+    const [currentProducts, setCurrentProducts] = useState(products);
+
+    const handleSearch = (searchValue) => {
+        const filteredProducts = products.filter((product) =>
+             product.name.toLowerCase().includes(searchValue.toLowerCase())
+         );
+        setCurrentProducts(filteredProducts);
+        setCurrentPage(1);
+        setOffset(0);
+
+        const url = new URL(window.location);
+        url.searchParams.set('search', searchValue);
+        window.history.pushState(null, null, url.toString());
+    };  
+    
 
     const getLayout = (layout) => {
         setLayout(layout)
@@ -65,20 +83,35 @@ const ShopGridStandard = ({location, products}) => {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
+
+                                {/* shop search */}
+                                {/* <ShopSearch /> */}
+
                                 {/* shop sidebar */}
-                                <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30"/>
+                                <ShopSidebar products={products} getSortParams={getSortParams} handleSearch={handleSearch} sideSpaceClass="mr-30"/>
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
-                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={products.length} sortedProductCount={currentData.length} />
+                                <ShopTopbar getLayout={getLayout} getFilterSortParams={getFilterSortParams} productCount={currentProducts.length} sortedProductCount={currentData.length} />
 
                                 {/* shop page content default */}
-                                <ShopProducts layout={layout} products={currentData} />
+                                <ShopProducts layout={layout} products={currentProducts} />
 
                                 {/* shop product pagination */}
                                 <div className="pro-pagination-style text-center mt-30">
-                                    <Paginator
+                                    {/* <Paginator
                                         totalRecords={sortedProducts.length}
+                                        pageLimit={pageLimit}
+                                        pageNeighbours={2}
+                                        setOffset={setOffset}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                        pageContainerClass="mb-0 mt-0"
+                                        pagePrevText="«"
+                                        pageNextText="»"
+                                    /> */}
+                                    <Paginator
+                                        totalRecords={currentProducts.length}
                                         pageLimit={pageLimit}
                                         pageNeighbours={2}
                                         setOffset={setOffset}

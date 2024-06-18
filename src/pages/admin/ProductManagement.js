@@ -36,7 +36,7 @@ const ProductManagement = ({ products }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const pageLimit = 10;
+  const pageLimit = 6;
 
   const [sortType, setSortType] = useState("");
   const [sortValue, setSortValue] = useState("");
